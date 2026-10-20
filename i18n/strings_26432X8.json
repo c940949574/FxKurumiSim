@@ -148,7 +148,7 @@
     {
       "id": "s019",
       "zh": "直连",
-      "en": "Direct connection",
+      "en": "Direct",
       "ja": "直接接続",
       "ko": "직접 연결",
       "count": 3
@@ -1436,9 +1436,9 @@
     {
       "id": "s180",
       "zh": "代理已更新",
-      "en": "Agent updated",
-      "ja": "エージェントが更新されました",
-      "ko": "에이전트 정보가 업데이트되었습니다",
+      "en": "Proxy updated",
+      "ja": "プロキシを更新しました",
+      "ko": "프록시가 업데이트되었습니다",
       "count": 1
     },
     {
@@ -2683,6 +2683,14 @@
     },
     {
       "id": "s336",
+      "zh": "未悬停",
+      "en": "Not hovering",
+      "ja": "浮かんでいない",
+      "ko": "떠다니지 않아요",
+      "count": 1
+    },
+    {
+      "id": "s337",
       "zh": "本地代理（HTTP / SOCKS5）",
       "en": "Local proxy (HTTP / SOCKS5)",
       "ja": "ローカルプロキシ（HTTP / SOCKS5）",
@@ -2690,7 +2698,7 @@
       "count": 1
     },
     {
-      "id": "s337",
+      "id": "s338",
       "zh": "权益低于维持保证金要求的 125% 时发出追加保证金通知，倒计时 24 小时（模拟时间）",
       "en": "A margin call notice is issued when equity drops below 125% of the maintenance margin requirement, starting a 24-hour countdown (simulated time).",
       "ja": "資産が維持証拠金要件の125%を下回ると追証通知が出され、24時間のカウントダウン（シミュレーション時間）が始まります。",
@@ -2698,7 +2706,7 @@
       "count": 1
     },
     {
-      "id": "s338",
+      "id": "s339",
       "zh": "权益跌破维持保证金要求",
       "en": "Equity drops below the maintenance margin requirement",
       "ja": "株価が維持マージン要件を下回る",
@@ -2706,7 +2714,7 @@
       "count": 1
     },
     {
-      "id": "s339",
+      "id": "s340",
       "zh": "权益跌破维持保证金要求即触发强制平仓，按亏损从大到小依次平仓，直到权益回到维持要求的 106% 以上",
       "en": "If equity falls below the maintenance margin requirement, forced liquidation is triggered: positions are closed from the largest loss downward until equity is back above 106% of the requirement.",
       "ja": "資産が維持証拠金要件を下回ると強制決済が発動します。損失の大きい順に決済し、資産が維持要件の106%以上に回復するまで続行されます。",
@@ -2714,7 +2722,7 @@
       "count": 1
     },
     {
-      "id": "s340",
+      "id": "s341",
       "zh": "权益（现金 + 全部浮动盈亏）跌破",
       "en": "Equity (cash + all floating profits and losses) drops below",
       "ja": "自己資本（現金＋すべての変動利益と損失）が下回る",
@@ -2722,7 +2730,7 @@
       "count": 1
     },
     {
-      "id": "s341",
+      "id": "s342",
       "zh": "杠杆",
       "en": "leverage",
       "ja": "レバレッジ",
@@ -2730,7 +2738,7 @@
       "count": 1
     },
     {
-      "id": "s342",
+      "id": "s343",
       "zh": "杠杆  × · 第三方（保证金率  %）",
       "en": "Leverage × · Third party (margin rate %)",
       "ja": "レバレッジ × · 第三者（マージン率%）",
@@ -2738,7 +2746,7 @@
       "count": 1
     },
     {
-      "id": "s343",
+      "id": "s344",
       "zh": "杠杆由每手保证金固定决定，不能单独调整",
       "en": "The leverage is determined by the margin per trade and cannot be adjusted individually.",
       "ja": "レバレッジは取引あたりのマージンによって決定され、個別に調整することはできません。",
@@ -2746,7 +2754,7 @@
       "count": 1
     },
     {
-      "id": "s344",
+      "id": "s345",
       "zh": "杠杆（保证金率",
       "en": "Leverage (Margin Ratio)",
       "ja": "レバレッジ（マージン比率）",
@@ -2754,7 +2762,7 @@
       "count": 1
     },
     {
-      "id": "s345",
+      "id": "s346",
       "zh": "条成交记录",
       "en": "Transaction record",
       "ja": "取引記録",
@@ -2762,7 +2770,7 @@
       "count": 1
     },
     {
-      "id": "s346",
+      "id": "s347",
       "zh": "板块  已实现  浮动  费用  合计",
       "en": "Planes have achieved floating costs; total amount.",
       "ja": "飛行機は浮動コストを達成しました。合計金額です。",
@@ -2770,7 +2778,7 @@
       "count": 1
     },
     {
-      "id": "s347",
+      "id": "s348",
       "zh": "板块导航",
       "en": "Plate Navigation",
       "ja": "プレートナビゲーション",
@@ -2778,7 +2786,7 @@
       "count": 1
     },
     {
-      "id": "s348",
+      "id": "s349",
       "zh": "标普500 E-mini",
       "en": "S&P 500 E-mini",
       "ja": "S&P 500 E-mini",
@@ -2786,7 +2794,7 @@
       "count": 1
     },
     {
-      "id": "s349",
+      "id": "s350",
       "zh": "标普500ETF",
       "en": "S&P 500 ETF",
       "ja": "S&P 500 ETF",
@@ -2794,7 +2802,7 @@
       "count": 1
     },
     {
-      "id": "s350",
+      "id": "s351",
       "zh": "桌面版存于 文档",
       "en": "Desktop version is stored in documents",
       "ja": "デスクトップ版はドキュメントに保存されています",
@@ -2802,7 +2810,7 @@
       "count": 1
     },
     {
-      "id": "s351",
+      "id": "s352",
       "zh": "模拟引擎",
       "en": "Simulation engine",
       "ja": "シミュレーションエンジン",
@@ -2810,7 +2818,7 @@
       "count": 1
     },
     {
-      "id": "s352",
+      "id": "s353",
       "zh": "模拟引擎为确定性随机，同一 seed 可复现",
       "en": "The simulation engine is deterministic random; the same seed can be reproduced.",
       "ja": "シミュレーションエンジンは決定論的ランダムであり、同じシードを再現することができます。",
@@ -2818,7 +2826,7 @@
       "count": 1
     },
     {
-      "id": "s353",
+      "id": "s354",
       "zh": "模拟行情引擎",
       "en": "Simulation Market Engine",
       "ja": "シミュレーション市場エンジン",
@@ -2826,7 +2834,7 @@
       "count": 1
     },
     {
-      "id": "s354",
+      "id": "s355",
       "zh": "欧元 / 美元",
       "en": "Euro / US Dollar",
       "ja": "ユーロ / 米ドル",
@@ -2834,7 +2842,7 @@
       "count": 1
     },
     {
-      "id": "s355",
+      "id": "s356",
       "zh": "每 pip 价值",
       "en": "Value per pip",
       "ja": "ピップあたりの価値",
@@ -2842,7 +2850,7 @@
       "count": 1
     },
     {
-      "id": "s356",
+      "id": "s357",
       "zh": "每交易日结算：$",
       "en": "Daily settlement: $",
       "ja": "日々の決済：ドル",
@@ -2850,7 +2858,7 @@
       "count": 1
     },
     {
-      "id": "s357",
+      "id": "s358",
       "zh": "每手    股  保证金   %  维持   %",
       "en": "Each lot Shares Margin % Maintenance %",
       "ja": "各ロットの株式のマージン率、維持率",
@@ -2858,7 +2866,7 @@
       "count": 1
     },
     {
-      "id": "s358",
+      "id": "s359",
       "zh": "每手 100 股，T+2 交收。信用交易初始保证金 30%（约 3.33×），维持保证金 20%。多头融资利率 2.8%/年，空头借券费 1.5%/年。佣金 0.05%",
       "en": "100 shares per lot, T+2 settlement. Credit trading initial margin 30% (about 3.33x), maintenance margin 20%. Long financing rate 2.8%/yr, short stock-borrow fee 1.5%/yr. Commission 0.05%",
       "ja": "1注文100株、決済はT+2日。信用取引の初期保証金は30%（約3.33倍）、維持保証金は20%。買方金利は年2.8%、貸株料は年1.5%。手数料は0.05%。",
@@ -2866,7 +2874,7 @@
       "count": 1
     },
     {
-      "id": "s359",
+      "id": "s360",
       "zh": "每手保证金",
       "en": "Margin per trade",
       "ja": "取引ごとのマージン",
@@ -2874,7 +2882,7 @@
       "count": 1
     },
     {
-      "id": "s360",
+      "id": "s361",
       "zh": "每手股数",
       "en": "Number of shares per trade",
       "ja": "取引あたりの株数",
@@ -2882,7 +2890,7 @@
       "count": 1
     },
     {
-      "id": "s361",
+      "id": "s362",
       "zh": "每手股数因股而异（腾讯 100、汇丰 400、友邦 200）。初始保证金 40%",
       "en": "The number of shares per trade varies depending on the stock (Tencent: 100, HSBC: 400, AIA: 200). The initial margin is 40%.",
       "ja": "取引あたりの株数は、株券によって異なります（テンセント：100、HSBC：400、AIA：200）。初期保証金は40％です。",
@@ -2890,7 +2898,7 @@
       "count": 1
     },
     {
-      "id": "s362",
+      "id": "s363",
       "zh": "每手股数无效",
       "en": "The number of shares per trade is invalid",
       "ja": "取引ごとに保有する株数は有効ではない",
@@ -2898,7 +2906,7 @@
       "count": 1
     },
     {
-      "id": "s363",
+      "id": "s364",
       "zh": "每点价值",
       "en": "Value per point",
       "ja": "1ポイントあたりの価値",
@@ -2906,7 +2914,7 @@
       "count": 1
     },
     {
-      "id": "s364",
+      "id": "s365",
       "zh": "汇丰控股",
       "en": "HSBC Holdings",
       "ja": "HSBCホールドスピンズ",
@@ -2914,7 +2922,7 @@
       "count": 1
     },
     {
-      "id": "s365",
+      "id": "s366",
       "zh": "汇兑成本已计入点差",
       "en": "The exchange cost has been included in the spread.",
       "ja": "スプレッドには取引コストが含まれています。",
@@ -2922,7 +2930,7 @@
       "count": 1
     },
     {
-      "id": "s366",
+      "id": "s367",
       "zh": "波动  % 触及限制，暂停交易 5 分钟",
       "en": "Volatility % reached the limit, trading suspended for 5 minutes",
       "ja": "変動率が限界に達し、5分間取引が停止されました",
@@ -2930,7 +2938,7 @@
       "count": 1
     },
     {
-      "id": "s367",
+      "id": "s368",
       "zh": "波动率放大",
       "en": "Volatility amplification",
       "ja": "ボラティリティの増幅",
@@ -2938,7 +2946,7 @@
       "count": 1
     },
     {
-      "id": "s368",
+      "id": "s369",
       "zh": "浏览器模式不支持代理",
       "en": "The browser mode does not support proxies.",
       "ja": "ブラウザモードではプロキシはサポートされません。",
@@ -2946,7 +2954,7 @@
       "count": 1
     },
     {
-      "id": "s369",
+      "id": "s370",
       "zh": "浮动",
       "en": "floating",
       "ja": "浮動",
@@ -2954,7 +2962,7 @@
       "count": 1
     },
     {
-      "id": "s370",
+      "id": "s371",
       "zh": "涨跌停",
       "en": "Price fluctuations and limits",
       "ja": "価格の変動と制限",
@@ -2962,7 +2970,7 @@
       "count": 1
     },
     {
-      "id": "s371",
+      "id": "s372",
       "zh": "涨跌停/熔断：日股按价格带限幅，美股 LULD 与港股市调机制在",
       "en": "Price limit/circuit breaker: Japanese stocks are limited within price ranges, while US stocks use LULD and Hong Kong stock market adjustment mechanisms",
       "ja": "価格制限/サードパーティ：日本の株式は特定の価格範囲内に制限されているが、米国の株式はLULDを使用し、香港の株式市場には調整メカニズムがある",
@@ -2970,7 +2978,7 @@
       "count": 1
     },
     {
-      "id": "s372",
+      "id": "s373",
       "zh": "添加到自选",
       "en": "Add to favorite list",
       "ja": "お気に入りリストに追加",
@@ -2978,7 +2986,7 @@
       "count": 1
     },
     {
-      "id": "s373",
+      "id": "s374",
       "zh": "添加自选品种    ，每手   股",
       "en": "Add selected varieties, each trade of shares",
       "ja": "選択した品種を追加し、各株数を記入する",
@@ -2986,7 +2994,7 @@
       "count": 1
     },
     {
-      "id": "s374",
+      "id": "s375",
       "zh": "港股",
       "en": "Hong Kong stocks",
       "ja": "香港株",
@@ -2994,7 +3002,7 @@
       "count": 1
     },
     {
-      "id": "s375",
+      "id": "s376",
       "zh": "港股每手不同，按实际填",
       "en": "Hong Kong stocks: each lot is different; fill in according to the actual amount.",
       "ja": "香港株：各ロットごとに異なります。実際の金額に応じて入力してください。",
@@ -3002,7 +3010,7 @@
       "count": 1
     },
     {
-      "id": "s376",
+      "id": "s377",
       "zh": "澳元 / 日元",
       "en": "AUD / JPY",
       "ja": "豪ドル / 円",
@@ -3010,7 +3018,7 @@
       "count": 1
     },
     {
-      "id": "s377",
+      "id": "s378",
       "zh": "点差",
       "en": "Betting odds",
       "ja": "賭けの確率",
@@ -3018,7 +3026,7 @@
       "count": 1
     },
     {
-      "id": "s378",
+      "id": "s379",
       "zh": "点差    pip  每手       上限   ×",
       "en": "Spread pip per lot upper limit ×",
       "ja": "ロット上限あたりのピップを広げる ×",
@@ -3026,7 +3034,7 @@
       "count": 1
     },
     {
-      "id": "s379",
+      "id": "s380",
       "zh": "点差   pip（含于成交价）",
       "en": "Betting odds pip (included in the transaction price)",
       "ja": "賭けのオッズピップ（取引価格に含まれる）",
@@ -3034,7 +3042,7 @@
       "count": 1
     },
     {
-      "id": "s380",
+      "id": "s381",
       "zh": "特斯拉",
       "en": "Tesla",
       "ja": "テスラ",
@@ -3042,7 +3050,7 @@
       "count": 1
     },
     {
-      "id": "s381",
+      "id": "s382",
       "zh": "现金 + 浮动盈亏",
       "en": "Cash + variable profits and losses",
       "ja": "現金 + 変動利益・損失",
@@ -3050,7 +3058,7 @@
       "count": 1
     },
     {
-      "id": "s382",
+      "id": "s383",
       "zh": "留空则显示代码",
       "en": "Leave blank to display the code",
       "ja": "空欄のままにしておくとコードが表示されます",
@@ -3058,7 +3066,7 @@
       "count": 1
     },
     {
-      "id": "s383",
+      "id": "s384",
       "zh": "盈亏",
       "en": "Profits and Losses",
       "ja": "利益と損失",
@@ -3066,7 +3074,7 @@
       "count": 1
     },
     {
-      "id": "s384",
+      "id": "s385",
       "zh": "盈亏(JPY)",
       "en": "Profits and Losses (JPY)",
       "ja": "利益と損失（円）",
@@ -3074,7 +3082,7 @@
       "count": 1
     },
     {
-      "id": "s385",
+      "id": "s386",
       "zh": "盈亏比",
       "en": "Profit-to-Loss Ratio",
       "ja": "利益対損失比率",
@@ -3082,7 +3090,7 @@
       "count": 1
     },
     {
-      "id": "s386",
+      "id": "s387",
       "zh": "盘前",
       "en": "Before the market opens",
       "ja": "市場が開く前に",
@@ -3090,7 +3098,7 @@
       "count": 1
     },
     {
-      "id": "s387",
+      "id": "s388",
       "zh": "盘后",
       "en": "Post-market",
       "ja": "市場後",
@@ -3098,7 +3106,7 @@
       "count": 1
     },
     {
-      "id": "s388",
+      "id": "s389",
       "zh": "目前支持日股(.T)、港股(.HK)、美股(直接填代码)",
       "en": "Currently, Japanese stocks (.T), Hong Kong stocks (.HK), and U.S. stocks (just enter the code) are supported.",
       "ja": "現在、日本株(.T)、香港株(.HK)、米国株（コードを入力するだけ）がサポートされています。",
@@ -3106,7 +3114,7 @@
       "count": 1
     },
     {
-      "id": "s389",
+      "id": "s390",
       "zh": "看不见成本线",
       "en": "Invisible cost line",
       "ja": "見えないコストライン",
@@ -3114,7 +3122,7 @@
       "count": 1
     },
     {
-      "id": "s390",
+      "id": "s391",
       "zh": "确认结汇",
       "en": "Confirm the exchange of funds",
       "ja": "資金の交換を確認する",
@@ -3122,7 +3130,7 @@
       "count": 1
     },
     {
-      "id": "s391",
+      "id": "s392",
       "zh": "移除自选品种",
       "en": "Remove selected varieties",
       "ja": "選択した品種を削除する",
@@ -3130,7 +3138,7 @@
       "count": 1
     },
     {
-      "id": "s392",
+      "id": "s393",
       "zh": "空头对称。杠杆越高，强平价越贴近建仓价",
       "en": "Bullish symmetry. The higher the leverage, the closer the strong parity is to the entry price.",
       "ja": "好意的な対称性。レバレッジが高いほど、強いパラレル性は入札価格に近くなる。",
@@ -3138,7 +3146,7 @@
       "count": 1
     },
     {
-      "id": "s393",
+      "id": "s394",
       "zh": "第三方杠杆 · 超出监管上限",
       "en": "Third-party leverage · Exceeding regulatory limits",
       "ja": "第三者のレバレッジ・規制上の制限を超える",
@@ -3146,7 +3154,7 @@
       "count": 1
     },
     {
-      "id": "s394",
+      "id": "s395",
       "zh": "第三方杠杆佣金  %",
       "en": "Third-party leverage commission %",
       "ja": "第三者レバレッジ手数料の割合",
@@ -3154,7 +3162,7 @@
       "count": 1
     },
     {
-      "id": "s395",
+      "id": "s396",
       "zh": "等   项",
       "en": "Items",
       "ja": "アイテム",
@@ -3162,7 +3170,7 @@
       "count": 1
     },
     {
-      "id": "s396",
+      "id": "s397",
       "zh": "类型",
       "en": "Type",
       "ja": "タイプ",
@@ -3170,7 +3178,7 @@
       "count": 1
     },
     {
-      "id": "s397",
+      "id": "s398",
       "zh": "索尼集团",
       "en": "Sony Group",
       "ja": "ソニーグループ",
@@ -3178,7 +3186,7 @@
       "count": 1
     },
     {
-      "id": "s398",
+      "id": "s399",
       "zh": "纽约",
       "en": "New York",
       "ja": "ニューヨーク",
@@ -3186,7 +3194,7 @@
       "count": 1
     },
     {
-      "id": "s399",
+      "id": "s400",
       "zh": "组合绩效",
       "en": "portfolio performance",
       "ja": "ポートフォリオ成績",
@@ -3194,7 +3202,7 @@
       "count": 1
     },
     {
-      "id": "s400",
+      "id": "s401",
       "zh": "结汇完成",
       "en": "Currency conversion completed",
       "ja": "通貨交換が完了しました",
@@ -3202,7 +3210,7 @@
       "count": 1
     },
     {
-      "id": "s401",
+      "id": "s402",
       "zh": "绩效板",
       "en": "Performance Board",
       "ja": "パフォーマンスボード",
@@ -3210,7 +3218,7 @@
       "count": 1
     },
     {
-      "id": "s402",
+      "id": "s403",
       "zh": "维持保证金率",
       "en": "Maintain margin rate",
       "ja": "マージン率を維持する",
@@ -3218,7 +3226,7 @@
       "count": 1
     },
     {
-      "id": "s403",
+      "id": "s404",
       "zh": "维持率)",
       "en": "Maintenance rate)",
       "ja": "メンテナンス率",
@@ -3226,7 +3234,7 @@
       "count": 1
     },
     {
-      "id": "s404",
+      "id": "s405",
       "zh": "维持要求",
       "en": "Maintenance requirements",
       "ja": "メンテナンスの要件",
@@ -3234,7 +3242,7 @@
       "count": 1
     },
     {
-      "id": "s405",
+      "id": "s406",
       "zh": "美元 / 日元",
       "en": "US Dollar / Japanese Yen",
       "ja": "米ドル / 日本円",
@@ -3242,7 +3250,7 @@
       "count": 1
     },
     {
-      "id": "s406",
+      "id": "s407",
       "zh": "美团",
       "en": "Meituan",
       "ja": "美团",
@@ -3250,7 +3258,7 @@
       "count": 1
     },
     {
-      "id": "s407",
+      "id": "s408",
       "zh": "美国 CPI 公布",
       "en": "U.S. CPI released",
       "ja": "米国CPIが発表された",
@@ -3258,7 +3266,7 @@
       "count": 1
     },
     {
-      "id": "s408",
+      "id": "s409",
       "zh": "美国股票",
       "en": "U.S. stocks",
       "ja": "米国の株",
@@ -3266,7 +3274,7 @@
       "count": 1
     },
     {
-      "id": "s409",
+      "id": "s410",
       "zh": "美国股票（NYSE/NASDAQ）",
       "en": "U.S. stocks (NYSE/NASDAQ)",
       "ja": "米国の株価（NYSE/NASDAQ）",
@@ -3274,7 +3282,7 @@
       "count": 1
     },
     {
-      "id": "s410",
+      "id": "s411",
       "zh": "美股",
       "en": "U.S. stocks",
       "ja": "米国の株",
@@ -3282,7 +3290,7 @@
       "count": 1
     },
     {
-      "id": "s411",
+      "id": "s412",
       "zh": "股票  · 每手   股",
       "en": "Stocks · per share",
       "ja": "株価・1株あたり",
@@ -3290,7 +3298,7 @@
       "count": 1
     },
     {
-      "id": "s412",
+      "id": "s413",
       "zh": "胜率",
       "en": "Win rate",
       "ja": "勝率",
@@ -3298,7 +3306,7 @@
       "count": 1
     },
     {
-      "id": "s413",
+      "id": "s414",
       "zh": "腾讯控股",
       "en": "Tencent Holdings",
       "ja": "腾讯控股",
@@ -3306,7 +3314,7 @@
       "count": 1
     },
     {
-      "id": "s414",
+      "id": "s415",
       "zh": "自动",
       "en": "Automatic",
       "ja": "自動的",
@@ -3314,7 +3322,7 @@
       "count": 1
     },
     {
-      "id": "s415",
+      "id": "s416",
       "zh": "自动换汇补足",
       "en": "Automatic exchange rate correction",
       "ja": "自動為替レート修正",
@@ -3322,7 +3330,7 @@
       "count": 1
     },
     {
-      "id": "s416",
+      "id": "s417",
       "zh": "自动（推荐）",
       "en": "Automatic (Recommended)",
       "ja": "自動（推奨）",
@@ -3330,7 +3338,7 @@
       "count": 1
     },
     {
-      "id": "s417",
+      "id": "s418",
       "zh": "自选行情",
       "en": "Custom Market Conditions",
       "ja": "カスタム市場状況",
@@ -3338,7 +3346,7 @@
       "count": 1
     },
     {
-      "id": "s418",
+      "id": "s419",
       "zh": "至少 1 股",
       "en": "At least 1 share",
       "ja": "少なくとも1株",
@@ -3346,7 +3354,7 @@
       "count": 1
     },
     {
-      "id": "s419",
+      "id": "s420",
       "zh": "英伟达",
       "en": "NVIDIA",
       "ja": "NVIDIA",
@@ -3354,7 +3362,7 @@
       "count": 1
     },
     {
-      "id": "s420",
+      "id": "s421",
       "zh": "英镑 / 美元",
       "en": "GBP / USD",
       "ja": "ポンド / 米ドル",
@@ -3362,7 +3370,7 @@
       "count": 1
     },
     {
-      "id": "s421",
+      "id": "s422",
       "zh": "苹果",
       "en": "Apple",
       "ja": "アップル",
@@ -3370,7 +3378,7 @@
       "count": 1
     },
     {
-      "id": "s422",
+      "id": "s423",
       "zh": "融资利息",
       "en": "Financing interest",
       "ja": "融資の利息",
@@ -3378,7 +3386,7 @@
       "count": 1
     },
     {
-      "id": "s423",
+      "id": "s424",
       "zh": "融资利率上浮",
       "en": "Increase in financing interest rate",
       "ja": "融資金利の上昇",
@@ -3386,7 +3394,7 @@
       "count": 1
     },
     {
-      "id": "s424",
+      "id": "s425",
       "zh": "行情列表",
       "en": "Market List",
       "ja": "市場リスト",
@@ -3394,7 +3402,7 @@
       "count": 1
     },
     {
-      "id": "s425",
+      "id": "s426",
       "zh": "行情初始化",
       "en": "Market initialization",
       "ja": "市場の初期化",
@@ -3402,7 +3410,7 @@
       "count": 1
     },
     {
-      "id": "s426",
+      "id": "s427",
       "zh": "行情数据",
       "en": "Market data",
       "ja": "市場データ",
@@ -3410,7 +3418,7 @@
       "count": 1
     },
     {
-      "id": "s427",
+      "id": "s428",
       "zh": "行情数据源",
       "en": "Market data source",
       "ja": "市場データソース",
@@ -3418,7 +3426,7 @@
       "count": 1
     },
     {
-      "id": "s428",
+      "id": "s429",
       "zh": "触发$",
       "en": "Trigger $",
       "ja": "トリガー $",
@@ -3426,7 +3434,7 @@
       "count": 1
     },
     {
-      "id": "s429",
+      "id": "s430",
       "zh": "该周期",
       "en": "This cycle",
       "ja": "このサイクル",
@@ -3434,7 +3442,7 @@
       "count": 1
     },
     {
-      "id": "s430",
+      "id": "s431",
       "zh": "该品种还有持仓，请先平仓",
       "en": "There is still a position held for this variety; please close it first.",
       "ja": "この種類のポジションはまだ空いています。先にそれを閉じてください。",
@@ -3442,7 +3450,7 @@
       "count": 1
     },
     {
-      "id": "s431",
+      "id": "s432",
       "zh": "该品种还有挂单，请先撤单",
       "en": "There are still orders for this variety. Please cancel them first.",
       "ja": "この品種にはまだ注文があるので、先にキャンセルしてください。",
@@ -3450,7 +3458,7 @@
       "count": 1
     },
     {
-      "id": "s432",
+      "id": "s433",
       "zh": "该笔委托占用保证金占权益",
       "en": "The entrusted holding margin accounts for a portion of the equity",
       "ja": "委託された持株マージンは、資本の一部を占める",
@@ -3458,7 +3466,7 @@
       "count": 1
     },
     {
-      "id": "s433",
+      "id": "s434",
       "zh": "语言切换器",
       "en": "Language switcher",
       "ja": "言語切替",
@@ -3466,7 +3474,7 @@
       "count": 1
     },
     {
-      "id": "s434",
+      "id": "s435",
       "zh": "请填一个大于 0 的价格",
       "en": "Please enter a price greater than 0.",
       "ja": "0より大きい価格を入力してください。",
@@ -3474,7 +3482,7 @@
       "count": 1
     },
     {
-      "id": "s435",
+      "id": "s436",
       "zh": "请填写代码",
       "en": "Please fill in the code",
       "ja": "コードを入力してください",
@@ -3482,7 +3490,7 @@
       "count": 1
     },
     {
-      "id": "s436",
+      "id": "s437",
       "zh": "请检查地址与端口",
       "en": "Please check the address and port.",
       "ja": "アドレスとポートを確認してください。",
@@ -3490,7 +3498,7 @@
       "count": 1
     },
     {
-      "id": "s437",
+      "id": "s438",
       "zh": "请用 exe 运行",
       "en": "Run with exe",
       "ja": "exe形式で実行する",
@@ -3498,7 +3506,7 @@
       "count": 1
     },
     {
-      "id": "s438",
+      "id": "s439",
       "zh": "请用桌面版 exe 运行",
       "en": "Run it with the desktop version exe.",
       "ja": "デスクトップ版exeを使って実行してください。",
@@ -3506,7 +3514,7 @@
       "count": 1
     },
     {
-      "id": "s439",
+      "id": "s440",
       "zh": "请选择不同币种",
       "en": "Please select different currencies",
       "ja": "異なる通貨を選択してください",
@@ -3514,7 +3522,7 @@
       "count": 1
     },
     {
-      "id": "s440",
+      "id": "s441",
       "zh": "账户存档",
       "en": "Account archive",
       "ja": "アカウントアーカイブ",
@@ -3522,7 +3530,7 @@
       "count": 1
     },
     {
-      "id": "s441",
+      "id": "s442",
       "zh": "账户已回到安全水位",
       "en": "The account has returned to a safe level.",
       "ja": "アカウントは安全なレベルに戻りました。",
@@ -3530,7 +3538,7 @@
       "count": 1
     },
     {
-      "id": "s442",
+      "id": "s443",
       "zh": "账户权益",
       "en": "Account balance",
       "ja": "口座残高",
@@ -3538,7 +3546,7 @@
       "count": 1
     },
     {
-      "id": "s443",
+      "id": "s444",
       "zh": "账户模型",
       "en": "Account model",
       "ja": "アカウントモデル",
@@ -3546,7 +3554,7 @@
       "count": 1
     },
     {
-      "id": "s444",
+      "id": "s445",
       "zh": "费用(JPY)",
       "en": "Cost (JPY)",
       "ja": "コスト（円）",
@@ -3554,7 +3562,7 @@
       "count": 1
     },
     {
-      "id": "s445",
+      "id": "s446",
       "zh": "费用(原币)",
       "en": "Cost (original currency)",
       "ja": "コスト（元通貨）",
@@ -3562,7 +3570,7 @@
       "count": 1
     },
     {
-      "id": "s446",
+      "id": "s447",
       "zh": "费用合计",
       "en": "Total cost",
       "ja": "総費用",
@@ -3570,7 +3578,7 @@
       "count": 1
     },
     {
-      "id": "s447",
+      "id": "s448",
       "zh": "费用明细",
       "en": "Cost breakdown",
       "ja": "コストの内訳",
@@ -3578,7 +3586,7 @@
       "count": 1
     },
     {
-      "id": "s448",
+      "id": "s449",
       "zh": "资金不足，    未开仓",
       "en": "Insufficient funds, no positions opened",
       "ja": "資金不足で、ポジションを開けない",
@@ -3586,7 +3594,7 @@
       "count": 1
     },
     {
-      "id": "s449",
+      "id": "s450",
       "zh": "走势图 + 下单",
       "en": "Chart + Order Placement",
       "ja": "チャート + 注文の出荷",
@@ -3594,7 +3602,7 @@
       "count": 1
     },
     {
-      "id": "s450",
+      "id": "s451",
       "zh": "超出部分由第三方资金方提供，条款与常规信用交易不同",
       "en": "The excess amount is provided by a third-party financier, and the terms are different from those of regular credit transactions.",
       "ja": "過剰な金額は第三者金融機関から提供され、その条件は通常の信用取引の条件とは異なります。",
@@ -3602,7 +3610,7 @@
       "count": 1
     },
     {
-      "id": "s451",
+      "id": "s452",
       "zh": "距强平",
       "en": "Ju Qiangping",
       "ja": "ジュ・チャオピン",
@@ -3610,7 +3618,7 @@
       "count": 1
     },
     {
-      "id": "s452",
+      "id": "s453",
       "zh": "轮询间隔",
       "en": "Polling interval",
       "ja": "アンケートの間隔",
@@ -3618,7 +3626,7 @@
       "count": 1
     },
     {
-      "id": "s453",
+      "id": "s454",
       "zh": "软银集团",
       "en": "SoftBank Group",
       "ja": "ソフトバンクグループ",
@@ -3626,7 +3634,7 @@
       "count": 1
     },
     {
-      "id": "s454",
+      "id": "s455",
       "zh": "载入失败",
       "en": "Loading failed",
       "ja": "読み込みに失敗しました",
@@ -3634,7 +3642,7 @@
       "count": 1
     },
     {
-      "id": "s455",
+      "id": "s456",
       "zh": "追保线",
       "en": "Follow the protection line",
       "ja": "保護線に従って行動する",
@@ -3642,7 +3650,7 @@
       "count": 1
     },
     {
-      "id": "s456",
+      "id": "s457",
       "zh": "追保超时未补足",
       "en": "The claim period has expired, and the amount has not been paid.",
       "ja": "請求期間が満了し、金額が支払われていません。",
@@ -3650,7 +3658,7 @@
       "count": 1
     },
     {
-      "id": "s457",
+      "id": "s458",
       "zh": "追保通知：保证金率  %，维持要求",
       "en": "Warranty notice: Deposit rate %, maintenance requirements",
       "ja": "保証通知：預金率、メンテナンスの要件",
@@ -3658,7 +3666,7 @@
       "count": 1
     },
     {
-      "id": "s458",
+      "id": "s459",
       "zh": "追加保证金通知  剩余   h  m （模拟时间）。逾期将按亏损顺序强制平仓",
       "en": "Margin call notice. Remaining h m (simulation time). If overdue, positions will be liquidated in order of loss.",
       "ja": "マージンコールの通知です。残りのh m（シミュレーション時間）です。期限が過ぎた場合、ポジションは損失の順に清算されます。",
@@ -3666,7 +3674,7 @@
       "count": 1
     },
     {
-      "id": "s459",
+      "id": "s460",
       "zh": "部分成交",
       "en": "Some transactions completed",
       "ja": "いくつかの取引が完了した",
@@ -3674,7 +3682,7 @@
       "count": 1
     },
     {
-      "id": "s460",
+      "id": "s461",
       "zh": "重新开局",
       "en": "Start over",
       "ja": "やり直す",
@@ -3682,7 +3690,7 @@
       "count": 1
     },
     {
-      "id": "s461",
+      "id": "s462",
       "zh": "重置账户",
       "en": "Reset account",
       "ja": "アカウントをリセットする",
@@ -3690,7 +3698,7 @@
       "count": 1
     },
     {
-      "id": "s462",
+      "id": "s463",
       "zh": "钱多到很难爆仓，适合随手试单、验证策略，或者纯粹想看数字跳",
       "en": "There’s so much money that it’s difficult to lose everything. It’s suitable for testing trades, validating strategies, or just for enjoying the numbers changing.",
       "ja": "お金があまりにも多いので、全てを失うのは難しい。これは、取引を試すため、戦略を検証するため、または単に数字が変わるのを楽しむためにも適している。",
@@ -3698,7 +3706,7 @@
       "count": 1
     },
     {
-      "id": "s463",
+      "id": "s464",
       "zh": "阿里巴巴",
       "en": "Alibaba",
       "ja": "アリババ",
@@ -3706,7 +3714,7 @@
       "count": 1
     },
     {
-      "id": "s464",
+      "id": "s465",
       "zh": "限价单挂单撮合，可能部分成交",
       "en": "Limit order orders are matched for execution, and some transactions may occur.",
       "ja": "限り注文は実行に合わせてマッチングされ、いくつかの取引が発生する可能性があります。",
@@ -3714,7 +3722,7 @@
       "count": 1
     },
     {
-      "id": "s465",
+      "id": "s466",
       "zh": "限价无效",
       "en": "The limit price is invalid",
       "ja": "制限価格は無効です",
@@ -3722,7 +3730,7 @@
       "count": 1
     },
     {
-      "id": "s466",
+      "id": "s467",
       "zh": "隔夜利息",
       "en": "Overnight interest",
       "ja": "一晩で得られる利息",
@@ -3730,7 +3738,7 @@
       "count": 1
     },
     {
-      "id": "s467",
+      "id": "s468",
       "zh": "难度 · 中 · 原版体验",
       "en": "Difficulty · Medium · Original experience",
       "ja": "難易度・中程度・オリジナル体験",
@@ -3738,7 +3746,7 @@
       "count": 1
     },
     {
-      "id": "s468",
+      "id": "s469",
       "zh": "难度 · 低",
       "en": "Difficulty · Low",
       "ja": "難易度 · 低い",
@@ -3746,7 +3754,7 @@
       "count": 1
     },
     {
-      "id": "s469",
+      "id": "s470",
       "zh": "难度 · 高",
       "en": "Difficulty · High",
       "ja": "困難度・高い",
@@ -3754,7 +3762,7 @@
       "count": 1
     },
     {
-      "id": "s470",
+      "id": "s471",
       "zh": "非农就业数据",
       "en": "Non-agricultural employment data",
       "ja": "非農業雇用データ",
@@ -3762,7 +3770,7 @@
       "count": 1
     },
     {
-      "id": "s471",
+      "id": "s472",
       "zh": "顶栏",
       "en": "Top bar",
       "ja": "トップバー",
@@ -3770,7 +3778,7 @@
       "count": 1
     },
     {
-      "id": "s472",
+      "id": "s473",
       "zh": "香港股票",
       "en": "Hong Kong stocks",
       "ja": "香港株",
@@ -3778,7 +3786,7 @@
       "count": 1
     },
     {
-      "id": "s473",
+      "id": "s474",
       "zh": "香港股票（HKEX）",
       "en": "Hong Kong stocks (HKEX)",
       "ja": "香港株（HKEX）",
@@ -3786,7 +3794,7 @@
       "count": 1
     },
     {
-      "id": "s474",
+      "id": "s475",
       "zh": "默认",
       "en": "Default",
       "ja": "デフォルト",
@@ -3794,7 +3802,7 @@
       "count": 1
     },
     {
-      "id": "s475",
+      "id": "s476",
       "zh": "（无杠杆）",
       "en": "(No leverage)",
       "ja": "（レバレッジなし）",
@@ -3802,7 +3810,7 @@
       "count": 1
     },
     {
-      "id": "s476",
+      "id": "s477",
       "zh": "（模拟时间）。逾期将按亏损顺序强制平仓",
       "en": "(Simulated time). If overdue, forced liquidation will be carried out in order of loss.",
       "ja": "（シミュレーション時間）。期限が過ぎた場合、損失の順に強制的な清算が行われる。",
@@ -3810,7 +3818,7 @@
       "count": 1
     },
     {
-      "id": "s477",
+      "id": "s478",
       "zh": "（点差   JPY）",
       "en": "(Betting amount JPY)",
       "ja": "（賭け金額 日本円）",
