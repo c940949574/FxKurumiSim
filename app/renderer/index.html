@@ -189,6 +189,8 @@ button{cursor:pointer;background:none;border:none}
 .levset button:hover:not(:disabled){color:var(--txt);border-color:#3B4654;background:var(--panel3)}
 .levset button.on{background:rgba(61,139,255,.18);border-color:rgba(61,139,255,.55);color:#A8CBFF}
 .levset button.capped{opacity:.52}
+.levset button.third{border-color:rgba(243,178,60,.45);color:var(--warn)}
+.levset button.third.on{background:rgba(243,178,60,.18);border-color:var(--warn);color:var(--warn)}
 .levset button:disabled{opacity:.3;cursor:not-allowed}
 .est{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(152px,1fr));gap:7px 16px;
@@ -454,11 +456,7 @@ button{cursor:pointer;background:none;border:none}
             <div class="og" style="flex:1;min-width:130px">
               <label id="lLevTxt">杠杆</label>
               <div class="levrow" style="margin:0">
-                <div class="levset" id="levSet">
-                  <button type="button" data-lev="1">1×</button>
-                  <button type="button" data-lev="5">5×</button>
-                  <button type="button" data-lev="10">10×</button>
-                </div>
+                <div class="levset" id="levSet"></div>
                 <input id="iLev" type="range" min="1" max="3.33" step="0.01" value="1">
                 <span class="lv" id="levTxt">1.00×</span>
               </div>
@@ -770,6 +768,19 @@ const jpy2 = (amt, ccy) => amt / rateToJPY(ccy);
    多币种现金
    ------------------------------------------------------------ */
 const CONVERT_SPREAD = 0.0012;              // 结汇单边点差 0.12%
+const THIRD_FEE = 0.005;                    // 第三方杠杆：开仓一次性佣金 0.5%（名义价值）
+const THIRD_EXTRA_RATE = 0.02;              // 第三方杠杆：融资利率上浮 2%/年
+const THIRD_HARD_MAX = 50;                  // 股票第三方杠杆硬上限
+const FX_HARD_MAX = 100;                    // 外汇第三方杠杆硬上限
+const hardMaxOf = inst => inst.kind === 'fx' ? FX_HARD_MAX : inst.kind === 'fut' ? 0 : THIRD_HARD_MAX;
+const isThird = (inst, lev) => inst.kind !== 'fut' && lev > inst.levMax + 1e-9;
+// 第三方杠杆下按比例下调维持率，否则 50× 一开仓就爆
+function maintRateOf(pos) {
+  const inst = IMAP[pos.sym];
+  if (!inst || inst.kind !== 'stock') return inst ? inst.maintM : 0.2;
+  if (pos.lev > inst.levMax + 1e-9) return Math.max(0.01, 0.6 / pos.lev);
+  return inst.maintM;
+}
 const CASH_CCYS = ['JPY', 'USD', 'HKD', 'CNY'];
 
 const cashOf = c => Number(state.cash[c]) || 0;
@@ -1350,7 +1361,7 @@ function maintOf(pos) {
   const inst = IMAP[pos.sym], q = quotes[pos.sym];
   if (inst.kind === 'fut') return pos.qty * cvt(inst.mm, inst.ccy);
   if (inst.kind === 'fx') return (pos.qty * inst.units * rateToJPY(inst.base)) / inst.levMax;
-  return pos.qty * q.px * rateToJPY(inst.ccy) * inst.maintM;
+  return pos.qty * q.px * rateToJPY(inst.ccy) * maintRateOf(pos);
 }
 // 浮动盈亏（日元）
 function pnlOf(pos) {
@@ -1384,8 +1395,9 @@ function liqPrice(inst, dir, entry, lev) {
     const a = 1 - 1 / lev, b = 1 - 1 / inst.levMax;
     return dir > 0 ? entry * a / b : entry * (1 + 1 / lev) / (1 + 1 / inst.levMax);
   }
-  return dir > 0 ? entry * (1 - 1 / lev) / (1 - inst.maintM)
-                 : entry * (1 + 1 / lev) / (1 + inst.maintM);
+  const mr = isThird(inst, lev) ? Math.max(0.01, 0.6 / lev) : inst.maintM;
+  return dir > 0 ? entry * (1 - 1 / lev) / (1 - mr)
+                 : entry * (1 + 1 / lev) / (1 + mr);
 }
 
 function account(excludeOrderId) {
@@ -1450,6 +1462,13 @@ function openPos(inst, dir, qty, px, lev) {
   if (!(qty > 0) || !Number.isFinite(px) || px <= 0) return null;
   const margin = marginOf(inst, qty, px, lev);
   const fee = calcFee(inst, dir, qty, px);
+  let thirdFee = 0;
+  if (isThird(inst, lev)) {
+    thirdFee = qty2notional(inst, qty, px) * THIRD_FEE;   // 原币
+    fee.items.push({ k: `第三方杠杆佣金 ${num(THIRD_FEE * 100, 1)}%`, v: thirdFee });
+    fee.total += thirdFee;
+    fee.jpy = cvt(fee.total, inst.ccy);
+  }
   moveCash(inst.ccy, -fee.total);
   state.feeTotal += fee.jpy;
   const pos = {
@@ -1755,7 +1774,8 @@ function dailyRollover() {
     if (inst.kind === 'stock') {
       const notional = notionalOf(p);
       let cost = 0;
-      if (p.dir > 0) cost = notional * (1 - 1 / p.lev) * inst.longRate / 365 * mult;
+      const extraRate = p.lev > inst.levMax + 1e-9 ? THIRD_EXTRA_RATE : 0;
+      if (p.dir > 0) cost = notional * (1 - 1 / p.lev) * (inst.longRate + extraRate) / 365 * mult;
       else cost = notional * inst.shortRate / 365 * mult;
       moveCash('JPY', -cost); state.swapTotal += cost; fee += cost;
       p.swapAcc += cost;
@@ -2036,15 +2056,40 @@ function applyLevPreset(v) {
     toast('期货不设杠杆档位', '杠杆由每手保证金固定决定，不能单独调整', 'warn');
     return;
   }
-  const cap = inst.levMax;
-  const target = Math.min(v, cap);
-  ui.lev = target;
-  $('#iLev').value = target;
-  syncLevUI(); renderEst();
-  if (v > cap + 1e-9) {
-    toast(`已取该市场上限 ${num(cap, 2)}×`,
-      `${MARKETS[inst.mkt].label}市场杠杆上限 ${num(cap, 2)}×（保证金率 ${num(100 / cap, 1)}%）`, 'warn');
+  const hard = hardMaxOf(inst);
+  if (v > hard + 1e-9) {
+    toast('超出硬上限', `最高 ${hard}×`, 'warn');
+    return;
   }
+  if (isThird(inst, v)) { askThirdParty(inst, v); return; }
+  ui.lev = v;
+  $('#iLev').value = v;
+  syncLevUI(); renderEst();
+}
+
+function askThirdParty(inst, lev) {
+  const notional = qty2notional(inst, currentQty(), quotes[inst.sym] ? quotes[inst.sym].px : 0);
+  $('#confirmBody').innerHTML = `
+    <p style="font-size:12px;color:var(--mut);line-height:1.8;margin-bottom:10px">
+      <b style="color:var(--warn)">第三方杠杆 · 超出监管上限</b><br>
+      ${MARKETS[inst.mkt].label}市场常规上限为 <b>${num(inst.levMax, 2)}×</b>，你将使用 <b style="color:var(--dgr)">${lev}×</b>。
+      超出部分由第三方资金方提供，条款与常规信用交易不同。</p>
+    <div class="kv" style="margin-bottom:14px">
+      <span>开仓一次性佣金</span><b>${num(THIRD_FEE * 100, 2)}%（名义价值）</b>
+      <span>融资利率上浮</span><b>+${num(THIRD_EXTRA_RATE * 100, 1)}% / 年</b>
+      <span>维持保证金率</span><b>${num(Math.max(0.01, 0.6 / lev) * 100, 2)}%</b>
+      <span>强平风险</span><b style="color:var(--dngr)">显著高于常规杠杆</b>
+    </div>
+    <button class="btn primary" style="width:100%;padding:8px" id="thirdGo">我已了解风险，使用 ${lev}×</button>`;
+  openModal('maskConfirm');
+  $('#thirdGo').onclick = () => {
+    closeModal('maskConfirm');
+    ui.lev = lev;
+    $('#iLev').value = lev;
+    syncLevUI(); renderEst();
+    toast('已启用第三方杠杆', `${lev}× · 开仓佣金 ${num(THIRD_FEE * 100, 2)}%，融资利率 +${num(THIRD_EXTRA_RATE * 100, 1)}%/年`, 'warn');
+    logLine('risk', `启用第三方杠杆 ${inst.name} ${lev}×（常规上限 ${num(inst.levMax, 2)}×）`);
+  };
 }
 
 function syncLevUI() {
@@ -2058,18 +2103,28 @@ function syncLevUI() {
     $('#lLevTxt').textContent = '杠杆（由保证金决定）';
   } else {
     wrap.style.opacity = 1; slider.disabled = false;
-    slider.max = inst.levMax; slider.min = 1;
+    slider.max = hardMaxOf(inst); slider.min = 1;
     slider.value = ui.lev;
     $('#levTxt').textContent = num(ui.lev, ui.lev < 10 ? 2 : 1) + '×';
-    $('#lLevTxt').textContent = '杠杆（保证金率 ' + num(100 / ui.lev, 1) + '%）';
+    $('#lLevTxt').textContent = isThird(inst, ui.lev)
+      ? `杠杆 ${ui.lev}× · 第三方（保证金率 ${num(100 / ui.lev, 1)}%）`
+      : '杠杆（保证金率 ' + num(100 / ui.lev, 1) + '%）';
+  }
+  const presets = inst.kind === 'fx' ? [1, 5, 10, 50, 100] : [1, 5, 10, 50];
+  const set = $('#levSet');
+  const want = inst.kind === 'fut' ? [] : presets;
+  if (set.dataset.sig !== want.join(',')) {
+    set.dataset.sig = want.join(',');
+    set.innerHTML = want.map(v => `<button type="button" data-lev="${v}">${v}×</button>`).join('');
+    $$('#levSet button').forEach(b => b.onclick = () => applyLevPreset(Number(b.dataset.lev)));
   }
   $$('#levSet button').forEach(b => {
     const v = Number(b.dataset.lev);
-    b.disabled = inst.kind === 'fut';
+    b.disabled = inst.kind === 'fut' || v > hardMaxOf(inst) + 1e-9;
     b.classList.toggle('on', inst.kind !== 'fut' && Math.abs(ui.lev - v) < 0.01);
-    b.classList.toggle('capped', inst.kind !== 'fut' && v > inst.levMax + 1e-9);
+    b.classList.toggle('third', isThird(inst, v));
     b.title = inst.kind === 'fut' ? '期货杠杆由每手保证金决定'
-      : v > inst.levMax + 1e-9 ? `超过${MARKETS[inst.mkt].label}市场上限 ${num(inst.levMax, 2)}×，点击将取上限`
+      : v > inst.levMax + 1e-9 ? `第三方杠杆 ${v}×（超上限，需确认并收 ${num(THIRD_FEE * 100, 2)}% 佣金）`
       : `设为 ${v}×（保证金率 ${num(100 / v, 1)}%）`;
   });
   $('#lQty').textContent = inst.kind === 'stock' ? `数量（每手 ${inst.lot} 股）`
