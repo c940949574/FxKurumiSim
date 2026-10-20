@@ -431,6 +431,11 @@ window.I18N_DICT = {
 "ja": "各ロット",
 "ko": "각 묶음"
 },
+"爆仓": {
+"en": "Blown up",
+"ja": "強制決済",
+"ko": "강제 청산"
+},
 "现金余额": {
 "en": "Cash balance",
 "ja": "現金残高",
@@ -686,11 +691,6 @@ window.I18N_DICT = {
 "ja": "12. リスク管理：請求の回収と強制清算",
 "ko": "12. 위험 관리: 손해배상 및 강제 청산"
 },
-"13. 每交易日结算：盯市 / 融资利息 / 隔夜利息": {
-"en": "13. Settlement every trading day: market value adjustment / financing interest / overnight interest",
-"ja": "13. 毎日取引日に決済：市場価値の調整／融資利息／一晩の利息",
-"ko": "13. 매일 거래일마다 결제: 시장 가치 조정 / 금융 이자 / 야간 이자"
-},
 "16. 图表": {
 "en": "16. Chart",
 "ja": "16. チャート",
@@ -775,6 +775,11 @@ window.I18N_DICT = {
 "en": "FRC tax rate: 0.00015%",
 "ja": "FRC税率：0.00015％",
 "ko": "FRC 세율: 0.00015%"
+},
+"JPY ·  本金": {
+"en": "JPY · Principal amount",
+"ja": "JPY · 元本",
+"ko": "JPY · 원금"
 },
 "LULD 熔断": {
 "en": "LULD fuse blow",
@@ -1461,6 +1466,11 @@ window.I18N_DICT = {
 "ja": "総リターン率",
 "ko": "총수익률"
 },
+"总权益": {
+"en": "Equity",
+"ja": "総資産",
+"ko": "총자산"
+},
 "恒生指数期货": {
 "en": "Hengseng Index futures",
 "ja": "恒盛指数先物",
@@ -1715,6 +1725,11 @@ window.I18N_DICT = {
 "en": "Local proxy (HTTP / SOCKS5)",
 "ja": "ローカルプロキシ（HTTP / SOCKS5）",
 "ko": "로컬 프록시 (HTTP / SOCKS5)"
+},
+"本金": {
+"en": "Principal",
+"ja": "元手",
+"ko": "원금"
 },
 "权益低于维持保证金要求的 125% 时发出追加保证金通知，倒计时 24 小时（模拟时间）": {
 "en": "A margin call notice is issued when equity drops below 125% of the maintenance margin requirement, starting a 24-hour countdown (simulated time).",
@@ -1991,6 +2006,11 @@ window.I18N_DICT = {
 "ja": "選択した品種を削除する",
 "ko": "선택된 품종을 제거하세요"
 },
+"空中飞人": {
+"en": "Flying man",
+"ja": "飛行男",
+"ko": "비행하는 남자"
+},
 "空头对称。杠杆越高，强平价越贴近建仓价": {
 "en": "Bullish symmetry. The higher the leverage, the closer the strong parity is to the entry price.",
 "ja": "好意的な対称性。レバレッジが高いほど、強いパラレル性は入札価格に近くなる。",
@@ -2176,6 +2196,11 @@ window.I18N_DICT = {
 "ja": "トリガー $",
 "ko": "트리거 $"
 },
+"认输": {
+"en": "I give up",
+"ja": "降参",
+"ko": "항복"
+},
 "该周期": {
 "en": "This cycle",
 "ja": "このサイクル",
@@ -2240,6 +2265,11 @@ window.I18N_DICT = {
 "en": "The account has returned to a safe level.",
 "ja": "アカウントは安全なレベルに戻りました。",
 "ko": "계정이 안전한 수준으로 회복되었습니다."
+},
+"账户已资不抵债，重置账户可重开一局": {
+"en": "The account is insolvent. Reset the account to start over.",
+"ja": "口座は債務超過です。口座をリセットすると最初からやり直せます。",
+"ko": "계정이 채무 초과 상태입니다. 계정을 재설정하면 새로 시작할 수 있습니다."
 },
 "账户权益": {
 "en": "Account balance",
@@ -2480,5 +2510,10 @@ window.I18N_DICT = {
 "en": "C",
 "ja": "終値",
 "ko": "종가"
+},
+"空中飞人！": {
+"en": "Flying trapeze!",
+"ja": "空中ブランコ！",
+"ko": "공중 그네!"
 }
 };

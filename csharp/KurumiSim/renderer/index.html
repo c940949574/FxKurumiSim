@@ -211,6 +211,9 @@ button{cursor:pointer;background:none;border:none}
 .submit.sell{background:var(--dn);color:#fff}
 .submit.sell:hover{filter:brightness(1.08)}
 .submit.cant,.submit:disabled{opacity:.5;cursor:not-allowed;filter:grayscale(.45)}
+.flyword{font-size:34px;font-weight:800;letter-spacing:3px;color:#F0553F;text-shadow:0 0 22px rgba(240,85,63,.5);animation:flyIn .45s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes flyIn{from{transform:translateY(-18px) scale(.86);opacity:0}to{transform:none;opacity:1}}
+.flysub{margin-top:12px;font-size:12px;color:var(--mut);line-height:1.9}
 .submit.cant:hover{filter:grayscale(.45)}
 .est b.bad{color:var(--dn)}
 .est div.overrow{white-space:normal;align-items:flex-start;font-size:10px;color:#E8877A;padding-top:2px}
@@ -603,6 +606,19 @@ button{cursor:pointer;background:none;border:none}
         <input type="number" id="addPx" value="100" min="0.0001" step="any"></div>
       <div class="hint" id="addHint" style="margin:10px 0 4px;line-height:1.7">—</div>
       <button class="btn primary" style="width:100%;padding:8px;margin-top:8px" id="addGo">添加到自选</button>
+    </div>
+  </div>
+</div>
+<div class="mask" id="maskFly">
+  <div class="modal" style="width:min(420px,100%)">
+    <div class="modal-h"><b>爆仓</b><button class="mclose" data-close title="关闭" aria-label="关闭">×</button></div>
+    <div class="modal-b" style="text-align:center;padding:30px 20px 24px">
+      <div class="flyword">空中飞人！</div>
+      <div class="flysub">
+        <div><span>总权益</span> <b id="flyEq">—</b> JPY · <span>本金</span> <b id="flySrc">—</b> JPY</div>
+        <div>账户已资不抵债，重置账户可重开一局</div>
+      </div>
+      <button class="btn primary" style="width:100%;padding:9px;margin-top:20px" data-close>认输</button>
     </div>
   </div>
 </div>
@@ -1837,9 +1853,20 @@ function liquidate(reason, target = 1.06) {
   }
   state.liquidationCount++;
   state.marginCall = null;
-  toast('强制平仓', `${reason}，已平掉 ${n} 个持仓，权益 ${fmtN(account().equity, 0)} JPY`, 'err');
-  logLine('risk', `强制平仓（${reason}）：平仓 ${n} 个，权益 ${fmtN(A0.equity, 0)} → ${fmtN(account().equity, 0)}`);
+  const eqNow = account().equity;
+  toast('强制平仓', `${reason}，已平掉 ${n} 个持仓，权益 ${fmtN(eqNow, 0)} JPY`, 'err');
+  logLine('risk', `强制平仓（${reason}）：平仓 ${n} 个，权益 ${fmtN(A0.equity, 0)} → ${fmtN(eqNow, 0)}`);
+  if (eqNow < 0) showAirborne(eqNow);        // 资不抵债：空中飞人
   return n;
+}
+
+// 爆仓且总权益为负 → 「空中飞人！」
+function showAirborne(equity) {
+  const a = $('#flyEq'), b = $('#flySrc');
+  if (a) a.textContent = fmtN(equity, 0);
+  if (b) b.textContent = fmtN(state.initEquity, 0);
+  openModal('maskFly');
+  if (window.applyI18n) window.applyI18n($('#maskFly'));
 }
 
 /* ============================================================

@@ -155,6 +155,16 @@ CORRECTIONS = {
     "高":     {"en": "H", "ja": "高値", "ko": "고가"},
     "低":     {"en": "L", "ja": "安値", "ko": "저가"},
     "收":     {"en": "C", "ja": "終値", "ko": "종가"},
+    # 爆仓弹窗
+    "空中飞人！": {"en": "Flying trapeze!", "ja": "空中ブランコ！", "ko": "공중 그네!"},
+    "爆仓":   {"en": "Blown up", "ja": "強制決済", "ko": "강제 청산"},
+    "认输":   {"en": "I give up", "ja": "降参", "ko": "항복"},
+    "总权益": {"en": "Equity", "ja": "総資産", "ko": "총자산"},
+    "本金":   {"en": "Principal", "ja": "元手", "ko": "원금"},
+    "账户已资不抵债，重置账户可重开一局": {
+        "en": "The account is insolvent. Reset the account to start over.",
+        "ja": "口座は債務超過です。口座をリセットすると最初からやり直せます。",
+        "ko": "계정이 채무 초과 상태입니다. 계정을 재설정하면 새로 시작할 수 있습니다."},
 }
 for z, v in CORRECTIONS.items():
     if z not in merged:
