@@ -36,6 +36,9 @@
     return txt;
   }
 
+  // 画布等非 DOM 场景用：把一段中文按当前语言直译（applyI18n 只扫 DOM，管不到 canvas）
+  window.i18nText = function (s) { return translateText(String(s), window.I18N_LANG || 'zh'); };
+
   function skipEl(el) {
     return el.nodeType === 1 && (el.tagName === 'SCRIPT' || el.tagName === 'STYLE' || el.hasAttribute('data-i18n-skip'));
   }

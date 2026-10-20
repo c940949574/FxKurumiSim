@@ -150,7 +150,7 @@ button{cursor:pointer;background:none;border:none}
 .tfset button{padding:2px 6px;border-radius:4px;font-size:10.5px;font-family:var(--mono);color:var(--dim);transition:.14s}
 .tfset button:hover{color:var(--txt)}
 .tfset button.on{background:var(--panel3);color:#A8CBFF;box-shadow:0 1px 2px rgba(0,0,0,.3)}
-#chart{flex:1;min-height:150px;width:100%;display:block}
+#chart{flex:1;min-height:150px;width:100%;display:block;cursor:crosshair;touch-action:none}
 
 /* 下单区 */
 .order{border-top:1px solid var(--line);background:var(--panel2);padding:10px 14px 12px;flex:0 0 auto}
@@ -1932,6 +1932,7 @@ function newsTick() {
 /* ============================================================
    16. 图表
    ============================================================ */
+let chartHover = null;          // 十字光标位置（画布内 CSS 像素），null = 未悬停
 function fitCanvas(cv) {
   const r = cv.getBoundingClientRect();
   const dpr = window.devicePixelRatio || 1;
@@ -1945,6 +1946,14 @@ function pxFmt(inst, v) {
   if (inst.kind === 'fx') return num(v, inst.pip < 0.001 ? 5 : 3);
   if (inst.kind === 'fut') return num(v, inst.tick < 0.1 ? 3 : 2);
   return num(v, v < 10 ? 3 : 2);
+}
+
+const TX = s => (window.i18nText ? window.i18nText(s) : s);   // 画布文字走字典（DOM 扫描管不到 canvas）
+function barTimeText(t) {
+  const d = new Date(t), p = n => String(n).padStart(2, '0');
+  const intraday = /^m(1|5|10)$/.test(ui.tf || 'm1');
+  const md = `${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+  return intraday ? `${md} ${p(d.getHours())}:${p(d.getMinutes())}` : `${d.getFullYear()}-${md}`;
 }
 
 function drawChart() {
@@ -2034,6 +2043,50 @@ function drawChart() {
   const lastC = bars[bars.length - 1].c, ly = clamp(y(lastC), padT + 8, h - padB - 8);
   ctx.fillStyle = '#3D8BFF'; ctx.fillRect(w - padR, ly - 8, padR - 2, 16);
   ctx.fillStyle = '#fff'; ctx.fillText(pxFmt(inst, lastC), w - padR + 5, ly + 4);
+
+  // ---------- 十字光标 ----------
+  if (chartHover && chartHover.mx >= padL && chartHover.mx <= w - padR &&
+      chartHover.my >= padT && chartHover.my <= h - padB) {
+    const i = clamp(Math.floor((chartHover.mx - x0) / bw), 0, bars.length - 1);
+    const b = bars[i];
+    const cx = x0 + (i + 0.5) * bw;
+    const my = clamp(chartHover.my, padT, h - padB);
+    ctx.save();
+    ctx.strokeStyle = 'rgba(150,168,190,.42)'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+    ctx.beginPath(); ctx.moveTo(cx, padT); ctx.lineTo(cx, h - padB); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(padL, my); ctx.lineTo(w - padR, my); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // 右侧：光标所在价位的价格
+    const pAt = clamp(hi - (my - padT) / (h - padT - padB) * range, lo, hi);
+    ctx.font = '10px ui-monospace,monospace'; ctx.textAlign = 'left';
+    ctx.fillStyle = '#2E3946'; ctx.fillRect(w - padR, my - 8, padR - 2, 16);
+    ctx.fillStyle = '#E6EDF5'; ctx.fillText(pxFmt(inst, pAt), w - padR + 5, my + 4);
+
+    // 底部：该根 K 线的时间
+    const tTxt = barTimeText(b.t);
+    ctx.textAlign = 'center';
+    const tw2 = ctx.measureText(tTxt).width;
+    ctx.fillStyle = '#2E3946';
+    ctx.fillRect(cx - tw2 / 2 - 6, h - padB + 2, tw2 + 12, 14);
+    ctx.fillStyle = '#E6EDF5'; ctx.fillText(tTxt, cx, h - padB + 12);
+
+    // 左上：开高低收 + 涨跌幅
+    const pct = b.o ? (b.c - b.o) / b.o * 100 : 0;
+    const seg1 = tTxt + '  ';
+    const seg2 = `${TX('开')} ${pxFmt(inst, b.o)}  ${TX('高')} ${pxFmt(inst, b.h)}  ` +
+                 `${TX('低')} ${pxFmt(inst, b.l)}  ${TX('收')} ${pxFmt(inst, b.c)}  `;
+    const seg3 = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
+    ctx.font = '11px ui-monospace,monospace'; ctx.textAlign = 'left';
+    const bx = padL + 6, by = padT + 13;
+    const w1 = ctx.measureText(seg1).width, w2 = ctx.measureText(seg2).width, w3 = ctx.measureText(seg3).width;
+    ctx.fillStyle = 'rgba(8,10,14,.92)';
+    ctx.fillRect(bx - 5, by - 11, w1 + w2 + w3 + 14, 16);
+    ctx.fillStyle = '#7C8A9A'; ctx.fillText(seg1, bx, by);
+    ctx.fillStyle = '#E6EDF5'; ctx.fillText(seg2, bx + w1, by);
+    ctx.fillStyle = b.c >= b.o ? '#F0553F' : '#12B57E'; ctx.fillText(seg3, bx + w1 + w2, by);
+    ctx.restore();
+  }
 }
 
 function drawEquity() {
@@ -2804,6 +2857,16 @@ function bind() {
   // 导出
   $('#btnExport').onclick = exportCSV;
   $('#btnSettings').onclick = () => { buildSettings(); openModal('maskSettings'); };
+  // K 线十字光标：移动即重绘，移出即清除
+  const cvChart = $('#chart');
+  if (cvChart) {
+    cvChart.addEventListener('mousemove', e => {
+      const r = cvChart.getBoundingClientRect();
+      chartHover = { mx: e.clientX - r.left, my: e.clientY - r.top };
+      drawChart();
+    });
+    cvChart.addEventListener('mouseleave', () => { chartHover = null; drawChart(); });
+  }
   $('#btnHelp').onclick = () => { buildHelp(); openModal('maskHelp'); };
   $$('[data-close]').forEach(b => b.onclick = () => {
     const m = b.closest('.mask'); if (m) m.classList.remove('on');
