@@ -1,56 +1,14 @@
-# 久留美模拟器 · FxKurumiSim
+# FxKurumiSim · 久留美模拟器
 
-日股 / 美股 / 港股 / 期货 / 外汇 的投资模拟终端。C# + WebView2 单文件，约 3.3MB，双击即用。
+A trading simulator for Japanese / US / Hong Kong stocks, futures and FX.
+C# + WebView2 single-file build, ~3.3 MB, no installer required.
 
-> A trading simulator for Japanese / US / Hong Kong stocks, futures and FX.
-> C# + WebView2 single-file build, ~3.3 MB, no installer required.
-> [English version below ↓](#english)
+日股 / 美股 / 港股 / 期货 / 外汇的投资模拟终端。C# + WebView2 单文件，约 3.3MB，双击即用。
 
----
-
-## 中文
-
-### 特性
-
-- 四板块：股票（日 / 美 / 港）、期货、外汇、组合绩效
-- 多币种现金（CNY / JPY / USD / HKD），按实时汇率双向结汇，0.12% 点差
-- 三个开局：一般韭菜（20 万 CNY）/ 久留美（1000 万 JPY）/ 神豪（1 亿 USD）
-- 杠杆档位 1× / 5× / 10× / 50×（外汇另加 100×）
-- **第三方杠杆**：可突破监管上限（日股 3.33×、美股 2×、港股 2.5×）最高到 50×（外汇 100×），
-  需二次确认，收 0.5% 开仓佣金、融资利率上浮 2%/年，维持保证金率按 `0.6 / 杠杆` 下调
-- 保仓机制：追保倒计时、强平引擎、期货逐日盯市、美股 PDT
-- K 线周期：1M / 5M / 10M / 日 / 周 / 月 / 季 / 年
-- 内嵌 23 个品种历史日线（2000 年起），首次启动自动解包到本地
-
-### 构建
-
-```
-cd csharp/KurumiSim
-dotnet publish -c Release -r win-x64 --self-contained false
-```
-
-产物：`bin\Release\net8.0-windows\win-x64\publish\久留美模拟器.exe`
-
-### 数据位置
-
-| 路径 | 作用 |
-|---|---|
-| `文档\KurumiSim\save.json` | 存档（持仓、资金、自选） |
-| `文档\KurumiSim\klines\` | 历史日线缓存，首次启动自动从 exe 内解包 |
-| `%LOCALAPPDATA%\KurumiSim\webview` | WebView2 缓存，可随时删除 |
-
-### 行情与代理
-
-国内可直连：腾讯 `qt.gtimg.cn`（日 / 美 / 港快照）、新浪 `hq.sinajs.cn`（外汇）。
-Yahoo（历史日线）国内不通，默认走 `http://127.0.0.1:6789` 代理；无代理时自动回退到本地缓存与国内源。
-
-### 环境要求
-
-Windows 10 1803+ / Windows 11，需系统自带 .NET 8 运行时与 WebView2 运行时。
+[English](#english) · [中文](#chinese)
 
 ---
 
-<a id="english"></a>
 ## English
 
 ### Features
@@ -92,6 +50,51 @@ and falls back to local cache / domestic sources when unavailable.
 ### Requirements
 
 Windows 10 1803+ / Windows 11 with the .NET 8 runtime and WebView2 runtime (both ship with the OS).
+
+---
+
+<a id="chinese"></a>
+## 中文
+
+### 特性
+
+- 四板块：股票（日 / 美 / 港）、期货、外汇、组合绩效
+- 多币种现金（CNY / JPY / USD / HKD），按实时汇率双向结汇，0.12% 点差
+- 三个开局：一般韭菜（20 万 CNY）/ 久留美（1000 万 JPY）/ 神豪（1 亿 USD）
+- 杠杆档位 1× / 5× / 10× / 50×（外汇另加 100×）
+- **第三方杠杆**：可突破监管上限（日股 3.33×、美股 2×、港股 2.5×）最高到 50×（外汇 100×），
+  需二次确认，收 0.5% 开仓佣金、融资利率上浮 2%/年，维持保证金率按 `0.6 / 杠杆` 下调
+- 保仓机制：追保倒计时、强平引擎、期货逐日盯市、美股 PDT
+- K 线周期：1M / 5M / 10M / 日 / 周 / 月 / 季 / 年
+- 内嵌 23 个品种历史日线（2000 年起），首次启动自动解包到本地
+
+### 构建
+
+```
+cd csharp/KurumiSim
+dotnet publish -c Release -r win-x64 --self-contained false
+```
+
+产物：`bin\Release\net8.0-windows\win-x64\publish\久留美模拟器.exe`
+
+### 数据位置
+
+| 路径 | 作用 |
+|---|---|
+| `文档\KurumiSim\save.json` | 存档（持仓、资金、自选） |
+| `文档\KurumiSim\klines\` | 历史日线缓存，首次启动自动从 exe 内解包 |
+| `%LOCALAPPDATA%\KurumiSim\webview` | WebView2 缓存，可随时删除 |
+
+### 行情与代理
+
+国内可直连：腾讯 `qt.gtimg.cn`（日 / 美 / 港快照）、新浪 `hq.sinajs.cn`（外汇）。
+Yahoo（历史日线）国内不通，默认走 `http://127.0.0.1:6789` 代理；无代理时自动回退到本地缓存与国内源。
+
+### 环境要求
+
+Windows 10 1803+ / Windows 11，需系统自带 .NET 8 运行时与 WebView2 运行时。
+
+---
 
 ---
 
