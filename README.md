@@ -1,9 +1,9 @@
 # FxKurumiSim · 久留美模拟器
 
 A trading simulator for Japanese / US / Hong Kong stocks, futures and FX.
-C# + WebView2 single-file build, ~3.3 MB, no installer required.
+**C# + WebView2, one ultra-small single-file EXE (~3.5 MB)** — no installer, no Node/Electron runtime, just double-click to run.
 
-日股 / 美股 / 港股 / 期货 / 外汇的投资模拟终端。C# + WebView2 单文件，约 3.3MB，双击即用。
+日股 / 美股 / 港股 / 期货 / 外汇的投资模拟终端。**C# + WebView2，一个超小单文件 EXE（约 3.5MB）**——无需安装、不依赖 Node/Electron，双击即用。
 
 [English](#english) · [中文](#chinese)
 
@@ -23,6 +23,8 @@ C# + WebView2 single-file build, ~3.3 MB, no installer required.
 - Margin protection: margin call countdown, forced liquidation, daily mark-to-market on futures, US PDT rule
 - Chart intervals: 1M / 5M / 10M / 1D / 1W / 1M / 1Q / 1Y
 - 23 instruments' daily history (from 2000) embedded; extracted on first launch
+- **Ultra-small single-file**: one ~3.5 MB `久留美模拟器.exe` is the whole app — the UI, 23 daily datasets and the i18n dictionary are all packed inside. Extract-and-run, no install, no Node/Electron dependency.
+- **Four languages**: 简体中文 / English / 日本語 / 한국어, switch instantly from the toolbar (all UI text is bundled in the single EXE)
 
 ### Build
 
@@ -67,6 +69,8 @@ Windows 10 1803+ / Windows 11 with the .NET 8 runtime and WebView2 runtime (both
 - 保仓机制：追保倒计时、强平引擎、期货逐日盯市、美股 PDT
 - K 线周期：1M / 5M / 10M / 日 / 周 / 月 / 季 / 年
 - 内嵌 23 个品种历史日线（2000 年起），首次启动自动解包到本地
+- **超小单文件**：单个约 3.5MB 的 `久留美模拟器.exe` 即全部——UI、23 套历史日线、四语字典全部内嵌，免安装解压即用，不依赖 Node/Electron
+- **四语言**：简体中文 / English / 日本語 / 한국어，顶栏一键切换（全部文案随单文件 EXE 一并发包）
 
 ### 构建
 
