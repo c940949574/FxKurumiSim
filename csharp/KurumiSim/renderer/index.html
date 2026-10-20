@@ -210,6 +210,11 @@ button{cursor:pointer;background:none;border:none}
 .submit.buy:hover{filter:brightness(1.08)}
 .submit.sell{background:var(--dn);color:#fff}
 .submit.sell:hover{filter:brightness(1.08)}
+.submit.cant,.submit:disabled{opacity:.5;cursor:not-allowed;filter:grayscale(.45)}
+.submit.cant:hover{filter:grayscale(.45)}
+.est b.bad{color:var(--dn)}
+.est div.overrow{white-space:normal;align-items:flex-start;font-size:10px;color:#E8877A;padding-top:2px}
+.est div.overrow a{color:#F0553F;text-decoration:underline;cursor:pointer}
 .submit:disabled{background:#2A323D;color:var(--dim);cursor:not-allowed}
 
 /* 右侧 */
@@ -2345,13 +2350,34 @@ function renderEst() {
     ['逐仓参考强平价', lp > 0 ? pxFmt(inst, lp) : '—（无杠杆）'],
   ];
   if (tickVal !== null) items.push([inst.kind === 'fut' ? '每点价值' : '每 pip 价值', fmtN(tickVal, 0) + ' JPY']);
+  // 资金可承受上限：按单手（股票按 1 股）的保证金 + 费用折算，避免敲到提交才被打回
+  const A = account();
+  const unitMargin = marginOf(inst, 1, px, lev);
+  const unitFee = Math.max(0, calcFee(inst, ui.side, 1, px).jpy);
+  const step = inst.kind === 'stock' ? inst.lot : inst.kind === 'fx' ? 0.1 : 1;
+  const rawMax = unitMargin + unitFee > 0 ? A.avail / (unitMargin + unitFee) : 0;
+  const maxQty = Math.max(0, Math.round(Math.floor(rawMax / step) * step * 100) / 100);
+  const over = qty > maxQty + 1e-9;
+  items.push(['最多可开', maxQty > 0 ? fmtQty(inst, maxQty) : '资金不足']);
   $('#estBox').innerHTML = items.map(([a, b], i) =>
-    `<div><span>${a}</span><b class="${i === 2 ? 'hl' : ''}">${b}</b></div>`).join('')
+    `<div><span>${a}</span><b class="${i === 2 ? 'hl' : ''}${a === '最多可开' && over ? ' bad' : ''}">${b}</b></div>`).join('')
     + `<div class="feedetail" style="grid-column:1/-1"><span>费用明细</span><b>${
-      fee.items.map(x => `${x.k} ${num(x.v, 2)}`).join(' · ')}</b></div>`;
+      fee.items.map(x => `${x.k} ${num(x.v, 2)}`).join(' · ')}</b></div>`
+    + (over
+      ? `<div class="overrow" style="grid-column:1/-1">超出可用资金，<a href="#" id="useMax">改为最多 ${fmtQty(inst, maxQty)}</a></div>`
+      : '');
+  const um = $('#useMax');
+  if (um) um.onclick = e => {
+    e.preventDefault();
+    $('#iQty').value = inst.kind === 'fx' ? Math.round(maxQty * 10) / 10 : maxQty;
+    renderEst();
+  };
   const st = $('#btnSubmit');
-  st.className = 'submit ' + (ui.side > 0 ? 'buy' : 'sell');
-  st.textContent = (ui.side > 0 ? '买入 / 做多 ' : '卖出 / 做空 ') + inst.name + ' ' + fmtQty(inst, qty);
+  st.className = 'submit ' + (ui.side > 0 ? 'buy' : 'sell') + (over ? ' cant' : '');
+  st.disabled = over;
+  st.textContent = over
+    ? `资金不足 · 最多 ${fmtQty(inst, maxQty)}`
+    : (ui.side > 0 ? '买入 / 做多 ' : '卖出 / 做空 ') + inst.name + ' ' + fmtQty(inst, qty);
 }
 
 function currentQty() {
