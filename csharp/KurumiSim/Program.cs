@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Text.Json;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
@@ -91,18 +92,53 @@ internal sealed class MainForm : Form
     }
 
     private static readonly HttpClient Direct = new(new HttpClientHandler { UseProxy = false }) { Timeout = TimeSpan.FromSeconds(20) };
-    private static readonly HttpClient Proxied = new(new HttpClientHandler
-    {
-        Proxy = new WebProxy("http://127.0.0.1:6789"),
-        UseProxy = true
-    })
-    { Timeout = TimeSpan.FromSeconds(40) };
+
+    // 本地代理（设置界面可填端口，运行中即时生效）：null = 直连
+    private static volatile HttpClient _proxied;
+    private static string _proxySpec = "";
+    private static readonly object ProxyLock = new();
 
     static MainForm()
     {
         Direct.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", UA);
-        Proxied.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", UA);
     }
+
+    /// <summary>归一化代理串：6789 / 127.0.0.1:6789 / http://host:port / socks5://host:port。
+    /// 返回空串表示「不合法或未填」，调用方按直连处理。</summary>
+    public static string NormalizeProxy(string raw)
+    {
+        var s = (raw ?? "").Trim();
+        if (s.Length == 0) return "";
+        if (Regex.IsMatch(s, @"^\d{2,5}$")) s = "127.0.0.1:" + s;                    // 只填端口
+        if (!Regex.IsMatch(s, @"^[a-zA-Z][\w+.\-]*://")) s = "http://" + s;           // 缺协议
+        if (!Uri.TryCreate(s, UriKind.Absolute, out var u)) return "";
+        if (u.IsDefaultPort || u.Port <= 0) return "";                               // 没写端口 → 不是代理
+        return u.GetLeftPart(UriPartial.Authority);
+    }
+
+    /// <summary>设置本地代理，返回归一化后的地址（空串 = 直连）。</summary>
+    public static string SetProxy(string raw)
+    {
+        var spec = NormalizeProxy(raw);
+        lock (ProxyLock)
+        {
+            if (spec.Length == 0) { _proxied = null; _proxySpec = ""; return ""; }
+            if (spec == _proxySpec) return _proxySpec;
+            try
+            {
+                var h = new HttpClientHandler { UseProxy = true, Proxy = new WebProxy(spec) };
+                var c = new HttpClient(h) { Timeout = TimeSpan.FromSeconds(40) };
+                c.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", UA);
+                _proxied = c;
+                _proxySpec = spec;
+            }
+            catch { return _proxySpec; }
+            return _proxySpec;
+        }
+    }
+
+    /// <summary>需要出墙的请求（Yahoo 日线）走这个：配了代理就用代理，否则直连。</summary>
+    private static HttpClient Net() => _proxied ?? Direct;
 
     public MainForm()
     {
@@ -160,6 +196,8 @@ internal sealed class MainForm : Form
             openSaveFolder: () => call('openSaveFolder'),
             savePath:    () => call('savePath'),
             httpGet:     (u) => call('httpGet', u),
+            setProxy:    (p) => call('setProxy', p),
+            getProxy:    ()  => call('getProxy'),
             readKline:   (id) => call('readKline', id),
             downloadKline: (id, sym) => call('downloadKline', id, sym),
             listKlines:  () => call('listKlines')
@@ -211,6 +249,8 @@ internal sealed class MainForm : Form
                 return true;
             case "savePath": return SaveFile;
             case "httpGet": return await HttpGet(a[0]);
+            case "setProxy": return SetProxy(a.Length > 0 ? a[0] : "");
+            case "getProxy": return _proxySpec;
             case "readKline": return SafeRead(Path.Combine(KLineDir, SafeName(a[0]) + ".json"));
             case "downloadKline": return await DownloadKline(a[0], a.Length > 1 && !string.IsNullOrWhiteSpace(a[1]) ? a[1] : a[0]);
             case "listKlines": return ListKlines();
@@ -300,7 +340,7 @@ internal sealed class MainForm : Form
             var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             var url = $"https://query2.finance.yahoo.com/v8/finance/chart/{Uri.EscapeDataString(sym)}"
                     + $"?period1=946684800&period2={now}&interval=1d&events=div%2Csplits";
-            using var res = await Proxied.GetAsync(url);
+            using var res = await Net().GetAsync(url);
             if (!res.IsSuccessStatusCode) return new { id, n = 0, err = "HTTP " + (int)res.StatusCode };
             using var doc = JsonDocument.Parse(await res.Content.ReadAsStringAsync());
             var r = doc.RootElement.GetProperty("chart").GetProperty("result")[0];

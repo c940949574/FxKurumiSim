@@ -295,6 +295,9 @@ button{cursor:pointer;background:none;border:none}
 }
 .modal-h{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line)}
 .modal-h b{font-size:14px;font-weight:600}
+.mclose{width:28px;height:28px;display:grid;place-items:center;padding:0;border:1px solid transparent;border-radius:6px;background:transparent;color:var(--mut);font-size:19px;line-height:1;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.mclose:hover{background:var(--panel3);border-color:var(--line);color:var(--txt)}
+.mclose:active{transform:translateY(1px)}
 .modal-b{padding:16px 18px}
 .modal-b h4{font-size:12px;color:var(--acc);letter-spacing:.08em;margin:16px 0 8px}
 .modal-b h4:first-child{margin-top:0}
@@ -522,13 +525,13 @@ button{cursor:pointer;background:none;border:none}
 
 <div class="mask" id="maskSettings">
   <div class="modal">
-    <div class="modal-h"><b>设置</b><button class="btn sm ghost" data-close>关闭</button></div>
+    <div class="modal-h"><b>设置</b><button class="mclose" data-close title="关闭" aria-label="关闭">×</button></div>
     <div class="modal-b" id="setBody"></div>
   </div>
 </div>
 <div class="mask" id="maskHelp">
   <div class="modal">
-    <div class="modal-h"><b>交易规则与费用说明</b><button class="btn sm ghost" data-close>关闭</button></div>
+    <div class="modal-h"><b>交易规则与费用说明</b><button class="mclose" data-close title="关闭" aria-label="关闭">×</button></div>
     <div class="modal-b" id="helpBody"></div>
   </div>
 </div>
@@ -567,7 +570,7 @@ button{cursor:pointer;background:none;border:none}
 
 <div class="mask" id="maskFx">
   <div class="modal" style="width:min(430px,100%)">
-    <div class="modal-h"><b>结汇 / 购汇</b><button class="btn sm ghost" data-close>关闭</button></div>
+    <div class="modal-h"><b>结汇 / 购汇</b><button class="mclose" data-close title="关闭" aria-label="关闭">×</button></div>
     <div class="modal-b">
       <div class="frow"><label>卖出<i>从哪个币种出</i></label><select id="fxFrom"></select></div>
       <div class="frow"><label>买入<i>换成哪个币种</i></label><select id="fxTo"></select></div>
@@ -583,7 +586,7 @@ button{cursor:pointer;background:none;border:none}
 
 <div class="mask" id="maskAdd">
   <div class="modal" style="width:min(480px,100%)">
-    <div class="modal-h"><b>添加自选品种</b><button class="btn sm ghost" data-close>取消</button></div>
+    <div class="modal-h"><b>添加自选品种</b><button class="mclose" data-close title="关闭" aria-label="关闭">×</button></div>
     <div class="modal-b">
       <div class="frow"><label>代码<i>日股加 .T，港股加 .HK，美股直接填代码</i></label>
         <input type="text" id="addCode" placeholder="AAPL / 7203.T / 0700.HK" autocomplete="off"></div>
@@ -600,7 +603,7 @@ button{cursor:pointer;background:none;border:none}
 </div>
 <div class="mask" id="maskConfirm">
   <div class="modal" style="width:min(440px,100%)">
-    <div class="modal-h"><b>确认委托</b><button class="btn sm ghost" data-close>取消</button></div>
+    <div class="modal-h"><b>确认委托</b><button class="mclose" data-close title="关闭" aria-label="关闭">×</button></div>
     <div class="modal-b" id="confirmBody"></div>
   </div>
 </div>
@@ -740,7 +743,8 @@ const state = {
   clock: Date.now(),          // 模拟世界时间（可加速）
   accel: 60,                  // 时间倍率
   feedMode: 'live',           // auto | live | sim（默认真实行情）
-  proxy: '',                  // CORS 代理前缀
+  proxy: '',                  // 本地代理：端口 / host:port / socks5://host:port，空 = 直连
+  proxyMigrated: false,       // 旧档迁移标记（首次升级回填 127.0.0.1:6789）
   pollMs: 30000,
   ignoreSession: true,        // 练习模式：忽略休市
   cash: { JPY: 10000000, USD: 0, HKD: 0, CNY: 0 },   // 多币种现金（可手动结汇）
@@ -1014,6 +1018,25 @@ function cnCode(inst) {
   if (inst.mkt === 'HK') return num ? 'hk' + num.padStart(5, '0') : null;
   if (inst.mkt === 'US') return 'us' + String(inst.code).toUpperCase();
   return null;
+}
+/* 本地代理：支持直接填端口（6789 / 127.0.0.1:6789 / http://host:port / socks5://host:port）。
+   桌面版把地址交给 C# 端重建 HttpClient；浏览器版无法设置系统代理，忽略。 */
+function proxyArg(v) {
+  v = String(v || '').trim();
+  if (!v) return '';
+  if (/^\d{2,5}$/.test(v)) v = '127.0.0.1:' + v;
+  if (!/^[a-z][\w+.\-]*:\/\//i.test(v)) v = 'http://' + v;
+  return v;
+}
+function applyProxy(notify) {
+  const spec = proxyArg(state.proxy);
+  if (window.Kurumi && window.Kurumi.setProxy) {
+    window.Kurumi.setProxy(spec)
+      .then(applied => { if (notify) toast('代理已更新', applied ? '→ ' + applied : '直连', 'ok'); })
+      .catch(() => { if (notify) toast('代理设置失败', '请检查地址与端口', 'warn'); });
+  } else if (notify) {
+    toast('浏览器模式不支持代理', '请用桌面版 exe 运行', 'warn');
+  }
 }
 async function netGet(url) {
   if (window.Kurumi && window.Kurumi.httpGet) return await window.Kurumi.httpGet(url);
@@ -1314,7 +1337,7 @@ function snapshot() {
     feeTotal: state.feeTotal, swapTotal: state.swapTotal, realized: state.realized,
     settlements: state.settlements, nextSettle: state.nextSettle,
     custom: state.custom,
-    feedMode: state.feedMode, proxy: state.proxy, pollMs: state.pollMs,
+    feedMode: state.feedMode, proxy: state.proxy, proxyMigrated: state.proxyMigrated, pollMs: state.pollMs,
     ignoreSession: state.ignoreSession, accel: state.accel
   });
 }
@@ -1344,9 +1367,14 @@ function load() {
       custom: Array.isArray(o.custom) ? o.custom : [],
       // 旧档里的 auto 迁移为 live：默认真实行情
       feedMode: (o.feedMode && o.feedMode !== 'auto') ? o.feedMode : 'live',
-      proxy: o.proxy ?? '', pollMs: o.pollMs ?? 30000,
+      proxy: o.proxy ?? '', proxyMigrated: o.proxyMigrated ?? false, pollMs: o.pollMs ?? 30000,
       ignoreSession: o.ignoreSession ?? true, accel: o.accel ?? 60
     });
+    // 旧档迁移：代理原先硬编码在程序里（127.0.0.1:6789），升级后先沿用；用户清空一次后不再回填
+    if (!state.proxyMigrated) {
+      if (!state.proxy) state.proxy = '127.0.0.1:6789';
+      state.proxyMigrated = true;
+    }
     return true;
   } catch (e) { return false; }
 }
@@ -1941,7 +1969,10 @@ function drawChart() {
   const hi = Math.max(...bars.map(b => b.h)), lo = Math.min(...bars.map(b => b.l));
   const range = (hi - lo) || (hi * 0.01);
   const y = p => padT + (hi - p) / range * (h - padT - padB);
-  const bw = (w - padL - padR) / bars.length;
+  const plotW = w - padL - padR;
+  // 柱宽上限 14px：刚切到实时、bars 只有 1~2 根时，若按 屏宽/根数 算会画出撑满全屏的巨型方块
+  const bw = Math.min(14, plotW / Math.max(1, bars.length));
+  const x0 = padL + plotW - bars.length * bw;      // 不足一屏时靠右对齐，最新一根贴右边
 
   // 网格
   ctx.strokeStyle = '#161C24'; ctx.lineWidth = 1;
@@ -1951,7 +1982,7 @@ function drawChart() {
   }
   // K 线
   bars.forEach((b, i) => {
-    const x = padL + i * bw;
+    const x = x0 + i * bw;
     const up = b.c >= b.o;
     const col = up ? '#F0553F' : '#12B57E';
     ctx.strokeStyle = col; ctx.fillStyle = col;
@@ -1961,6 +1992,13 @@ function drawChart() {
     ctx.beginPath(); ctx.moveTo(x + bw * 0.5, y(b.h)); ctx.lineTo(x + bw * 0.5, y(b.l));
     ctx.lineWidth = 1; ctx.stroke();
   });
+  // 刚切到实时：只有很少几根，补一句说明，避免被当成画坏了
+  if (bars.length < 5) {
+    ctx.fillStyle = '#4A5563';
+    ctx.font = '11.5px "MiSans","PingFang SC",sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('实时K线累积中，每分钟生成一根', padL + plotW / 2, h - padB - 10);
+  }
   // 昨收
   if (q.prev) {
     ctx.strokeStyle = '#39434F'; ctx.setLineDash([3, 3]); ctx.lineWidth = 1;
@@ -2786,8 +2824,8 @@ function buildSettings() {
         <option value="live" ${state.feedMode === 'live' ? 'selected' : ''}>强制实时</option>
         <option value="sim" ${state.feedMode === 'sim' ? 'selected' : ''}>模拟引擎</option>
       </select></div>
-    <div class="frow"><label>CORS 代理前缀<i>实时行情被跨域拦截时填写，如 https://corsproxy.io/?url=</i></label>
-      <input type="text" id="sProxy" value="${state.proxy}" placeholder="留空 = 直连"></div>
+    <div class="frow"><label>本地代理（HTTP / SOCKS5）<i>填本地端口即可，例如 127.0.0.1:6789 或 socks5 代理。空着则为直连，仅用于下载 Yahoo 日线</i></label>
+      <input type="text" id="sProxy" value="${state.proxy || ''}" placeholder="留空 = 直连" spellcheck="false"></div>
     <div class="frow"><label>轮询间隔<i>实时模式下拉取行情的频率</i></label>
       <select id="sPoll">
         ${[10, 20, 30, 60, 120].map(s => `<option value="${s * 1000}" ${state.pollMs === s * 1000 ? 'selected' : ''}>${s} 秒</option>`).join('')}
@@ -2809,7 +2847,7 @@ function buildSettings() {
       </div></div>
     <div class="hint" style="margin-top:10px">初始资金 ¥10,000,000（日元本位）。重置会清空持仓、挂单与历史记录。</div>`;
   $('#sFeed').onchange = e => { state.feedMode = e.target.value; pollFeed(); save(); };
-  $('#sProxy').onchange = e => { state.proxy = e.target.value.trim(); save(); };
+  $('#sProxy').onchange = e => { state.proxy = e.target.value.trim(); save(); applyProxy(true); };
   $('#sPoll').onchange = e => { state.pollMs = Number(e.target.value); save(); };
   $('#sAccel').onchange = e => { state.accel = Number(e.target.value); save(); };
   $('#sIgnore').onclick = e => {
@@ -2945,6 +2983,7 @@ async function boot() {
   initQuotes();
   if (loaded && state.nextSettle && state.nextSettle < Date.now()) state.nextSettle = 0;
   bind();
+  applyProxy();                    // 把存档里的本地代理同步给 C# 端
   setInstrument('7203.T');
   if (!loaded || !state.started) openStart();
   // 支持 #stock / #fut / #fx / #perf 直达板块
