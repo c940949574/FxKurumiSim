@@ -13,7 +13,7 @@
     <Product>久留美模拟器 / FxKurumiSim</Product>
     <Company>FxKurumiSim</Company>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon>icon_kurumi.ico</ApplicationIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>false</SelfContained>
