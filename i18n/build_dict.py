@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# 从当前 app/renderer/index.html 重新抽取中文字面量，合并既有 strings.json 翻译，
-# 用本地 Ollama (hy-mt2) 补齐缺失项，产出 i18n-data.js（app 实际加载的字典）。
+# 从当前 csharp/KurumiSim/renderer/index.html 重新抽取中文字面量，合并既有 strings.json 翻译，
+# 用本地 Ollama (hy-mt2) 补齐缺失项，产出 i18n-data.js（C# 单文件 EXE 内嵌的字典）。
 import json, re, time, urllib.request, sys
 
 ROOT = ".."
-HTML = f"{ROOT}/app/renderer/index.html"
+HTML = f"{ROOT}/csharp/KurumiSim/renderer/index.html"
 SRC = open(HTML, encoding="utf-8").read()
 OLD = json.load(open("strings.json", encoding="utf-8"))["items"]
 TAG = open(".tag.tmp").read().strip()
@@ -25,6 +25,8 @@ def phrases_from(s):
             continue
         if re.search(r"(class=|function\s*=|return\s+|=>|://|addEventListener|\.map\(|\.filter\(|console\.)", r):
             continue
+        if r.lstrip().startswith("//") or r.lstrip().startswith("/*"):   # JS 注释不是文案
+            continue
         out.append(r)
     return out
 
@@ -43,13 +45,19 @@ print(f"抽取中文短语 {len(phrases)} 条（去重，含计数）")
 
 # ---------- 2. 合并既有翻译 ----------
 old_map = {i["zh"]: i for i in OLD}
+try:   # 复用当前已发布的字典，只翻真正新增的串
+    _js = open(f"{ROOT}/csharp/KurumiSim/renderer/i18n-data.js", encoding="utf-8").read()
+    LIVE = json.loads(_js[_js.index("=") + 1:].rstrip().rstrip(";"))
+except Exception:
+    LIVE = {}
 merged = {}   # zh -> {en,ja,ko,count}
 for z in phrases:
     e = old_map.get(z, {})
+    lv = LIVE.get(z, {})
     merged[z] = {
-        "en": e.get("en", "") or "",
-        "ja": e.get("ja", "") or "",
-        "ko": e.get("ko", "") or "",
+        "en": lv.get("en") or e.get("en", "") or "",
+        "ja": lv.get("ja") or e.get("ja", "") or "",
+        "ko": lv.get("ko") or e.get("ko", "") or "",
         "count": cnt[z],
     }
 
@@ -65,9 +73,17 @@ def tr(text, lang, model="hy-mt2"):
          f"translated result without any additional explanation:\n\n{text}")
     b = json.dumps({"model": model, "prompt": p, "stream": False, "keep_alive": "10m",
                     "options": {"temperature": 0.1, "num_predict": 400}}).encode()
-    req = urllib.request.Request(API, data=b, headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=120) as resp:
-        return clean(json.load(resp).get("response", ""))
+    last = None
+    for attempt in range(3):                       # Ollama 偶尔 RemoteDisconnected，重试即可
+        try:
+            req = urllib.request.Request(API, data=b, headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                return clean(json.load(resp).get("response", ""))
+        except Exception as e:
+            last = e
+            time.sleep(1.5 * (attempt + 1))
+    print(f"  [warn] 翻译失败({lang}): {text[:24]} -> {last}")
+    return ""
 
 def fix_brace(src, out):
     if "{}" in src and "{}" not in out:
@@ -93,7 +109,7 @@ dict_items = {z: {"en": merged[z]["en"], "ja": merged[z]["ja"], "ko": merged[z][
 js = "// 自动生成 by build_dict.py —— 四语言字典（zh 源 -> en/ja/ko）\n"
 js += "// 源串为 key，值缺失时回退原文（中文）。\n"
 js += "window.I18N_DICT = " + json.dumps(dict_items, ensure_ascii=False, indent=0) + ";\n"
-open(f"{ROOT}/app/renderer/i18n-data.js", "w", encoding="utf-8").write(js)
+open(f"{ROOT}/csharp/KurumiSim/renderer/i18n-data.js", "w", encoding="utf-8").write(js)
 
 # 4b. 合并副本（带日期标记，不覆盖 strings.json）
 rec = [{"id": f"s{n:03d}", "zh": z, "en": merged[z]["en"], "ja": merged[z]["ja"],
@@ -130,6 +146,10 @@ CORRECTIONS = {
     "模拟":   {"en": "Simulation", "ja": "シミュレーション", "ko": "시뮬레이션"},
     "风险":   {"en": "Risk", "ja": "リスク", "ko": "위험"},
     "交割":   {"en": "Delivery", "ja": "決済", "ko": "인도"},
+    # 网络/代理类（机翻会把「代理」翻成 agent，需锁定为 proxy）
+    "代理已更新": {"en": "Proxy updated", "ja": "プロキシを更新しました", "ko": "프록시가 업데이트되었습니다"},
+    "代理设置失败": {"en": "Proxy setup failed", "ja": "プロキシ設定に失敗しました", "ko": "프록시 설정 실패"},
+    "直连":   {"en": "Direct", "ja": "直接接続", "ko": "직접 연결"},
 }
 for z, v in CORRECTIONS.items():
     if z not in merged:
@@ -141,5 +161,5 @@ dict_items = {z: {"en": merged[z]["en"], "ja": merged[z]["ja"], "ko": merged[z][
 js = "// 自动生成 by build_dict.py —— 四语言字典（zh 源 -> en/ja/ko）\n"
 js += "// 源串为 key，值缺失时回退原文（中文）。\n"
 js += "window.I18N_DICT = " + json.dumps(dict_items, ensure_ascii=False, indent=0) + ";\n"
-open(f"{ROOT}/app/renderer/i18n-data.js", "w", encoding="utf-8").write(js)
+open(f"{ROOT}/csharp/KurumiSim/renderer/i18n-data.js", "w", encoding="utf-8").write(js)
 print(f"纠正后字典条目: {len(dict_items)}")

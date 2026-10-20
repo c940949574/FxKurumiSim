@@ -1,6 +1,11 @@
 // 自动生成 by build_dict.py —— 四语言字典（zh 源 -> en/ja/ko）
 // 源串为 key，值缺失时回退原文（中文）。
 window.I18N_DICT = {
+"关闭": {
+"en": "Turn off",
+"ja": "オフにする",
+"ko": "끄기"
+},
 "买入": {
 "en": "Buy",
 "ja": "購入する",
@@ -66,11 +71,6 @@ window.I18N_DICT = {
 "ja": "香港",
 "ko": "홍콩"
 },
-"关闭": {
-"en": "Turn off",
-"ja": "オフにする",
-"ko": "끄기"
-},
 "可用资金": {
 "en": "available funds",
 "ja": "余力",
@@ -90,6 +90,11 @@ window.I18N_DICT = {
 "en": "Equity",
 "ja": "株価",
 "ko": "주식"
+},
+"直连": {
+"en": "Direct",
+"ja": "直接接続",
+"ko": "직접 연결"
 },
 "美国": {
 "en": "USA",
@@ -220,11 +225,6 @@ window.I18N_DICT = {
 "en": "Reference Exchange Rate",
 "ja": "参考為替レート",
 "ko": "기준 환율"
-},
-"取消": {
-"en": "Cancel",
-"ja": "キャンセル",
-"ko": "취소"
 },
 "可得": {
 "en": "Obtainable",
@@ -441,11 +441,6 @@ window.I18N_DICT = {
 "ja": "市場ベースの決済",
 "ko": "시장 기반 결제"
 },
-"直连": {
-"en": "Direct connection",
-"ja": "直接接続",
-"ko": "직접 연결"
-},
 "确认委托": {
 "en": "Confirm the commission",
 "ja": "委託を確認する",
@@ -631,51 +626,6 @@ window.I18N_DICT = {
 "ja": "+ % / 年",
 "ko": "+ % / 년"
 },
-"// 价格轴": {
-"en": "Price axis",
-"ja": "価格軸",
-"ko": "가격축"
-},
-"// 先读存档（桌面版读文档目录文件）拿到自选列表，再并进品种表，最后才建报价": {
-"en": "First, read the archive (for the desktop version, read the document directory file) to get the selected list, then go to the product table, and finally create the quotation.",
-"ja": "まず、アーカイブを読み込む（デスクトップ版の場合は、文書ディレクトリファイルを読む）。選択されたリストを得た後、製品表に移動し、最後に見積もりを作成します。",
-"ko": "먼저 아카이브를 읽어서 선택된 목록을 얻고, 그 다음 제품 표로 가서 마지막으로 견적서를 작성합니다."
-},
-"// 强平：权益低于维持保证金要求": {
-"en": "Strong settlement: Equity is below the maintenance margin requirement",
-"ja": "強力な決済：資本が維持マージン要件以下である",
-"ko": "강력한 결제: 자본금이 유지 마진 요건보다 낮음"
-},
-"// 最小变动价位": {
-"en": "Minimum price range",
-"ja": "最低価格帯",
-"ko": "최소 가격 범위"
-},
-"// 未成交挂单按剩余数量冻结保证金与费用": {
-"en": "Pending orders that have not been executed are frozen in terms of margin and fees based on the remaining quantity",
-"ja": "実行されていない保留注文は、残りの数量に基づいてマージンと手数料の面で凍結されます。",
-"ko": "실행되지 않은 대기 주문들은 남아 있는 수량에 따른 마진과 수수료 측면에서 동결됩니다."
-},
-"// 每手股数按市场强制：美股按股、日股 100 股，只有港股需要手填": {
-"en": "The number of shares per trade follows market requirements: 100 shares for US stocks and Japanese stocks, while only for Hong Kong stocks is the lot required.",
-"ja": "取引ごとに保有する株数は市場の要求に応じて決定されます。米国株と日本株の場合は100株ですが、香港株の場合は一定の数だけ必要です。",
-"ko": "거래당 주식 수는 시장 요구에 따라 결정됩니다: 미국 주식과 일본 주식의 경우 100주이며, 홍콩 주식의 경우는 단일 lot로 처리됩니다."
-},
-"// 网格": {
-"en": "Grid",
-"ja": "グリッド",
-"ko": "그리드"
-},
-"// 触及风控阈值但无需平仓（例如仅跌破追保线），不计入强平次数": {
-"en": "Reaches the risk control threshold but no liquidation is required (e.g., just below the protection level), so it is not counted as a forced liquidation.",
-"ja": "リスク管理の閾値に達したが、清算は必要ない（例えば、保護レベルのちょうど下位であるため）、したがって強制清算には数えられない。",
-"ko": "위험 관리 임계값에 도달했지만 청산이 필요하지 않은 경우(예: 보호 수준에 약간 미세하게 근처), 이는 강제 청산으로 간주되지 않습니다."
-},
-"// 部分成交模拟": {
-"en": "Partial transaction simulation",
-"ja": "部分的取引シミュレーション",
-"ko": "부분 거래 시뮬레이션"
-},
 "1 亿美元起手": {
 "en": "Starting from 100 million dollars",
 "ja": "1億ドルから始める",
@@ -731,6 +681,11 @@ window.I18N_DICT = {
 "ja": "1Mチャート 39000 / 見積価格 64000",
 "ko": "1M 차트 39000 / 입찰가 64000"
 },
+"2 根时，若按 屏宽/根数 算会画出撑满全屏的巨型方块": {
+"en": "When there are 2 roots, if calculated based on screen width umber of roots, it will produce giant squares that fill the entire screen.",
+"ja": "2つの根がある場合、画面幅に基づいて数えられた根の数を使うと、画面全体を占める巨大な正方形が生成されます。",
+"ko": "두 개의 루트가 있을 때, 화면 너비에 따라 루트의 수를 계산하면, 전체 화면을 가득 채우는 거대한 사각형이 생성됩니다."
+},
 "20 万人民币起手": {
 "en": "Starting from 200,000 RMB",
 "ja": "20万人民元から",
@@ -775,11 +730,6 @@ window.I18N_DICT = {
 "en": "COMEX Gold",
 "ja": "COMEXゴールド",
 "ko": "COMEX 골드"
-},
-"CORS 代理前缀": {
-"en": "CORS proxy prefix",
-"ja": "CORSプロキシプレフィックス",
-"ko": "CORS 프록시 접두사"
 },
 "EIA 原油库存": {
 "en": "EIA crude oil inventory",
@@ -945,6 +895,16 @@ window.I18N_DICT = {
 "en": "In which currency?",
 "ja": "どの通貨でですか？",
 "ko": "어느 통화로요?"
+},
+"代理已更新": {
+"en": "Proxy updated",
+"ja": "プロキシを更新しました",
+"ko": "프록시가 업데이트되었습니다"
+},
+"代理设置失败": {
+"en": "Proxy setup failed",
+"ja": "プロキシ設定に失敗しました",
+"ko": "프록시 설정 실패"
 },
 "价格": {
 "en": "Price",
@@ -1191,6 +1151,11 @@ window.I18N_DICT = {
 "ja": "キーレンセ",
 "ko": "키엔스"
 },
+"填本地端口即可，例如 127.0.0.1:6789 或 socks5 代理。空着则为直连，仅用于下载 Yahoo 日线": {
+"en": "Just fill in the local port, such as 127.0.0.1:6789 or a socks5 proxy. If left blank, it’s a direct connection, used only for downloading Yahoo daily charts.",
+"ja": "127.0.0.1:6789やSocks5プロキシのようなローカルポートを入力してください。空欄の場合は直接接続となり、Yahooの日次チャートのダウンロードにのみ使用されます。",
+"ko": "127.0.0.1:6789나 socks5 프록시와 같은 로컬 포트를 입력하기만 하면 됩니다. 빈칸으로 남아 있으면 직접 연결이 되며, Yahoo의 일일 차트를 다운로드하는 데만 사용됩니다."
+},
 "夏普比率": {
 "en": "Sharpe Ratio",
 "ja": "シャープ率",
@@ -1230,6 +1195,11 @@ window.I18N_DICT = {
 "en": "Real-time",
 "ja": "リアルタイム",
 "ko": "실시간"
+},
+"实时K线累积中，每分钟生成一根": {
+"en": "Real-time K-line accumulation is in progress; one K-line is generated every minute.",
+"ja": "リアルタイムのK線の蓄積が進行中で、1分ごとに1つのK線が生成されます。",
+"ko": "실시간 K선 축적이 진행 중입니다. 매분마다 하나의 K선이 생성됩니다."
 },
 "实时不可用（离线或跨域）· 已切模拟引擎": {
 "en": "Real-time unavailable (offline or cross-domain) · Simulation engine switched off",
@@ -1706,6 +1676,11 @@ window.I18N_DICT = {
 "ja": "先物のレバレッジは、1ロットあたりのマージンによって決定されます。",
 "ko": "선물 레버리지는 로트당 마진에 따라 결정됩니다."
 },
+"本地代理（HTTP / SOCKS5）": {
+"en": "Local proxy (HTTP / SOCKS5)",
+"ja": "ローカルプロキシ（HTTP / SOCKS5）",
+"ko": "로컬 프록시 (HTTP / SOCKS5)"
+},
 "权益低于维持保证金要求的 125% 时发出追加保证金通知，倒计时 24 小时（模拟时间）": {
 "en": "A margin call notice is issued when equity drops below 125% of the maintenance margin requirement, starting a 24-hour countdown (simulated time).",
 "ja": "資産が維持証拠金要件の125%を下回ると追証通知が出され、24時間のカウントダウン（シミュレーション時間）が始まります。",
@@ -1860,6 +1835,11 @@ window.I18N_DICT = {
 "en": "Volatility amplification",
 "ja": "ボラティリティの増幅",
 "ko": "변동성 증폭"
+},
+"浏览器模式不支持代理": {
+"en": "The browser mode does not support proxies.",
+"ja": "ブラウザモードではプロキシはサポートされません。",
+"ko": "브라우저 모드는 프록시를 지원하지 않습니다."
 },
 "浮动": {
 "en": "floating",
@@ -2181,6 +2161,11 @@ window.I18N_DICT = {
 "ja": "委託された持株マージンは、資本の一部を占める",
 "ko": "위임된 보유 마진 계정은 자본의 일부를 차지한다."
 },
+"语言切换器": {
+"en": "Language switcher",
+"ja": "言語切替",
+"ko": "언어 전환기"
+},
 "请填一个大于 0 的价格": {
 "en": "Please enter a price greater than 0.",
 "ja": "0より大きい価格を入力してください。",
@@ -2191,10 +2176,20 @@ window.I18N_DICT = {
 "ja": "コードを入力してください",
 "ko": "코드를 입력해 주세요"
 },
+"请检查地址与端口": {
+"en": "Please check the address and port.",
+"ja": "アドレスとポートを確認してください。",
+"ko": "주소와 포트를 확인해 주세요."
+},
 "请用 exe 运行": {
 "en": "Run with exe",
 "ja": "exe形式で実行する",
 "ko": "exe 파일로 실행하기"
+},
+"请用桌面版 exe 运行": {
+"en": "Run it with the desktop version exe.",
+"ja": "デスクトップ版exeを使って実行してください。",
+"ko": "데스크톱 버전 exe로 실행하세요."
 },
 "请选择不同币种": {
 "en": "Please select different currencies",
