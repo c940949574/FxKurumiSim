@@ -790,6 +790,20 @@ const THIRD_EXTRA_RATE = 0.02;              // 第三方杠杆：融资利率上
 const THIRD_HARD_MAX = 50;                  // 股票第三方杠杆硬上限
 const FX_HARD_MAX = 100;                    // 外汇第三方杠杆硬上限
 const hardMaxOf = inst => inst.kind === 'fx' ? FX_HARD_MAX : inst.kind === 'fut' ? 0 : THIRD_HARD_MAX;
+// 杠杆快捷档：1× → 该类型常用档（外汇 10× / 股票 1.5×）→ 该类型基础上限 levMax → 第三方档
+function levPresets(inst) {
+  if (inst.kind === 'fut') return [];                     // 期货杠杆由每手保证金决定
+  const common = inst.kind === 'fx' ? 10 : 1.5;
+  const cap = Math.round(inst.levMax * 100) / 100;        // 交易所/监管允许的基础上限
+  const rest = inst.kind === 'fx' ? [50, 100] : [5, 10];  // 超出上限的第三方杠杆
+  const out = [];
+  for (const v of [1, common, cap, ...rest]) {
+    if (v > hardMaxOf(inst) + 1e-9 || out.some(x => Math.abs(x - v) < 1e-9)) continue;
+    out.push(v);
+  }
+  return out;
+}
+const levLabel = v => (Math.round(v * 100) / 100) + '×';
 const isThird = (inst, lev) => inst.kind !== 'fut' && lev > inst.levMax + 1e-9;
 // 第三方杠杆下按比例下调维持率，否则 50× 一开仓就爆
 function maintRateOf(pos) {
@@ -2146,7 +2160,7 @@ function setInstrument(id) {
   ui.sym = id;
   if (state.board !== inst.mkt && inst.mkt !== 'JP') { /* 保持板块与品种一致 */ }
   ui.qty = inst.kind === 'stock' ? inst.lot : inst.kind === 'fut' ? 1 : 1;
-  ui.lev = inst.kind === 'stock' ? 1 : inst.kind === 'fx' ? 20 : 1;
+  ui.lev = inst.kind === 'stock' ? 1.5 : inst.kind === 'fx' ? 10 : 1;   // 默认取第二档
   $('#iQty').value = ui.qty;
   $('#iLimit').value = '';
   syncLevUI();
@@ -2214,12 +2228,11 @@ function syncLevUI() {
       ? `杠杆 ${ui.lev}× · 第三方（保证金率 ${num(100 / ui.lev, 1)}%）`
       : '杠杆（保证金率 ' + num(100 / ui.lev, 1) + '%）';
   }
-  const presets = inst.kind === 'fx' ? [1, 5, 10, 50, 100] : [1, 5, 10, 50];
   const set = $('#levSet');
-  const want = inst.kind === 'fut' ? [] : presets;
+  const want = levPresets(inst);
   if (set.dataset.sig !== want.join(',')) {
     set.dataset.sig = want.join(',');
-    set.innerHTML = want.map(v => `<button type="button" data-lev="${v}">${v}×</button>`).join('');
+    set.innerHTML = want.map(v => `<button type="button" data-lev="${v}">${levLabel(v)}</button>`).join('');
     $$('#levSet button').forEach(b => b.onclick = () => applyLevPreset(Number(b.dataset.lev)));
   }
   $$('#levSet button').forEach(b => {
