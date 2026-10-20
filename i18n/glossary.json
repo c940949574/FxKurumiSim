@@ -1,0 +1,192 @@
+{
+  "fixed": {
+    "韭菜": {
+      "en": "retail investors",
+      "ja": "retail investors",
+      "ko": "retail investors"
+    },
+    "一般韭菜": {
+      "en": "Retail Rookies",
+      "ja": "Retail Rookies",
+      "ko": "Retail Rookies"
+    },
+    "神豪": {
+      "en": "elon mode",
+      "ja": "elon mode",
+      "ko": "elon mode"
+    },
+    "久留美": {
+      "en": "kurumi",
+      "ja": "くるみ",
+      "ko": "쿠루미"
+    },
+    "久留美模拟器": {
+      "en": "FxKurumiSim",
+      "ja": "FX くるみ シミュレーター",
+      "ko": "FX 쿠루미 시뮬레이터"
+    },
+    "久留美模拟": {
+      "en": "FX Kurumi simulate",
+      "ja": "FX くるみ シミュレーター",
+      "ko": "FX 쿠루미 시뮬레이터"
+    }
+  },
+  "terms": {
+    "占用保证金": {
+      "en": "margin used",
+      "ja": "必要保証金",
+      "ko": "필요 증거금"
+    },
+    "维持保证金": {
+      "en": "maintenance margin",
+      "ja": "維持証拠金",
+      "ko": "유지 증거금"
+    },
+    "保证金率": {
+      "en": "margin ratio",
+      "ja": "証拠金率",
+      "ko": "증거금률"
+    },
+    "追加保证金": {
+      "en": "margin call",
+      "ja": "追証",
+      "ko": "마진콜"
+    },
+    "追证": {
+      "en": "margin call",
+      "ja": "追証",
+      "ko": "마진콜"
+    },
+    "强制平仓": {
+      "en": "forced liquidation",
+      "ja": "強制決済",
+      "ko": "강제 청산"
+    },
+    "强平": {
+      "en": "forced liquidation",
+      "ja": "強制決済",
+      "ko": "강제 청산"
+    },
+    "逐日盯市": {
+      "en": "daily mark-to-market",
+      "ja": "毎日値洗い",
+      "ko": "일일 정산"
+    },
+    "浮动盈亏": {
+      "en": "unrealized P&L",
+      "ja": "評価損益",
+      "ko": "평가 손익"
+    },
+    "已实现盈亏": {
+      "en": "realized P&L",
+      "ja": "実現損益",
+      "ko": "실현 손익"
+    },
+    "名义价值": {
+      "en": "notional value",
+      "ja": "想定元本",
+      "ko": "명목 가치"
+    },
+    "可用资金": {
+      "en": "available funds",
+      "ja": "余力",
+      "ko": "가용 자금"
+    },
+    "总权益": {
+      "en": "total equity",
+      "ja": "総資産",
+      "ko": "총 자산"
+    },
+    "融资利息": {
+      "en": "financing interest",
+      "ja": "買方金利",
+      "ko": "융자 이자"
+    },
+    "借券费": {
+      "en": "stock borrow fee",
+      "ja": "貸株料",
+      "ko": "대차 수수료"
+    },
+    "隔夜利息": {
+      "en": "overnight swap",
+      "ja": "スワップ",
+      "ko": "스왑"
+    },
+    "点差": {
+      "en": "spread",
+      "ja": "スプレッド",
+      "ko": "스프레드"
+    },
+    "佣金": {
+      "en": "commission",
+      "ja": "手数料",
+      "ko": "수수료"
+    },
+    "印花税": {
+      "en": "stamp duty",
+      "ja": "印紙税",
+      "ko": "인지세"
+    },
+    "涨跌停": {
+      "en": "price limit",
+      "ja": "値幅制限",
+      "ko": "가격 제한폭"
+    },
+    "熔断": {
+      "en": "circuit breaker",
+      "ja": "サーキットブレーカー",
+      "ko": "서킷 브레이커"
+    },
+    "结汇": {
+      "en": "currency conversion",
+      "ja": "為替交換",
+      "ko": "환전"
+    },
+    "购汇": {
+      "en": "currency purchase",
+      "ja": "外貨購入",
+      "ko": "외화 매수"
+    },
+    "杠杆": {
+      "en": "leverage",
+      "ja": "レバレッジ",
+      "ko": "레버리지"
+    },
+    "持仓": {
+      "en": "position",
+      "ja": "建玉",
+      "ko": "포지션"
+    },
+    "平仓": {
+      "en": "close position",
+      "ja": "決済",
+      "ko": "청산"
+    },
+    "挂单": {
+      "en": "pending order",
+      "ja": "注文",
+      "ko": "주문"
+    },
+    "成交": {
+      "en": "filled",
+      "ja": "約定",
+      "ko": "체결"
+    },
+    "强平价": {
+      "en": "liquidation price",
+      "ja": "強制決済価格",
+      "ko": "청산가"
+    },
+    "自选": {
+      "en": "watchlist",
+      "ja": "ウォッチリスト",
+      "ko": "관심종목"
+    },
+    "组合绩效": {
+      "en": "portfolio performance",
+      "ja": "ポートフォリオ成績",
+      "ko": "포트폴리오 성과"
+    }
+  },
+  "note": "fixed=整条替换；terms=模型输出后的术语兜底替换（模型对金融术语不可靠）"
+}
