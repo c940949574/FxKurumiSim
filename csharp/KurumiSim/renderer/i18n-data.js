@@ -236,11 +236,6 @@ window.I18N_DICT = {
 "ja": "利用可能",
 "ko": "사용 가능"
 },
-"可选": {
-"en": "Optional",
-"ja": "オプション",
-"ko": "선택적"
-},
 "名义价值": {
 "en": "notional value",
 "ja": "想定元本",
@@ -351,6 +346,11 @@ window.I18N_DICT = {
 "ja": "おすすめ",
 "ko": "추천"
 },
+"改为最多": {
+"en": "Change to a maximum of",
+"ja": "最大で変更する",
+"ko": "최대 10%까지 변경"
+},
 "数量（每手   股）": {
 "en": "Quantity (per lot)",
 "ja": "数量（ロットあたり）",
@@ -401,6 +401,11 @@ window.I18N_DICT = {
 "ja": "最大で…個のアイテムですから、まずいくつかを削除してください。",
 "ko": "최대… 개의 아이템 중에서 먼저 몇 개를 제거해 주세요."
 },
+"最多可开": {
+"en": "Up to 3 can be opened",
+"ja": "最大3つを開けることができます",
+"ko": "최대 3개까지 열 수 있습니다."
+},
 "最高  ×": {
 "en": "Highest ×",
 "ja": "最高値 ×",
@@ -435,6 +440,11 @@ window.I18N_DICT = {
 "en": "Blank",
 "ja": "空白",
 "ko": "빈"
+},
+"留空自动获取": {
+"en": "Leave blank for automatic retrieval",
+"ja": "自動検索用に空欄にしておく",
+"ko": "자동 검색을 위해 빈칸으로 두세요"
 },
 "盯市结算": {
 "en": "Market-based settlement",
@@ -526,6 +536,11 @@ window.I18N_DICT = {
 "ja": "株",
 "ko": "주식"
 },
+"自动取名": {
+"en": "Automatic name generation",
+"ja": "自動名生成",
+"ko": "자동 이름 생성"
+},
 "自选品种": {
 "en": "Selected Varieties",
 "ja": "選ばれた品種",
@@ -565,6 +580,11 @@ window.I18N_DICT = {
 "en": "Costs",
 "ja": "コスト",
 "ko": "비용"
+},
+"超出可用资金": {
+"en": "Exceeding available funds",
+"ja": "利用可能な資金を超過する",
+"ko": "가용 자금을 초과함"
 },
 "超出硬上限": {
 "en": "Exceeding the hard limit",
@@ -625,6 +645,11 @@ window.I18N_DICT = {
 "en": "+ % / year",
 "ja": "+ % / 年",
 "ko": "+ % / 년"
+},
+".json，与 C# DownloadKline 同格式": {
+"en": ".json, in the same format as C# DownloadKline",
+"ja": ".json、C# DownloadKlineと同じフォーマットで",
+"ko": ".json, C# DownloadKline과 동일한 형식"
 },
 "1 亿美元起手": {
 "en": "Starting from 100 million dollars",
@@ -1311,6 +1336,11 @@ window.I18N_DICT = {
 "ja": "選択から外された",
 "ko": "선택에서 제외됨"
 },
+"已自动填入公司名": {
+"en": "The company name has been automatically filled in",
+"ja": "会社名は自動的に入力されました",
+"ko": "회사 이름은 자동으로 채워졌습니다."
+},
 "已载入存档": {
 "en": "Loaded into archive",
 "ja": "アーカイブに保存される",
@@ -1911,10 +1941,10 @@ window.I18N_DICT = {
 "ja": "現金 + 変動利益・損失",
 "ko": "현금 + 변동된 이익과 손실"
 },
-"留空则显示代码": {
-"en": "Leave blank to display the code",
-"ja": "空欄のままにしておくとコードが表示されます",
-"ko": "빈칸으로 두면 코드가 표시됩니다"
+"留空则自动获取公司名": {
+"en": "Leave blank to automatically get the company name",
+"ja": "空白のままにしておくと、自動的に会社名が表示されます",
+"ko": "빈칸으로 남기면 자동으로 회사 이름이 입력됩니다"
 },
 "盈亏": {
 "en": "Profits and Losses",
@@ -2240,6 +2270,16 @@ window.I18N_DICT = {
 "en": "Cost breakdown",
 "ja": "コストの内訳",
 "ko": "비용 분해"
+},
+"资金不足": {
+"en": "Insufficient funds",
+"ja": "資金不足",
+"ko": "자금이 부족함"
+},
+"资金不足 · 最多": {
+"en": "Insufficient funds · Up to",
+"ja": "資金不足 · 最大",
+"ko": "자금이 부족함 · 최대"
 },
 "资金不足，    未开仓": {
 "en": "Insufficient funds, no positions opened",

@@ -320,7 +320,8 @@ internal sealed class MainForm : Form
     // ---------- 行情 ----------
     private static readonly string[] AllowedHosts =
     {
-        "qt.gtimg.cn", "ifzq.gtimg.cn", "web.ifzq.gtimg.cn", "hq.sinajs.cn", "stock.finance.sina.com.cn"
+        "qt.gtimg.cn", "ifzq.gtimg.cn", "web.ifzq.gtimg.cn", "hq.sinajs.cn", "stock.finance.sina.com.cn",
+        "query1.finance.yahoo.com"          // 公司名查询（需走代理）
     };
 
     private static async Task<string> HttpGet(string url)
@@ -328,11 +329,14 @@ internal sealed class MainForm : Form
         var uri = new Uri(url);
         if (!AllowedHosts.Contains(uri.Host)) throw new Exception("域名不在白名单");
         var req = new HttpRequestMessage(HttpMethod.Get, uri);
-        req.Headers.Referrer = new Uri(uri.Host.Contains("sina") ? "https://finance.sina.com.cn/" : "https://gu.qq.com/");
-        using var res = await Direct.SendAsync(req);
+        var yahoo = uri.Host.EndsWith("yahoo.com", StringComparison.OrdinalIgnoreCase);
+        req.Headers.Referrer = new Uri(yahoo ? "https://finance.yahoo.com/"
+            : uri.Host.Contains("sina") ? "https://finance.sina.com.cn/" : "https://gu.qq.com/");
+        // Yahoo 只有境外可直连：配了代理就走代理，并返回 UTF-8；国内源仍直连、GBK
+        using var res = await (yahoo ? Net() : Direct).SendAsync(req);
         res.EnsureSuccessStatusCode();
         var bytes = await res.Content.ReadAsByteArrayAsync();
-        return Encoding.GetEncoding("GBK").GetString(bytes);
+        return yahoo ? Encoding.UTF8.GetString(bytes) : Encoding.GetEncoding("GBK").GetString(bytes);
     }
 
     private static async Task<object> DownloadKline(string id, string sym)

@@ -595,8 +595,8 @@ button{cursor:pointer;background:none;border:none}
     <div class="modal-b">
       <div class="frow"><label>代码<i>日股加 .T，港股加 .HK，美股直接填代码</i></label>
         <input type="text" id="addCode" placeholder="AAPL / 7203.T / 0700.HK" autocomplete="off"></div>
-      <div class="frow"><label>名称<i>留空则显示代码</i></label>
-        <input type="text" id="addName" placeholder="可选"></div>
+      <div class="frow"><label>名称<i>留空则自动获取公司名</i></label>
+        <input type="text" id="addName" placeholder="留空自动获取"></div>
       <div class="frow"><label>每手股数<i>港股每手不同，按实际填；日股通常 100</i></label>
         <input type="number" id="addLot" value="100" min="1" step="1"></div>
       <div class="frow"><label>参考价<i>拉不到实时行情时作为模拟起点</i></label>
@@ -912,12 +912,13 @@ function customDefaults(mkt, px) {
   if (mkt === 'HK') return { ccy: 'HKD', lot: 100, initM: 0.40, maintM: 0.30, levMax: 2.5, fee: 'HK', longRate: 0.058, shortRate: 0.03, tick: px >= 100 ? 0.2 : 0.05 };
   return { ccy: 'USD', lot: 1, initM: 0.50, maintM: 0.25, levMax: 2, fee: 'US', longRate: 0.065, shortRate: 0.08, tick: 0.01 };
 }
-function makeCustomSpec(id, name, lot, px) {
+function makeCustomSpec(id, name, lot, px, nameEn) {
   const mkt = inferMarket(id);
   if (!mkt) return null;
   const d = customDefaults(mkt, px);
   return {
-    id, name: name || id, code: id.replace(/\.(T|HK)$/i, ''), mkt, kind: 'stock',
+    id, name: name || id, nameZh: name || '', nameEn: nameEn || '',
+    code: id.replace(/\.(T|HK)$/i, ''), mkt, kind: 'stock',
     ccy: d.ccy, px: px, vol: 0.30,
     // 美股按股、日股固定 100 股/手（TSE 单元株），港股按用户填写
     lot: mkt === 'US' ? 1 : mkt === 'JP' ? 100 : Math.max(1, parseInt(lot, 10) || d.lot),
@@ -929,11 +930,23 @@ function makeCustomSpec(id, name, lot, px) {
 function buildCustomInstruments() {
   (state.custom || []).forEach(c => {
     if (IMAP[c.id]) return;
-    const spec = makeCustomSpec(c.id, c.name, c.lot, c.px);
+    const spec = makeCustomSpec(c.id, c.name, c.lot, c.px, c.nameEn);
     if (!spec) return;
     INST.push(spec);
     IMAP[spec.id] = spec;
   });
+}
+// 自选股按当前界面语言取名字：中文名 / 英文名（日韩回退英文）
+function pickCustomName(spec) {
+  const zh = spec.nameZh || '', en = spec.nameEn || '';
+  return (window.I18N_LANG || 'zh') === 'zh' ? (zh || en) : (en || zh);
+}
+function syncCustomNames() {
+  for (const it of INST) {
+    if (!it.custom) continue;
+    const n = pickCustomName(it);
+    if (n) it.name = n;
+  }
 }
 
 function applySpread(inst, t) {
@@ -1037,6 +1050,26 @@ function cnCode(inst) {
   if (inst.mkt === 'HK') return num ? 'hk' + num.padStart(5, '0') : null;
   if (inst.mkt === 'US') return 'us' + String(inst.code).toUpperCase();
   return null;
+}
+/* 自选股公司名：中文走腾讯（主进程按 GBK 解码），英文走 Yahoo 搜索（需配代理）。
+   Yahoo 不提供日/韩本地化名称，日韩界面回退英文名。 */
+async function lookupCompanyName(spec) {
+  const out = { zh: '', en: '' };
+  const cn = cnCode(spec);
+  if (cn) {
+    try {
+      const t = await netGet('https://qt.gtimg.cn/q=' + cn);
+      const m = /="([^"]*)"/.exec(t);
+      if (m) out.zh = String(m[1].split('~')[1] || '').trim();
+    } catch (e) { /* 国内源不可用 */ }
+  }
+  try {
+    const q = encodeURIComponent(spec.yahoo || spec.id);
+    const t = await netGet('https://query1.finance.yahoo.com/v1/finance/search?q=' + q + '&quotesCount=1&newsCount=0');
+    const hit = (JSON.parse(t).quotes || [])[0];
+    if (hit) out.en = String(hit.shortname || hit.longname || '').trim();
+  } catch (e) { /* 代理不可用 */ }
+  return out;
 }
 /* 本地代理：支持直接填端口（6789 / 127.0.0.1:6789 / http://host:port / socks5://host:port）。
    桌面版把地址交给 C# 端重建 HttpClient；浏览器版无法设置系统代理，忽略。 */
@@ -2268,6 +2301,7 @@ function syncLevUI() {
    18. 渲染
    ============================================================ */
 function renderAll() {
+  syncCustomNames();          // 自选股按当前语言换名字
   renderTop();
   renderWatch();
   renderChartHead();
@@ -2714,6 +2748,25 @@ function updateAddHint() {
   hint.innerHTML = `识别为 <b style="color:var(--txt)">${MARKETS[mkt].label}股票</b> · 每手 ${lot} 股 · `
     + `初始保证金 ${num(d.initM * 100, 0)}% / 维持 ${num(d.maintM * 100, 0)}% / 上限 ${num(d.levMax, 2)}× · ${d.ccy}`;
   hint.style.color = 'var(--mut)';
+  scheduleAddNameLookup(code, mkt);
+}
+
+// 输入代码后自动补公司名（防抖 500ms，用户已填名称则不覆盖）
+let addNameTimer = 0;
+function scheduleAddNameLookup(code, mkt) {
+  clearTimeout(addNameTimer);
+  const nameEl = $('#addName');
+  if (!nameEl || (nameEl.value || '').trim()) return;
+  addNameTimer = setTimeout(async () => {
+    const cur = ($('#addCode').value || '').trim().toUpperCase();
+    if (cur !== code) return;
+    const n = await lookupCompanyName({ id: code, code: code.replace(/\.(T|HK)$/i, ''), mkt });
+    if ((($('#addCode').value || '').trim().toUpperCase()) !== code) return;
+    if (!n.zh && !n.en) return;
+    if (!(nameEl.value || '').trim()) nameEl.value = n.zh || n.en;
+    const hint = $('#addHint');
+    if (hint) hint.innerHTML += ` · 自动取名 <b style="color:var(--txt)">${n.zh || '—'}</b> / ${n.en || '—'}`;
+  }, 500);
 }
 
 function doAddSymbol() {
@@ -2731,7 +2784,7 @@ function doAddSymbol() {
 
   const spec = makeCustomSpec(code, name, lot, px);
   if (!spec) return toast('创建失败', '品种参数异常', 'err');
-  state.custom.push({ id: spec.id, name: spec.name, lot: spec.lot, px: spec.px });
+  state.custom.push({ id: spec.id, name: spec.name, nameEn: '', lot: spec.lot, px: spec.px });
   INST.push(spec);
   IMAP[spec.id] = spec;
   makeQuote(spec, px);
@@ -2741,6 +2794,7 @@ function doAddSymbol() {
   gotoMarket(spec.mkt, spec.id);
   save(); renderAll();
   toast('已添加自选', `${spec.name}（${spec.id}）`, 'ok');
+  if (!name) autofillName(spec);          // 没填名字就异步取公司名（不阻塞添加）
   logLine('sys', `添加自选品种 ${spec.name} ${spec.id}，每手 ${spec.lot} 股`);
 
   // 尝试补真实行情；拉不到就从参考价开始模拟
@@ -2752,6 +2806,20 @@ function doAddSymbol() {
       toast('暂用模拟行情', '实时行情不可用，已从参考价开始模拟', 'warn');
     });
   }
+}
+
+// 添加后异步补公司名（中文名 + 英文名一起存，切语言时各取所需）
+async function autofillName(spec) {
+  const n = await lookupCompanyName(spec);
+  if (!n.zh && !n.en) return;
+  spec.nameZh = n.zh || n.en;
+  spec.nameEn = n.en || n.zh;
+  const picked = pickCustomName(spec);
+  if (picked) spec.name = picked;
+  const c = (state.custom || []).find(x => x.id === spec.id);
+  if (c) { c.name = spec.nameZh; c.nameEn = spec.nameEn; }
+  save(); renderAll();
+  toast('已自动填入公司名', spec.name, 'ok');
 }
 
 function removeCustom(id) {
