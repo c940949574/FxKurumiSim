@@ -1728,7 +1728,7 @@ window.I18N_DICT = {
 },
 "本金": {
 "en": "Principal",
-"ja": "元手",
+"ja": "元本",
 "ko": "원금"
 },
 "权益低于维持保证金要求的 125% 时发出追加保证金通知，倒计时 24 小时（模拟时间）": {
@@ -2266,10 +2266,10 @@ window.I18N_DICT = {
 "ja": "アカウントは安全なレベルに戻りました。",
 "ko": "계정이 안전한 수준으로 회복되었습니다."
 },
-"账户已资不抵债，重置账户可重开一局": {
-"en": "The account is insolvent. Reset the account to start over.",
-"ja": "口座は債務超過です。口座をリセットすると最初からやり直せます。",
-"ko": "계정이 채무 초과 상태입니다. 계정을 재설정하면 새로 시작할 수 있습니다."
+"账户已资不抵债": {
+"en": "Equity has gone negative.",
+"ja": "資産がマイナスになりました。",
+"ko": "자산이 마이너스가 되었습니다."
 },
 "账户权益": {
 "en": "Account balance",
@@ -2380,6 +2380,11 @@ window.I18N_DICT = {
 "en": "Reset account",
 "ja": "アカウントをリセットする",
 "ko": "계정 초기화"
+},
+"重置账户可重开一局": {
+"en": "Reset the account to start over.",
+"ja": "リセットすれば最初からやり直せます。",
+"ko": "초기화하면 처음부터 다시 시작할 수 있습니다."
 },
 "钱多到很难爆仓，适合随手试单、验证策略，或者纯粹想看数字跳": {
 "en": "There’s so much money that it’s difficult to lose everything. It’s suitable for testing trades, validating strategies, or just for enjoying the numbers changing.",

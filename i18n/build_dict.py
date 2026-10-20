@@ -160,11 +160,15 @@ CORRECTIONS = {
     "爆仓":   {"en": "Blown up", "ja": "強制決済", "ko": "강제 청산"},
     "认输":   {"en": "I give up", "ja": "降参", "ko": "항복"},
     "总权益": {"en": "Equity", "ja": "総資産", "ko": "총자산"},
-    "本金":   {"en": "Principal", "ja": "元手", "ko": "원금"},
-    "账户已资不抵债，重置账户可重开一局": {
-        "en": "The account is insolvent. Reset the account to start over.",
-        "ja": "口座は債務超過です。口座をリセットすると最初からやり直せます。",
-        "ko": "계정이 채무 초과 상태입니다. 계정을 재설정하면 새로 시작할 수 있습니다."},
+    "本金":   {"en": "Principal", "ja": "元本", "ko": "원금"},
+    "账户已资不抵债": {
+        "en": "Equity has gone negative.",
+        "ja": "資産がマイナスになりました。",
+        "ko": "자산이 마이너스가 되었습니다."},
+    "重置账户可重开一局": {
+        "en": "Reset the account to start over.",
+        "ja": "リセットすれば最初からやり直せます。",
+        "ko": "초기화하면 처음부터 다시 시작할 수 있습니다."},
 }
 for z, v in CORRECTIONS.items():
     if z not in merged:
