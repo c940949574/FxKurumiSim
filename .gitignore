@@ -10,3 +10,7 @@ dist-csharp/
 _*.py
 *.tmp
 投资模拟终端*.html
+models/
+AI-models/
+*.gguf
+/app/
