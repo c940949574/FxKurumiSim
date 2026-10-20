@@ -200,6 +200,7 @@ internal sealed class MainForm : Form
             getProxy:    ()  => call('getProxy'),
             readKline:   (id) => call('readKline', id),
             downloadKline: (id, sym) => call('downloadKline', id, sym),
+            saveKline:   (id, json) => call('saveKline', id, json),
             listKlines:  () => call('listKlines')
           };
         })();
@@ -253,6 +254,7 @@ internal sealed class MainForm : Form
             case "getProxy": return _proxySpec;
             case "readKline": return SafeRead(Path.Combine(KLineDir, SafeName(a[0]) + ".json"));
             case "downloadKline": return await DownloadKline(a[0], a.Length > 1 && !string.IsNullOrWhiteSpace(a[1]) ? a[1] : a[0]);
+            case "saveKline": return SaveKline(a[0], a.Length > 1 ? a[1] : "");
             case "listKlines": return ListKlines();
             default: throw new Exception("unknown method " + method);
         }
@@ -364,6 +366,29 @@ internal sealed class MainForm : Form
             return new { id, n = bars.Count, start = (long)bars[0][0], end = (long)bars[^1][0] };
         }
         catch (Exception ex) { return new { id, n = 0, err = ex.Message }; }
+    }
+
+    /// <summary>把渲染层从国内免费源抓到的日线落盘（与 DownloadKline 同格式），下次启动直接命中缓存</summary>
+    private static object SaveKline(string id, string json)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(json)) return 0;
+            using var doc = JsonDocument.Parse(json);
+            var root = doc.RootElement;
+            if (root.ValueKind != JsonValueKind.Array || root.GetArrayLength() < 5) return 0;
+            var first = root[0];
+            if (first.ValueKind != JsonValueKind.Array || first.GetArrayLength() < 5) return 0;
+            var start = first[0].GetInt64();
+            Directory.CreateDirectory(KLineDir);
+            var payload = JsonSerializer.Serialize(new { v = 1, id, start, bars = root });
+            var path = Path.Combine(KLineDir, SafeName(id) + ".json");
+            var tmp = path + ".tmp";
+            File.WriteAllText(tmp, payload, new UTF8Encoding(false));
+            File.Move(tmp, path, true);          // 原子替换，避免中断留下半个文件
+            return root.GetArrayLength();
+        }
+        catch { return 0; }
     }
 
     private static object ListKlines()

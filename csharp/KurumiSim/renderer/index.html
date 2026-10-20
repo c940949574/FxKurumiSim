@@ -1165,6 +1165,15 @@ function aggByPeriod(bars, p) {
   if (cur) out.push(cur);
   return out;
 }
+// 兜底源日线落盘：写到 文档\KurumiSim\klines\<id>.json，与 C# DownloadKline 同格式
+function saveKlCache(inst, bars) {
+  if (!(window.Kurumi && window.Kurumi.saveKline) || !bars || bars.length < 5) return;
+  try {
+    const r4 = v => Math.round(v * 1e4) / 1e4;
+    const payload = JSON.stringify(bars.map(b => [b.t, r4(b.o), r4(b.h), r4(b.l), r4(b.c)]));
+    window.Kurumi.saveKline(inst.id, payload).catch(() => {});
+  } catch (e) { /* 落盘失败不影响显示 */ }
+}
 // 日线打底：美股走新浪（1984 起全历史），港股/日股走腾讯
 async function fetchDaily(inst) {
   let bars = [];
@@ -1214,6 +1223,8 @@ async function fetchDaily(inst) {
       }
     }
   } catch (e) { bars = []; }
+  // 兜底源抓到的就顺手落盘，下次启动直接命中本地缓存（否则自选股每次重启都要重抓）
+  if (bars.length >= 5) saveKlCache(inst, bars);
   return bars.length >= 5 ? bars : [];
 }
 function syncPriceFromBars(inst, bars) {
