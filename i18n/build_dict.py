@@ -160,6 +160,7 @@ CORRECTIONS = {
     # A股相关
     "A股":    {"en": "A-shares", "ja": "A株", "ko": "A주"},
     "下单面板": {"en": "Order panel", "ja": "注文パネル", "ko": "주문 패널"},
+    "均线":   {"en": "MA", "ja": "移動平均", "ko": "이동평균"},
     "收起":   {"en": "Collapse", "ja": "たたむ", "ko": "접기"},
     "展开":   {"en": "Expand", "ja": "ひらく", "ko": "펼치기"},
     "上海":   {"en": "Shanghai", "ja": "上海", "ko": "상하이"},

@@ -467,6 +467,7 @@ button{cursor:pointer;background:none;border:none}
               <button data-tf="m">月</button>
               <button data-tf="q">季</button>
               <button data-tf="y">年</button>
+              <button id="btnMA" class="on">均线</button>
             </div>
             <div class="meta" id="cMeta"></div>
           </div>
@@ -1421,10 +1422,10 @@ function syncTodayBar(inst) {
 function chartBars(inst) {
   const q = quotes[inst.id];
   const tf = ui.tf || 'm1';
-  if (q.kl && q.kl[tf] && q.kl[tf].length) return q.kl[tf].slice(-110);
+  if (q.kl && q.kl[tf] && q.kl[tf].length) return q.kl[tf].slice(-200);   // 200 根保证 MA60 也能铺满一屏
   const n = { m1: 1, m5: 5, m10: 10 }[tf];
   if (!n) return [];                       // 日/周/月/季/年没有历史源时明确留空，不用分钟数据冒充
-  return aggregateBars(q.bars, n).slice(-110);
+  return aggregateBars(q.bars, n).slice(-200);
 }
 
 async function pollFeed() {
@@ -2206,6 +2207,30 @@ function drawChart() {
     ctx.beginPath(); ctx.moveTo(x + bw * 0.5, y(b.h)); ctx.lineTo(x + bw * 0.5, y(b.l));
     ctx.lineWidth = 1; ctx.stroke();
   });
+  // 均线 MA5/10/20/60（收盘价算术平均），左上角标当前值
+  if (ui.showMA !== false) {
+    const MA_SET = [[5, '#F6C445'], [10, '#4DA3FF'], [20, '#E879E8'], [60, '#48D597']];
+    ctx.lineWidth = 1.2;
+    ctx.textAlign = 'left';
+    ctx.font = '10.5px Consolas, "MiSans", monospace';
+    let lx = padL + 6;
+    for (const [n, col] of MA_SET) {
+      let s = 0, lastVal = 0; const pts = [];
+      for (let i = 0; i < bars.length; i++) {
+        s += bars[i].c;
+        if (i >= n) s -= bars[i - n].c;
+        if (i >= n - 1) { lastVal = s / n; pts.push([x0 + i * bw + bw * 0.5, y(lastVal)]); }
+      }
+      if (!pts.length) continue;
+      ctx.strokeStyle = col; ctx.beginPath();
+      pts.forEach(([px, py], k) => k ? ctx.lineTo(px, py) : ctx.moveTo(px, py));
+      ctx.stroke();
+      const txt = `MA${n} ${num(lastVal, 2)}`;
+      ctx.fillStyle = col;
+      ctx.fillText(txt, lx, padT + 11);
+      lx += ctx.measureText(txt).width + 14;
+    }
+  }
   // 刚切到实时：只有很少几根，补一句说明，避免被当成画坏了
   if (bars.length < 5) {
     ctx.fillStyle = '#4A5563';
@@ -3022,12 +3047,18 @@ function bind() {
   $('#fxGo').onclick = doFx;
   $('#fxMax').onclick = () => { $('#fxAmt').value = cashOf($('#fxFrom').value); updateFx(); };
   $$('.scard').forEach(b => b.onclick = () => startGame(b.dataset.start));
-  $$('#tfSet button').forEach(b => b.onclick = async () => {
+  $$('#tfSet button[data-tf]').forEach(b => b.onclick = async () => {
     ui.tf = b.dataset.tf;
-    $$('#tfSet button').forEach(x => x.classList.toggle('on', x === b));
+    $$('#tfSet button[data-tf]').forEach(x => x.classList.toggle('on', x === b));
     drawChart();
     if (await loadKline(IMAP[ui.sym], ui.tf)) drawChart();   // 拉到历史再重绘
   });
+  const bMA = $('#btnMA');
+  if (bMA) bMA.onclick = () => {
+    ui.showMA = (ui.showMA === false);        // 之前关则开，之前开/未定义则关
+    bMA.classList.toggle('on', ui.showMA);
+    drawChart();
+  };
   $('#addCode').oninput = updateAddHint;
   $('#addPx').oninput = updateAddHint;
   $('#addLot').oninput = updateAddHint;
