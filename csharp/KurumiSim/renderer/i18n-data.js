@@ -746,6 +746,11 @@ window.I18N_DICT = {
 "ja": "8. コストモデル（市場別、商品別で利用可能）",
 "ko": "8. 비용 모델 (시장별, 품목별로 제공 가능)"
 },
+"A股": {
+"en": "A-shares",
+"ja": "A株",
+"ko": "A주"
+},
 "CCASS 结算费": {
 "en": "CCASS settlement fee",
 "ja": "CCASS決済手数料",
@@ -775,6 +780,11 @@ window.I18N_DICT = {
 "en": "FRC tax rate: 0.00015%",
 "ja": "FRC税率：0.00015％",
 "ko": "FRC 세율: 0.00015%"
+},
+"JP / US / HK / A股": {
+"en": "JP / US / HK / A Stock Market",
+"ja": "JP / US / HK / A 株式市場",
+"ko": "JP / US / HK / A 주식 시장"
 },
 "JPY ·  本金": {
 "en": "JPY · Principal amount",
@@ -826,6 +836,11 @@ window.I18N_DICT = {
 "ja": "三菱UFJ",
 "ko": "미쓰비시 UFJ"
 },
+"上海": {
+"en": "Shanghai",
+"ja": "上海",
+"ko": "상하이"
+},
 "上限": {
 "en": "Upper limit",
 "ja": "上限",
@@ -846,6 +861,11 @@ window.I18N_DICT = {
 "ja": "東京",
 "ko": "도쿄"
 },
+"东方财富": {
+"en": "Oriental Wealth",
+"ja": "オリエンタル・ウエルス",
+"ko": "동양의 부"
+},
 "个采样点 · 模拟时间   小时": {
 "en": "One sampling point · Simulation time in hours",
 "ja": "1つのサンプリングポイント · シミュレーション時間（時間単位）",
@@ -855,6 +875,11 @@ window.I18N_DICT = {
 "en": "China's manufacturing PMI",
 "ja": "中国の製造業PMI",
 "ko": "중국 제조업 PMI"
+},
+"中国平安": {
+"en": "China Ping An",
+"ja": "中国平安",
+"ko": "중국 핑안"
 },
 "丰田汽车": {
 "en": "Toyota cars",
@@ -875,6 +900,11 @@ window.I18N_DICT = {
 "en": "What currency should I use for the purchase?",
 "ja": "購入にどの通貨を使えばいいですか？",
 "ko": "구매할 때 어떤 통화를 사용해야 하나요?"
+},
+"五粮液": {
+"en": "Wuliangye",
+"ja": "ウラオイェ",
+"ko": "우리앙예"
 },
 "交收完成": {
 "en": "Payment settlement completed",
@@ -960,6 +990,11 @@ window.I18N_DICT = {
 "en": "You will use",
 "ja": "あなたは使用する",
 "ko": "당신은 사용할 것입니다."
+},
+"佣金 0.025%（低消 5）": {
+"en": "Commission 0.025% (min 5)",
+"ja": "手数料 0.025%（最低5元）",
+"ko": "수수료 0.025%(최소 5)"
 },
 "佣金 0.03%（低消 50）": {
 "en": "Commission: 0.03% (for low usage of 50)",
@@ -1070,6 +1105,11 @@ window.I18N_DICT = {
 "en": "Selling from which currency?",
 "ja": "どの通貨で売るか？",
 "ko": "어느 통화로 판매하나요?"
+},
+"印花税 0.05%（卖出）": {
+"en": "Stamp duty 0.05% (on sell)",
+"ja": "印紙税 0.05%（売却時）",
+"ko": "인지세 0.05%(매도 시)"
 },
 "印花税 0.1%（双向）": {
 "en": "Stamp duty 0.1% (both directions)",
@@ -1210,6 +1250,11 @@ window.I18N_DICT = {
 "en": "Quarterline",
 "ja": "クォーターライン",
 "ko": "분기선"
+},
+"宁德时代": {
+"en": "Enel Xing",
+"ja": "エネル・シング",
+"ko": "엔엘 싱"
 },
 "宏观事件": {
 "en": "Macro events",
@@ -1530,6 +1575,11 @@ window.I18N_DICT = {
 "en": "Rejecting orders",
 "ja": "命令を拒否する",
 "ko": "주문 거부"
+},
+"招商银行": {
+"en": "China Merchants Bank",
+"ja": "中国商業銀行",
+"ko": "중국 상인은행"
 },
 "持仓卡片": {
 "en": "Position card",
@@ -1866,6 +1916,11 @@ window.I18N_DICT = {
 "ja": "1ポイントあたりの価値",
 "ko": "포인트당 가치"
 },
+"比亚迪": {
+"en": "BYD",
+"ja": "BYD",
+"ko": "BYD"
+},
 "汇丰控股": {
 "en": "HSBC Holdings",
 "ja": "HSBCホールドスピンズ",
@@ -2041,6 +2096,11 @@ window.I18N_DICT = {
 "ja": "ソニーグループ",
 "ko": "소니 그룹"
 },
+"紫金矿业": {
+"en": "Zijin Mining",
+"ja": "ジン鉱業",
+"ko": "지인 광업"
+},
 "纽约": {
 "en": "New York",
 "ja": "ニューヨーク",
@@ -2105,11 +2165,6 @@ window.I18N_DICT = {
 "en": "U.S. stocks",
 "ja": "米国の株",
 "ko": "미국 주식"
-},
-"股票  · 每手   股": {
-"en": "Stocks · per share",
-"ja": "株価・1株あたり",
-"ko": "주식 · 주당"
 },
 "胜率": {
 "en": "Win rate",
@@ -2281,6 +2336,11 @@ window.I18N_DICT = {
 "ja": "アカウントモデル",
 "ko": "계정 모델"
 },
+"贵州茅台": {
+"en": "Guizhou Moutai",
+"ja": "貴州・毛臘",
+"ko": "구이저우 모타이"
+},
 "费用(JPY)": {
 "en": "Cost (JPY)",
 "ja": "コスト（円）",
@@ -2345,6 +2405,11 @@ window.I18N_DICT = {
 "en": "Loading failed",
 "ja": "読み込みに失敗しました",
 "ko": "로드 중에 실패했습니다."
+},
+"过户费 0.001%": {
+"en": "Transfer fee 0.001%",
+"ja": "名義変更料 0.001%",
+"ko": "명의변경 수수료 0.001%"
 },
 "追保线": {
 "en": "Follow the protection line",
@@ -2425,6 +2490,11 @@ window.I18N_DICT = {
 "en": "Difficulty · High",
 "ja": "困難度・高い",
 "ko": "난이도 · 높음"
+},
+"雷霆大A": {
+"en": "Lei Ting Da A",
+"ja": "雷霆大ア",
+"ko": "레이팅다아"
 },
 "非农就业数据": {
 "en": "Non-agricultural employment data",
