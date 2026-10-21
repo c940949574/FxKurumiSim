@@ -238,6 +238,27 @@ button{cursor:pointer;background:none;border:none}
 .flyword{font-size:34px;font-weight:800;letter-spacing:3px;color:#F0553F;text-shadow:0 0 22px rgba(240,85,63,.5);animation:flyIn .45s cubic-bezier(.2,.9,.3,1.4)}
 @keyframes flyIn{from{transform:translateY(-18px) scale(.86);opacity:0}to{transform:none;opacity:1}}
 .flysub{margin-top:12px;font-size:12px;color:var(--mut);line-height:1.9}
+.ai-strats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ai-card{
+  display:block;border:1px solid var(--line2);border-radius:8px;padding:8px 10px;cursor:pointer;
+  background:var(--panel2);transition:border-color .15s,background .15s;
+}
+.ai-card input{display:none}
+.ai-card b{display:block;font-size:12.5px;font-weight:600;color:var(--txt);margin-bottom:2px}
+.ai-card i{display:block;font-style:normal;font-size:10.5px;color:var(--dim);line-height:1.55}
+.ai-card:hover{border-color:var(--mut)}
+.ai-card.on{border-color:var(--blue);background:rgba(61,139,255,.10)}
+.ai-row{
+  display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:7px;
+  border:1px solid var(--line2);margin-top:6px;font-size:11.5px;
+}
+.ai-row .rk{width:20px;color:var(--dim);font-family:var(--mono)}
+.ai-row .nm{flex:1;min-width:0}
+.ai-row .nm b{display:block;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ai-row .nm i{font-style:normal;color:var(--dim);font-size:10px}
+.ai-row .sc{font-family:var(--mono);font-size:12px;font-weight:600;width:52px;text-align:right}
+.ai-row .bar{width:56px;height:5px;border-radius:3px;background:var(--line2);overflow:hidden}
+.ai-row .bar em{display:block;height:100%;background:linear-gradient(90deg,#3D8BFF,#12B57E)}
 .submit.cant:hover{filter:grayscale(.45)}
 .est b.bad{color:var(--dn)}
 .est div.overrow{white-space:normal;align-items:flex-start;font-size:10px;color:#E8877A;padding-top:2px}
@@ -444,6 +465,7 @@ button{cursor:pointer;background:none;border:none}
       <div class="pane-h"><span>自选行情</span>
         <span style="display:flex;align-items:center;gap:6px">
           <span id="watchMeta" style="font-family:var(--mono)">—</span>
+          <button class="btn sm" id="btnAI" title="AI 策略选股" style="padding:1px 7px;font-size:11px;line-height:1.2">AI</button>
           <button class="btn sm" id="btnAddSym" title="添加自选品种" style="padding:1px 7px;font-size:13px;line-height:1.2">＋</button>
         </span>
       </div>
@@ -639,6 +661,37 @@ button{cursor:pointer;background:none;border:none}
         <input type="number" id="addPx" value="100" min="0.0001" step="any"></div>
       <div class="hint" id="addHint" style="margin:10px 0 4px;line-height:1.7">—</div>
       <button class="btn primary" style="width:100%;padding:8px;margin-top:8px" id="addGo">添加到自选</button>
+    </div>
+  </div>
+</div>
+<div class="mask" id="maskAI">
+  <div class="modal" style="width:min(620px,100%)">
+    <div class="modal-h"><b>AI 策略选股</b><button class="mclose" data-close title="关闭" aria-label="关闭">×</button></div>
+    <div class="modal-b">
+      <div class="ai-strats" id="aiStrats">
+        <label class="ai-card on"><input type="radio" name="aiStrat" value="mom" checked>
+          <b>趋势动量</b><i>20 日涨幅领先，且站上 MA20 / MA60</i></label>
+        <label class="ai-card"><input type="radio" name="aiStrat" value="cross">
+          <b>均线金叉</b><i>MA5 近期上穿 MA20，趋势转多</i></label>
+        <label class="ai-card"><input type="radio" name="aiStrat" value="bounce">
+          <b>超跌反弹</b><i>20 日跌幅大 + RSI 低位 + 今日转红</i></label>
+        <label class="ai-card"><input type="radio" name="aiStrat" value="break">
+          <b>区间突破</b><i>放量突破 20 日高点，动量确认</i></label>
+        <label class="ai-card"><input type="radio" name="aiStrat" value="lowvol">
+          <b>低波动稳健</b><i>波动小、回撤浅，稳步上行</i></label>
+      </div>
+      <div class="frow" style="display:flex;gap:10px;margin-top:12px">
+        <label style="flex:1">市场范围
+          <select id="aiMkt"><option value="">全部市场</option>
+            <option value="JP">日本</option><option value="US">美国</option>
+            <option value="HK">香港</option><option value="CN">雷霆大A</option></select></label>
+        <label style="flex:1">取前几名
+          <select id="aiN"><option value="3">3</option><option value="5" selected>5</option>
+            <option value="10">10</option></select></label>
+      </div>
+      <button class="btn primary" style="width:100%;padding:9px;margin-top:12px" id="aiRun">开始筛选</button>
+      <div class="hint" id="aiHint" style="margin:10px 0 4px">选择策略后点击「开始筛选」，按近期日线逐个打分。</div>
+      <div id="aiResult"></div>
     </div>
   </div>
 </div>
@@ -843,6 +896,7 @@ const state = {
   dayTrades: [],              // PDT 计数
   marginCall: null,           // {since, deadline}
   liquidationCount: 0,
+  aiPicks: [],
   feeTotal: 0,
   swapTotal: 0,
   realized: 0,
@@ -1525,6 +1579,7 @@ function snapshot() {
     feeTotal: state.feeTotal, swapTotal: state.swapTotal, realized: state.realized,
     settlements: state.settlements, nextSettle: state.nextSettle,
     custom: state.custom,
+    aiPicks: state.aiPicks || [],
     feedMode: state.feedMode, proxy: state.proxy, proxyMigrated: state.proxyMigrated, pollMs: state.pollMs,
     ignoreSession: state.ignoreSession, accel: state.accel
   });
@@ -1553,6 +1608,7 @@ function load() {
       swapTotal: o.swapTotal ?? 0, realized: o.realized ?? 0,
       settlements: o.settlements ?? [], nextSettle: o.nextSettle ?? 0,
       custom: Array.isArray(o.custom) ? o.custom : [],
+      aiPicks: Array.isArray(o.aiPicks) ? o.aiPicks : [],
       // 旧档里的 auto 迁移为 live：默认真实行情
       feedMode: (o.feedMode && o.feedMode !== 'auto') ? o.feedMode : 'live',
       proxy: o.proxy ?? '', proxyMigrated: o.proxyMigrated ?? false, pollMs: o.pollMs ?? 30000,
@@ -2510,15 +2566,18 @@ function renderTop() {
 function renderWatch() {
   const mkt = state.board === 'stock' ? state.mkt : state.board === 'fut' ? 'FUT'
     : state.board === 'fx' ? 'FX' : currentMkt();
-  const list = INST.filter(i => i.mkt === mkt);
+  const picks = state.aiPicks || [];
+  const list = INST.filter(i => i.mkt === mkt)
+    .sort((a, b) => (picks.includes(b.id) ? 1 : 0) - (picks.includes(a.id) ? 1 : 0));
   const html = list.map(inst => {
     const q = quotes[inst.id];
     const chg = q.prev ? (q.px / q.prev - 1) * 100 : 0;
     const cls = chg > 0 ? 'up' : chg < 0 ? 'dn' : 'flat';
     const hold = state.positions.filter(p => p.sym === inst.id).length;
     const tag = inst.custom ? ' <span class="pill m" title="自选品种">自</span>' : '';
+    const ai = picks.includes(inst.id) ? ' <span class="pill m" title="AI 策略自选">AI</span>' : '';
     return `<div class="quote ${ui.sym === inst.id ? 'on' : ''} ${inst.custom ? 'custom' : ''}" data-sym="${inst.id}">
-      <div><div class="n">${inst.name}${tag}${hold ? ' <span class="pill m">持</span>' : ''}</div>
+      <div><div class="n">${inst.name}${tag}${ai}${hold ? ' <span class="pill m">持</span>' : ''}</div>
       <div class="c">${inst.code} · ${MARKETS[inst.mkt].label}</div></div>
       <div><div class="p ${cls}">${pxFmt(inst, q.px)}</div><div class="ch ${cls}">${sgn(chg, 2)}%</div></div>
       ${inst.custom ? `<button class="del" data-del="${inst.id}" title="移出自选">×</button>` : ''}
@@ -2875,6 +2934,130 @@ function gotoMarket(mkt, sym) {
   setInstrument(sym);
 }
 
+/* ============================================================
+   18.5b AI 策略选股：用近期日线给标的打分（0-100）
+   ============================================================ */
+function maArr(closes, n) {
+  const out = new Array(closes.length).fill(null);
+  let s = 0;
+  for (let i = 0; i < closes.length; i++) {
+    s += closes[i];
+    if (i >= n) s -= closes[i - n];
+    if (i >= n - 1) out[i] = s / n;
+  }
+  return out;
+}
+function rsiArr(closes, n) {
+  const out = new Array(closes.length).fill(null);
+  let ag = 0, al = 0;
+  for (let i = 1; i < closes.length; i++) {
+    const ch = closes[i] - closes[i - 1];
+    const g = Math.max(0, ch), l = Math.max(0, -ch);
+    if (i <= n) { ag += g / n; al += l / n; }
+    else { ag = (ag * (n - 1) + g) / n; al = (al * (n - 1) + l) / n; }
+    out[i] = al === 0 ? 100 : 100 - 100 / (1 + ag / al);
+  }
+  return out;
+}
+const AI_STRATS = [
+  { id: 'mom', name: '趋势动量' }, { id: 'cross', name: '均线金叉' },
+  { id: 'bounce', name: '超跌反弹' }, { id: 'break', name: '区间突破' },
+  { id: 'lowvol', name: '低波动稳健' }
+];
+function scoreByStrat(id, b) {
+  const n = b.length, c = b.map(x => x.c);
+  if (n < 25) return null;
+  const m20 = maArr(c, 20), m60 = maArr(c, 60), r14 = rsiArr(c, 14);
+  const last = n - 1;
+  const ret20 = c[last] / c[n - 21] - 1;
+  if (id === 'mom') {
+    const above = (c[last] > m20[last] ? 1 : 0) + (c[last] > m60[last] ? 1 : 0);
+    return { score: clamp(Math.round(50 + ret20 * 400 + above * 12), 0, 100),
+             why: `20日${sgn(ret20 * 100, 1)}% · 均线之上 ${above}/2` };
+  }
+  if (id === 'cross') {
+    const a5 = maArr(c, 5);
+    let cross = 0;
+    for (let i = Math.max(1, n - 5); i <= last; i++) {
+      if (a5[i - 1] && a5[i] && m20[i - 1] && m20[i] && a5[i - 1] <= m20[i - 1] && a5[i] > m20[i]) cross = n - i;
+    }
+    const rise = m20[last] > m20[Math.max(0, last - 5)] ? 1 : 0;
+    return { score: clamp(35 + (cross ? 35 : 0) + rise * 20 + (c[last] > m20[last] ? 10 : 0), 0, 100),
+             why: cross ? `近 ${cross} 根内金叉 · MA20${rise ? '上行' : '下行'}` : `无金叉 · MA5${c[last] > m20[last] ? '在' : '不在'} MA20 上` };
+  }
+  if (id === 'bounce') {
+    const up = b[last].c >= b[last].o;
+    return { score: clamp(Math.round(40 + (-ret20) * 300 + (r14[last] < 35 ? 25 : r14[last] < 45 ? 12 : 0) + (up ? 12 : 0)), 0, 100),
+             why: `20日${sgn(ret20 * 100, 1)}% · RSI ${num(r14[last], 0)}${up ? ' · 转红' : ''}` };
+  }
+  if (id === 'break') {
+    let prior = -Infinity;
+    for (let i = Math.max(0, n - 21); i <= n - 2; i++) prior = Math.max(prior, b[i].h);
+    const broke = c[last] > prior;
+    return { score: clamp(30 + (broke ? 45 : 0) + (c[last] > m20[last] ? 15 : 0), 0, 100),
+             why: broke ? '突破 20 日高点' : `距高点 ${num((prior / c[last] - 1) * 100, 1)}%` };
+  }
+  // lowvol
+  let amp = 0;
+  for (let i = Math.max(1, n - 20); i < n; i++) amp += Math.abs(c[i] / c[i - 1] - 1);
+  amp /= Math.min(20, n - 1);
+  const peak = Math.max(...b.slice(-20).map(x => x.h));
+  const dd = c[last] / peak - 1;
+  return { score: clamp(Math.round(72 - amp * 2500 + (c[last] > m20[last] ? 12 : 0) + dd * 60), 0, 100),
+           why: `日均波幅 ${num(amp * 100, 2)}% · ${c[last] > m20[last] ? '站上' : '跌破'} MA20` };
+}
+
+async function runAiScan() {
+  const sel = document.querySelector('input[name="aiStrat"]:checked');
+  const stratId = sel ? sel.value : 'mom';
+  const mkt = $('#aiMkt').value;
+  const N = +$('#aiN').value || 5;
+  const hint = $('#aiHint'), box = $('#aiResult');
+  const pool = INST.filter(i => i.kind === 'stock' && (!mkt || i.mkt === mkt));
+  box.innerHTML = '';
+  if (!pool.length) { hint.textContent = '该范围内没有可评分的品种'; return; }
+  const rows = [];
+  for (let i = 0; i < pool.length; i++) {
+    const inst = pool[i];
+    hint.textContent = `评分中 ${i + 1}/${pool.length} · ${inst.name}`;
+    let bars = (quotes[inst.id] && quotes[inst.id].kl && quotes[inst.id].kl._d) || null;
+    if (!bars || !bars.length) {
+      try {
+        bars = await fetchDaily(inst);
+        if (bars && bars.length) {
+          quotes[inst.id].kl = quotes[inst.id].kl || {};
+          quotes[inst.id].kl._d = bars;
+        }
+      } catch (e) { bars = []; }
+    }
+    const r = bars && bars.length ? scoreByStrat(stratId, bars) : null;
+    if (r) rows.push({ inst, score: r.score, why: r.why });
+    await new Promise(done => setTimeout(done, 0));
+  }
+  rows.sort((a, b) => b.score - a.score);
+  const top = rows.slice(0, N);
+  const picks = state.aiPicks || [];
+  hint.textContent = `${rows.length} 个标的有数据，已按评分排序（策略：${(AI_STRATS.find(s => s.id === stratId) || {}).name}）`;
+  box.innerHTML = top.map((r, i) => `
+    <div class="ai-row">
+      <span class="rk">${i + 1}</span>
+      <div class="nm"><b>${r.inst.name}</b><i>${r.inst.code} · ${MARKETS[r.inst.mkt].label} · ${r.why}</i></div>
+      <div class="bar"><em style="width:${r.score}%"></em></div>
+      <div class="sc">${r.score}</div>
+      <button class="btn sm" data-view="${r.inst.id}">查看</button>
+      <button class="btn sm" data-pick="${r.inst.id}">${picks.includes(r.inst.id) ? '取消标记' : '标记'}</button>
+    </div>`).join('') + (top.length ? `
+    <button class="btn primary" style="width:100%;padding:8px;margin-top:10px" id="aiPickAll">一键标记前 ${top.length} 个为 AI 自选</button>
+    <button class="btn" style="width:100%;padding:7px;margin-top:8px" id="aiPickNone">清除全部 AI 标记</button>` : '');
+}
+
+function toggleAiPick(id) {
+  const s = state.aiPicks || (state.aiPicks = []);
+  const i = s.indexOf(id);
+  if (i >= 0) s.splice(i, 1); else s.push(id);
+  save(); renderWatch();
+}
+
 function openAddModal() {
   $('#addCode').value = '';
   $('#addName').value = '';
@@ -3044,6 +3227,29 @@ function bind() {
     if (row) setInstrument(row.dataset.sym);
   };
   $('#btnAddSym').onclick = openAddModal;
+  $('#btnAI').onclick = () => { openModal('maskAI'); };
+  $$('#aiStrats .ai-card').forEach(card => card.onclick = () => {
+    $$('#aiStrats .ai-card').forEach(x => x.classList.toggle('on', x === card));
+    card.querySelector('input').checked = true;
+  });
+  $('#aiRun').onclick = runAiScan;
+  $('#aiResult').onclick = e => {
+    const view = e.target.closest('[data-view]');
+    const pick = e.target.closest('[data-pick]');
+    if (view) { setInstrument(view.dataset.view); }
+    if (pick) { toggleAiPick(pick.dataset.pick); runAiScan(); }
+    if (e.target.id === 'aiPickAll') {
+      $$('#aiResult [data-pick]').forEach(btn => {
+        const id = btn.dataset.pick;
+        if (!(state.aiPicks || []).includes(id)) toggleAiPick(id);
+      });
+      runAiScan();
+    }
+    if (e.target.id === 'aiPickNone') {
+      state.aiPicks = [];
+      save(); renderWatch(); runAiScan();
+    }
+  };
   $('#btnFx').onclick = openFx;
   $('#fxFrom').onchange = updateFx;
   $('#fxTo').onchange = updateFx;

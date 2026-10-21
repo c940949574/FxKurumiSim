@@ -21,6 +21,11 @@ window.I18N_DICT = {
 "ja": "必要保証金",
 "ko": "필요 증거금"
 },
+"香港": {
+"en": "Hong Kong",
+"ja": "香港",
+"ko": "홍콩"
+},
 "买入 / 做多": {
 "en": "Buy / Go Long",
 "ja": "買う / ロングに投資する",
@@ -41,10 +46,20 @@ window.I18N_DICT = {
 "ja": "方向",
 "ko": "방향"
 },
+"日本": {
+"en": "Japan",
+"ja": "日本",
+"ko": "일본"
+},
 "期货": {
 "en": "Futures",
 "ja": "先物",
 "ko": "선물"
+},
+"AI 策略选股": {
+"en": "AI Strategy Picks",
+"ja": "AI戦略銘柄選定",
+"ko": "AI 전략 종목"
 },
 "保证金率": {
 "en": "Margin Ratio",
@@ -66,10 +81,10 @@ window.I18N_DICT = {
 "ja": "選択した品種を追加する",
 "ko": "선택한 품종을 추가하세요"
 },
-"香港": {
-"en": "Hong Kong",
-"ja": "香港",
-"ko": "홍콩"
+"美国": {
+"en": "USA",
+"ja": "アメリカ",
+"ko": "미국"
 },
 "可用资金": {
 "en": "available funds",
@@ -81,11 +96,6 @@ window.I18N_DICT = {
 "ja": "強制決済",
 "ko": "강제 청산"
 },
-"日本": {
-"en": "Japan",
-"ja": "日本",
-"ko": "일본"
-},
 "权益": {
 "en": "Equity",
 "ja": "株価",
@@ -95,11 +105,6 @@ window.I18N_DICT = {
 "en": "Direct",
 "ja": "直接接続",
 "ko": "직접 연결"
-},
-"美国": {
-"en": "USA",
-"ja": "アメリカ",
-"ko": "미국"
 },
 "设置": {
 "en": "Set up",
@@ -115,6 +120,16 @@ window.I18N_DICT = {
 "en": "Limit",
 "ja": "指値",
 "ko": "지정가"
+},
+"20日 % · 均线之上  /2": {
+"en": "Day 20: Above the moving average /2",
+"ja": "20日目：移動平均線の上 /2",
+"ko": "20일차: 이동 평균 위에"
+},
+"AI 策略自选": {
+"en": "AI Strategy Selection",
+"ja": "AI戦略選定",
+"ko": "AI 전략 선택"
 },
 "× · 开仓佣金  %，融资利率 + %/年": {
 "en": "× · Opening position commission %, financing rate + %/year",
@@ -181,6 +196,11 @@ window.I18N_DICT = {
 "ja": "閉鎖市場",
 "ko": "닫힌 시장"
 },
+"低波动稳健": {
+"en": "Low Volatility",
+"ja": "低ボラ安定",
+"ko": "저변동 안정"
+},
 "余额": {
 "en": "Balance",
 "ja": "バランス",
@@ -205,6 +225,11 @@ window.I18N_DICT = {
 "en": "Initial capital: ¥10,000,000 (in yen). The reset will clear all positions, pending orders, and historical records.",
 "ja": "初期資本：10,000,000円。リセット後、すべてのポジション、保留注文、歴史データが消去されます。",
 "ko": "초기 자본: ¥10,000,000 (엔 단위). 리셋 시 모든 포지션, 대기 주문, 그리고 역사적 기록이 삭제됩니다."
+},
+"区间突破": {
+"en": "Range Breakout",
+"ja": "レンジブレイク",
+"ko": "레인지 돌파"
 },
 "卖出与买入不能是同一币种": {
 "en": "Selling and buying cannot be in the same currency.",
@@ -246,6 +271,11 @@ window.I18N_DICT = {
 "ja": "サードパーティのレバレッジを有効にする ×（通常の制限値 ×）",
 "ko": "제3자 레버리지 활성화 × (정규 제한 ×)"
 },
+"均线金叉": {
+"en": "MA Golden Cross",
+"ja": "移動平均ゴールデンクロス",
+"ko": "이평선 골든크로스"
+},
 "外汇最小 0.1 手（10,000 基础货币）": {
 "en": "Minimum foreign exchange transaction size: 0.1 lot (10,000 base currency)",
 "ja": "最小為替取引規模：0.1ロット（10,000基準通貨）",
@@ -285,6 +315,11 @@ window.I18N_DICT = {
 "en": "Close",
 "ja": "決済",
 "ko": "청산"
+},
+"开始筛选": {
+"en": "Start Scan",
+"ja": "スクリーニング開始",
+"ko": "선별 시작"
 },
 "强制平仓（ ）：平仓   个，权益": {
 "en": "Forced liquidation ( ): Liquidated 个, equity",
@@ -441,6 +476,11 @@ window.I18N_DICT = {
 "ja": "各ロット",
 "ko": "각 묶음"
 },
+"清除全部 AI 标记": {
+"en": "Clear all AI tags",
+"ja": "AIタグを全解除",
+"ko": "AI 표시 전체 해제"
+},
 "爆仓": {
 "en": "Blown up",
 "ja": "強制決済",
@@ -490,6 +530,11 @@ window.I18N_DICT = {
 "en": "Move out of choice",
 "ja": "選択肢から外れる",
 "ko": "선택의 여지 없이 나가라"
+},
+"突破 20 日高点": {
+"en": "Break through the 20-day high",
+"ja": "20日間の高値を突破する",
+"ko": "20일 고점을 돌파하기"
 },
 "第三方杠杆  ×（超上限，需确认并收  % 佣金）": {
 "en": "Third-party leverage × (exceeds limit, needs confirmation and commission % is required)",
@@ -586,6 +631,11 @@ window.I18N_DICT = {
 "ja": "株価が回路ブレーカー/停止オーダーを引き起こし、取引が停止されました。",
 "ko": "주식이 회로 차단/중단 주문을 발생시켰고, 거래가 중단되었습니다."
 },
+"该范围内没有可评分的品种": {
+"en": "There are no varieties within this range that can be scored.",
+"ja": "この範囲内には、スコアをつけることができる種類はありません。",
+"ko": "이 범위 내에서는 점수를 매길 수 있는 다양한 종류가 없습니다."
+},
 "请填写大于 0 的金额": {
 "en": "Please enter a amount greater than 0.",
 "ja": "0より大きい金額を入力してください。",
@@ -606,10 +656,25 @@ window.I18N_DICT = {
 "ja": "厳しい制限を超える",
 "ko": "강제 한도를 초과함"
 },
+"超跌反弹": {
+"en": "Oversold Bounce",
+"ja": "売られすぎ反発",
+"ko": "과매도 반등"
+},
+"趋势动量": {
+"en": "Trend Momentum",
+"ja": "トレンドモメンタム",
+"ko": "추세 모멘텀"
+},
 "距强平（权益": {
 "en": "Ju Qiangping (Equity)",
 "ja": "朱強平（株式）",
 "ko": "주창핑 (주식)"
+},
+"距高点  %": {
+"en": "High point %",
+"ja": "最高点％",
+"ko": "최고 점수 %"
 },
 "追保解除": {
 "en": "Cancel the follow-up protection",
@@ -630,6 +695,11 @@ window.I18N_DICT = {
 "en": "The amount is invalid",
 "ja": "金額が無効です",
 "ko": "금액이 유효하지 않습니다"
+},
+"雷霆大A": {
+"en": "Lei Ting Da A",
+"ja": "雷霆大ア",
+"ko": "레이팅다아"
 },
 "风险事件": {
 "en": "Risk Event",
@@ -711,6 +781,11 @@ window.I18N_DICT = {
 "ja": "18.レンダリング",
 "ko": "18. 렌더링"
 },
+"18.5b AI 策略选股：用近期日线给标的打分（0-100）": {
+"en": "18.5b AI Stock Selection Strategy: Assign a score (0-100) to targets using recent daily charts",
+"ja": "18.5b AI株選択戦略：最近の日次チャートを利用して対象株にスコア（0-100）を付与する",
+"ko": "18.5b AI 주식 선정 전략: 최근 일일 차트를 이용해 목표 종목에 점수(0-100)를 부여합니다."
+},
 "1M 图 39000 / 报价 64000": {
 "en": "1M Chart 39000 / Quotation 64000",
 "ja": "1Mチャート 39000 / 見積価格 64000",
@@ -726,10 +801,25 @@ window.I18N_DICT = {
 "ja": "20万人民元から",
 "ko": "20만 위안부터 시작"
 },
+"20 日涨幅领先，且站上 MA20 / MA60": {
+"en": "The increase on the 20th day was the most significant, and it reached the MA20 / MA60 level.",
+"ja": "20日目の上昇が最も顕著で、MA20 / MA60レベルに達しました。",
+"ko": "20일째에 증가량이 가장 컸으며, MA20 / MA60 수준에 도달했습니다."
+},
+"20 日跌幅大 + RSI 低位 + 今日转红": {
+"en": "20-day decline is significant + RSI at low levels + Today turned positive",
+"ja": "20日間の下落が顕著 + RSIが低水準 + 今日は正の方向に転じた",
+"ko": "20일간의 하락이 눈에 띄고 RSI도 낮은 수준에 있음 + 오늘은 positive로 전환됨"
+},
 "20. 启动": {
 "en": "20. Start",
 "ja": "20. 開始",
 "ko": "20. 시작"
+},
+"20日 % · RSI  $": {
+"en": "20th day % · RSI $",
+"ja": "20日目 % · RSI $",
+"ko": "20일 차 % · RSI $"
 },
 "35%。费用：佣金 0.03%（低消 HK$50）+ 印花税 0.1%（双向）+ 交易征费 0.0027% + 交易费 0.00565% + FRC 0.00015% + CCASS 结算费 0.002%（2": {
 "en": "35%. Costs: Commission 0.03% (up to HK$50) + Stamp duty 0.1% (both directions) + Transaction levy 0.0027% + Transaction fee 0.00565% + FRC 0.00015% + CCASS settlement fee 0.002% (2",
@@ -801,10 +891,20 @@ window.I18N_DICT = {
 "ja": "JPY · 元本",
 "ko": "JPY · 원금"
 },
+"K线": {
+"en": "Candlestick",
+"ja": "キャンドルスタック",
+"ko": "초상화"
+},
 "LULD 熔断": {
 "en": "LULD fuse blow",
 "ja": "LULD融合爆発",
 "ko": "LULD 융합 폭발"
+},
+"MA5 近期上穿 MA20，趋势转多": {
+"en": "MA5 recently moved above MA20, indicating a turning from bearish to bullish trend",
+"ja": "MA5は最近MA20を上回ったことから、下降相から上昇相への転換を示しています。",
+"ko": "MA5는 최근 MA20 위로 올라갔으며, 이는 약세 추세에서 강세 추세로 전환된다는 신호입니다."
 },
 "PDT 规则：5 日内第 4 笔日内往返且账户权益": {
 "en": "P PDT Rules: 4 intraday trips within 5 days, and account equity",
@@ -836,6 +936,11 @@ window.I18N_DICT = {
 "ja": "save.json（15秒ごとに自動的に保存される）",
 "ko": "save.json (15초마다 자동으로 저장됨)"
 },
+"一键标记前   个为 AI 自选": {
+"en": "Before one-click marking, it is the AI's own selection",
+"ja": "ワンクリックでマークする前に、それはAI自身の選択です",
+"ko": "단일 클릭으로 표시하기 전에, 이는 AI가 직접 선택하는 것입니다."
+},
 "三种本金，三种活法。选一个开局，随时可在设置里重来": {
 "en": "Three types of capital, three ways to live. Choose a starting point, and you can start over in the settings at any time.",
 "ja": "3種類の資本、3つの生き方。出発点を選べば、いつでも設定をやり直すことができます。",
@@ -866,10 +971,20 @@ window.I18N_DICT = {
 "ja": "注文パネル",
 "ko": "주문 패널"
 },
+"下行": {
+"en": "Downlink",
+"ja": "ダウンリンク",
+"ko": "다운링크"
+},
 "下载中  /": {
 "en": "Downloading...",
 "ja": "ダウンロード中…",
 "ko": "다운로드 중..."
+},
+"不在": {
+"en": "Not there",
+"ja": "そこにはない",
+"ko": "거기에는 없어"
 },
 "东京": {
 "en": "Tokyo",
@@ -880,6 +995,11 @@ window.I18N_DICT = {
 "en": "Oriental Wealth",
 "ja": "オリエンタル・ウエルス",
 "ko": "동양의 부"
+},
+"个标的有数据，已按评分排序（策略： ).name": {
+"en": "The metrics have data, sorted by score (Strategy: ). name",
+"ja": "メトリクスにはデータがあり、スコアで並べられています（戦略：）。名前",
+"ko": "지표에는 데이터가 있으며, 점수순으로 정렬되어 있습니다. (전략: ). 이름"
 },
 "个采样点 · 模拟时间   小时": {
 "en": "One sampling point · Simulation time in hours",
@@ -1071,6 +1191,11 @@ window.I18N_DICT = {
 "ja": "それら全て",
 "ko": "그들 모두"
 },
+"全部市场": {
+"en": "All markets",
+"ja": "全市場",
+"ko": "전체 시장"
+},
 "关闭后按各市场真实交易时段校验（含美股盘前盘后）": {
 "en": "After closing, verify during the actual trading hours of each market (including pre-market and after-market periods for US stocks)",
 "ja": "終了後、各市場の実際の取引時間中（米国株のプレトレーディングおよびアフトトレーディング期間も含む）を確認してください。",
@@ -1180,6 +1305,16 @@ window.I18N_DICT = {
 "en": "Fubon Insurance",
 "ja": "フブン保険",
 "ko": "푸본 보험"
+},
+"取前几名": {
+"en": "Top N",
+"ja": "上位N件",
+"ko": "상위 N개"
+},
+"取消标记": {
+"en": "Untag",
+"ja": "解除",
+"ko": "해제"
 },
 "只有满仓（保证金即全部权益）时两者才相等。右侧风控条的": {
 "en": "The two are equal only when the position is fully funded (the margin equals all equity). Right side risk control item",
@@ -1446,6 +1581,11 @@ window.I18N_DICT = {
 "ja": "市場の通常の上限は",
 "ko": "시장의 일반적인 상한선은"
 },
+"市场范围": {
+"en": "Market",
+"ja": "対象市場",
+"ko": "시장 범위"
+},
 "市调机制": {
 "en": "Market research mechanism",
 "ja": "市場調査メカニズム",
@@ -1626,6 +1766,11 @@ window.I18N_DICT = {
 "ja": "注文が完了し、実行されました @ $",
 "ko": "주문이 접수되고 실행되었습니다 @ $"
 },
+"按近期日线逐个打分": {
+"en": "Score each candle based on recent daily charts",
+"ja": "最近の日足チャートに基づいて、各キャンレートのスコアを付けなさい",
+"ko": "최근의 일일 차트를 기반으로 캔들에 점수를 매기세요."
+},
 "按钮按对手价立即平仓。所有内容自动保存在本机浏览器，可在设置里导出/导入 JSON 存档": {
 "en": "Click the button at the best price to close the position immediately. All data is automatically saved in the local browser, and can be exported/imported as a JSON archive in settings.",
 "ja": "最適な価格でボタンをクリックして、即座にポジションを閉じます。すべてのデータはローカルブラウザに自動的に保存され、設定からJSONアーカイブとしてエクスポート/インポートすることができます。",
@@ -1650,6 +1795,11 @@ window.I18N_DICT = {
 "en": "Match and Friction",
 "ja": "マッチとフリクション",
 "ko": "마찰과 충돌"
+},
+"放量突破 20 日高点，动量确认": {
+"en": "Breakout above the 20-day high, momentum confirmed",
+"ja": "20日間の高値を上回り、勢いが確認される",
+"ko": "20일 고점 위로 돌파되었으며, 추세가 확인됨"
 },
 "数量须为   股的整数倍（每手   股）": {
 "en": "The quantity must be an integer multiple of 1 share (1 lot).",
@@ -1686,6 +1836,11 @@ window.I18N_DICT = {
 "ja": "このコードを特定できません。日本の株式例：6758.T、香港の株式：9988.HK、米国の株式：NVDA",
 "ko": "이 코드를 식별할 수 없습니다. 일본 주식 예시: 6758.T, 홍콩 주식: 9988.HK, 미국 주식: NVDA"
 },
+"无金叉 · MA5$": {
+"en": "No golden cross · MA5$",
+"ja": "ゴールデンクロスなし · MA5$",
+"ko": "황금 십자가 없음 · MA5$"
+},
 "无需重复添加": {
 "en": "No need to add again",
 "ja": "再び追加する必要はありません",
@@ -1700,6 +1855,11 @@ window.I18N_DICT = {
 "en": "Yen cash available immediately; Japanese stocks, futures, and foreign exchange all accessible. With a 25-fold leverage on foreign exchange, it’s her preferred market.",
 "ja": "即時で現金が利用可能です。日本株、先物、為替もすべて利用可能です。為替市場では25倍のレバレッジが利用可能なので、これが彼女の好きな市場です。",
 "ko": "즉시 사용할 수 있는 엔화 현금이 있으며, 일본 주식, 선물, 외환도 모두 이용 가능합니다. 외환 시장에서는 25배의 레버리지가 제공되므로, 그녀는 이 시장을 선호합니다."
+},
+"日均波幅  % · $": {
+"en": "Average daily range % · $",
+"ja": "平均日間範囲％ · $",
+"ko": "평균 일일 범위 % · $"
 },
 "日志": {
 "en": "Log",
@@ -1861,6 +2021,11 @@ window.I18N_DICT = {
 "ja": "プレートナビゲーション",
 "ko": "판널 내비게이션"
 },
+"查看": {
+"en": "View",
+"ja": "表示",
+"ko": "보기"
+},
 "标普500 E-mini": {
 "en": "S&P 500 E-mini",
 "ja": "S&P 500 E-mini",
@@ -1870,6 +2035,11 @@ window.I18N_DICT = {
 "en": "S&P 500 ETF",
 "ja": "S&P 500 ETF",
 "ko": "S&P 500 ETF"
+},
+"标记": {
+"en": "Tag",
+"ja": "タグ付け",
+"ko": "표시"
 },
 "桌面版存于 文档": {
 "en": "Desktop version is stored in documents",
@@ -1960,6 +2130,11 @@ window.I18N_DICT = {
 "en": "Volatility % reached the limit, trading suspended for 5 minutes",
 "ja": "変動率が限界に達し、5分間取引が停止されました",
 "ko": "변동률 %가 한도에 도달하여 5분간 거래가 중단되었습니다."
+},
+"波动小、回撤浅，稳步上行": {
+"en": "Small fluctuations, shallow drawdowns, steady progress",
+"ja": "小さな変動、浅い下落、安定した進展",
+"ko": "작은 변동, 약한 하락, 꾸준한 진행"
 },
 "波动率放大": {
 "en": "Volatility amplification",
@@ -2286,6 +2461,11 @@ window.I18N_DICT = {
 "ja": "降参",
 "ko": "항복"
 },
+"评分中  /": {
+"en": "Rating in progress",
+"ja": "評価中",
+"ko": "평점 평가 중"
+},
 "该周期": {
 "en": "This cycle",
 "ja": "このサイクル",
@@ -2416,6 +2596,11 @@ window.I18N_DICT = {
 "ja": "過剰な金額は第三者金融機関から提供され、その条件は通常の信用取引の条件とは異なります。",
 "ko": "초과 금액은 제3자 금융기관에서 제공되며, 조건은 일반 신용 거래와는 다릅니다."
 },
+"跌破": {
+"en": "Drop below",
+"ja": "下に落とす",
+"ko": "아래에 내려놓기"
+},
 "距强平": {
 "en": "Ju Qiangping",
 "ja": "ジュ・チャオピン",
@@ -2441,6 +2626,11 @@ window.I18N_DICT = {
 "ja": "名義変更料 0.001%",
 "ko": "명의변경 수수료 0.001%"
 },
+"近   根内金叉 · MA20$": {
+"en": "Near root golden cross · MA20$",
+"ja": "ルート近くのゴールドクロス · MA20$",
+"ko": "뿌리 근처의 금색 십자기 · MA20$"
+},
 "追保线": {
 "en": "Follow the protection line",
 "ja": "保護線に従って行動する",
@@ -2460,6 +2650,11 @@ window.I18N_DICT = {
 "en": "Margin call notice. Remaining h m (simulation time). If overdue, positions will be liquidated in order of loss.",
 "ja": "マージンコールの通知です。残りのh m（シミュレーション時間）です。期限が過ぎた場合、ポジションは損失の順に清算されます。",
 "ko": "마진 콜 알림. 남은 시간(hm) (시뮬레이션 시간). 연체된 경우, 포지션은 손실 순서대로 청산될 것입니다."
+},
+"选择策略后点击": {
+"en": "Click after selecting the strategy",
+"ja": "戦略を選択した後、クリックする",
+"ko": "전략을 선택한 후 클릭하기"
 },
 "部分成交": {
 "en": "Some transactions completed",
@@ -2520,11 +2715,6 @@ window.I18N_DICT = {
 "en": "Difficulty · High",
 "ja": "困難度・高い",
 "ko": "난이도 · 높음"
-},
-"雷霆大A": {
-"en": "Lei Ting Da A",
-"ja": "雷霆大ア",
-"ko": "레이팅다아"
 },
 "非农就业数据": {
 "en": "Non-agricultural employment data",
