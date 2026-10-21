@@ -35,7 +35,7 @@ button{cursor:pointer;background:none;border:none}
   display:flex;align-items:center;gap:18px;height:60px;flex:0 0 60px;
   padding:0 16px;background:var(--panel);border-bottom:1px solid var(--line);
 }
-.brand{display:flex;align-items:center;gap:10px;min-width:220px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:0 1 auto}
 .logo{
   width:32px;height:32px;flex:0 0 32px;border-radius:50%;
   background-image:var(--logo-idle);
@@ -59,12 +59,19 @@ button{cursor:pointer;background:none;border:none}
 .dot.sim{background:var(--warn);box-shadow:0 0 0 3px rgba(243,178,60,.15)}
 .dot.err{background:var(--dngr)}
 
-.acct{display:flex;gap:22px;flex:1;overflow:hidden}
-.kpi{min-width:0}
-.kpi label{display:block;font-size:10.5px;color:var(--dim);letter-spacing:.08em;margin-bottom:1px;white-space:nowrap}
-.kpi b{display:block;font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:-.2px;white-space:nowrap}
-.kpi b.small{font-size:12.5px}
-.cur-col{min-width:190px}
+.acct{display:flex;gap:clamp(10px,1.2vw,22px);flex:1;min-width:0;overflow:hidden}
+.kpi{min-width:78px;overflow:hidden}
+.kpi label{display:block;font-size:clamp(9px,.66vw,10.5px);color:var(--dim);letter-spacing:.06em;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi b{display:block;font-family:var(--mono);font-size:clamp(10.5px,.92vw,14px);font-weight:600;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.kpi b.small{font-size:clamp(9.5px,.8vw,12.5px)}
+.cur-col{min-width:clamp(110px,11vw,190px)}
+/* 窗口变窄时按优先级收起次要指标，避免挤在一起 */
+@media (max-width:1420px){ .kpi.k-pnl{display:none} }
+@media (max-width:1300px){ .kpi.k-cash{display:none} }
+@media (max-width:1180px){ .kpi.k-ratio{display:none} }
+@media (max-width:1060px){ .kpi.k-margin{display:none} }
+@media (max-width:1000px){ .brand b{font-size:12.5px} }
+@media (max-width:880px){ .brand span.badge{display:none} .clockbox{display:none} }
 .curstrip{display:flex;gap:11px;font-family:var(--mono);font-size:11px;line-height:1.6;white-space:nowrap}
 .curstrip span{color:var(--mut)}
 .curstrip span.neg{color:var(--dngr)}
@@ -380,12 +387,12 @@ button{cursor:pointer;background:none;border:none}
       </div>
     </div>
     <div class="acct">
-      <div class="kpi"><label>总权益（折算 JPY）</label><b id="kEq">—</b></div>
-      <div class="kpi"><label>可用资金</label><b id="kAvail" class="small">—</b></div>
-      <div class="kpi"><label>占用保证金</label><b id="kMargin" class="small">—</b></div>
-      <div class="kpi"><label>保证金率</label><b id="kRatio" class="small">—</b></div>
-      <div class="kpi"><label>累计盈亏</label><b id="kPnl" class="small">—</b></div>
-      <div class="kpi cur-col"><label>现金余额</label><div id="kCashes" class="curstrip">—</div></div>
+      <div class="kpi k-eq"><label>总权益（折算 JPY）</label><b id="kEq">—</b></div>
+      <div class="kpi k-avail"><label>可用资金</label><b id="kAvail" class="small">—</b></div>
+      <div class="kpi k-margin"><label>占用保证金</label><b id="kMargin" class="small">—</b></div>
+      <div class="kpi k-ratio"><label>保证金率</label><b id="kRatio" class="small">—</b></div>
+      <div class="kpi k-pnl"><label>累计盈亏</label><b id="kPnl" class="small">—</b></div>
+      <div class="kpi cur-col k-cash"><label>现金余额</label><div id="kCashes" class="curstrip">—</div></div>
     </div>
     <div class="tools">
       <div class="clockbox" id="clocks"></div>
@@ -646,6 +653,14 @@ const num = (v, d = 2) => (Number.isFinite(v) ? v.toFixed(d) : '—');
 const fmtN = (v, d = 0) => Number.isFinite(v)
   ? v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }) : '—';
 const sgn = (v, d = 2) => (Number.isFinite(v) ? (v > 0 ? '+' : '') + v.toFixed(d) : '—');
+// 顶栏用：超过 10 亿走 B / T 缩写，避免长数字把布局撑破（hover 有完整值）
+const fmtBig = v => {
+  if (!Number.isFinite(v)) return '—';
+  const a = Math.abs(v);
+  if (a >= 1e12) return (v / 1e12).toFixed(2) + 'T';
+  if (a >= 1e9) return (v / 1e9).toFixed(2) + 'B';
+  return fmtN(v, 0);
+};
 const uid = () => Math.random().toString(36).slice(2, 10);
 const round2 = v => Math.round(v * 100) / 100;
 
@@ -2421,14 +2436,16 @@ function renderAll() {
 function renderTop() {
   const A = account();
   const pnlToday = A.equity - state.initEquity;
-  $('#kEq').textContent = fmtN(A.equity, 0);
-  $('#kAvail').textContent = fmtN(A.avail, 0);
-  $('#kMargin').textContent = fmtN(A.used, 0);
+  const eEl = $('#kEq'), aEl = $('#kAvail'), mEl = $('#kMargin');
+  eEl.textContent = fmtBig(A.equity); eEl.title = fmtN(A.equity, 0) + ' JPY';
+  aEl.textContent = fmtBig(A.avail);  aEl.title = fmtN(A.avail, 0) + ' JPY';
+  mEl.textContent = fmtBig(A.used);   mEl.title = fmtN(A.used, 0) + ' JPY';
   $('#kRatio').textContent = Number.isFinite(A.ratio) ? num(A.ratio, 1) + '%' : '—';
   $('#kRatio').style.color = A.ratio < 130 && Number.isFinite(A.ratio) ? 'var(--dngr)'
     : A.ratio < 200 && Number.isFinite(A.ratio) ? 'var(--warn)' : 'var(--txt)';
   const pe = $('#kPnl');
-  pe.textContent = sgn(pnlToday, 0);
+  pe.textContent = (pnlToday > 0 ? '+' : '') + fmtBig(pnlToday);
+  pe.title = sgn(pnlToday, 0) + ' JPY';
   pe.style.color = pnlToday > 0 ? 'var(--up)' : pnlToday < 0 ? 'var(--dn)' : 'var(--mut)';
   // 现金余额：CNY / JPY / USD 常驻置顶，HKD 仅有余额时显示
   $('#kCashes').innerHTML = FX_ORDER.map((c, i) => {
