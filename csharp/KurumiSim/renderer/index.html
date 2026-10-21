@@ -468,6 +468,7 @@ button{cursor:pointer;background:none;border:none}
               <button data-tf="q">季</button>
               <button data-tf="y">年</button>
               <button id="btnMA" class="on">均线</button>
+              <button id="btnKline" class="on">K线</button>
             </div>
             <div class="meta" id="cMeta"></div>
           </div>
@@ -2196,17 +2197,20 @@ function drawChart() {
     ctx.beginPath(); ctx.moveTo(padL, yy); ctx.lineTo(w - padR, yy); ctx.stroke();
   }
   // K 线
-  bars.forEach((b, i) => {
-    const x = x0 + i * bw;
-    const up = b.c >= b.o;
-    const col = up ? '#F0553F' : '#12B57E';
-    ctx.strokeStyle = col; ctx.fillStyle = col;
-    const yO = y(b.o), yC = y(b.c);
-    const top = Math.min(yO, yC), hh = Math.max(1, Math.abs(yC - yO));
-    ctx.fillRect(x + bw * 0.22, top, Math.max(1, bw * 0.56), hh);
-    ctx.beginPath(); ctx.moveTo(x + bw * 0.5, y(b.h)); ctx.lineTo(x + bw * 0.5, y(b.l));
-    ctx.lineWidth = 1; ctx.stroke();
-  });
+  // K 线（可关：只看均线时把柱子藏掉，避免图太乱）
+  if (ui.showCandles !== false) {
+    bars.forEach((b, i) => {
+      const x = x0 + i * bw;
+      const up = b.c >= b.o;
+      const col = up ? '#F0553F' : '#12B57E';
+      ctx.strokeStyle = col; ctx.fillStyle = col;
+      const yO = y(b.o), yC = y(b.c);
+      const top = Math.min(yO, yC), hh = Math.max(1, Math.abs(yC - yO));
+      ctx.fillRect(x + bw * 0.22, top, Math.max(1, bw * 0.56), hh);
+      ctx.beginPath(); ctx.moveTo(x + bw * 0.5, y(b.h)); ctx.lineTo(x + bw * 0.5, y(b.l));
+      ctx.lineWidth = 1; ctx.stroke();
+    });
+  }
   // 均线 MA5/10/20/60（收盘价算术平均），左上角标当前值
   if (ui.showMA !== false) {
     const MA_SET = [[5, '#F6C445'], [10, '#4DA3FF'], [20, '#E879E8'], [60, '#48D597']];
@@ -3057,6 +3061,12 @@ function bind() {
   if (bMA) bMA.onclick = () => {
     ui.showMA = (ui.showMA === false);        // 之前关则开，之前开/未定义则关
     bMA.classList.toggle('on', ui.showMA);
+    drawChart();
+  };
+  const bK = $('#btnKline');
+  if (bK) bK.onclick = () => {
+    ui.showCandles = (ui.showCandles === false);
+    bK.classList.toggle('on', ui.showCandles);
     drawChart();
   };
   $('#addCode').oninput = updateAddHint;
