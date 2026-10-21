@@ -2,6 +2,8 @@ name: build-release
 
 on:
   push:
+    # 推 main 只构建产物（不建 Release）；打 v* 标签才发版
+    branches: [main]
     tags: ['v*']
   workflow_dispatch:
     inputs:
