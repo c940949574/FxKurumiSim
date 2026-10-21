@@ -157,10 +157,27 @@ button{cursor:pointer;background:none;border:none}
 .tfset button{padding:2px 6px;border-radius:4px;font-size:10.5px;font-family:var(--mono);color:var(--dim);transition:.14s}
 .tfset button:hover{color:var(--txt)}
 .tfset button.on{background:var(--panel3);color:#A8CBFF;box-shadow:0 1px 2px rgba(0,0,0,.3)}
-#chart{flex:1;min-height:150px;width:100%;display:block;cursor:crosshair;touch-action:none}
+#chart{flex:1;min-height:210px;width:100%;display:block;cursor:crosshair;touch-action:none}
 
 /* 下单区 */
-.order{border-top:1px solid var(--line);background:var(--panel2);padding:10px 14px 12px;flex:0 0 auto}
+.order{border-top:1px solid var(--line);background:var(--panel2);padding:10px 14px 12px;flex:0 1 auto;max-height:46vh;overflow-y:auto}
+.order.collapsed{display:none}
+.ordersep{
+  display:flex;align-items:center;justify-content:space-between;height:22px;flex:0 0 22px;
+  padding:0 14px;border-top:1px solid var(--line);background:var(--panel2);
+  font-size:10.5px;color:var(--dim);cursor:pointer;user-select:none;
+}
+.ordersep b{font-weight:600;letter-spacing:.08em}
+.ordersep button{
+  display:flex;align-items:center;gap:4px;height:18px;padding:0 8px;border-radius:4px;
+  font-size:10.5px;color:var(--mut);background:transparent;border:1px solid var(--line2);
+}
+.ordersep button:hover{color:var(--txt);border-color:var(--mut)}
+.ordersep button i{font-style:normal;transition:transform .18s;font-size:9px}
+.ordersep .t-expand{display:none}
+.ordersep.collapsed .t-collapse{display:none}
+.ordersep.collapsed .t-expand{display:inline}
+.ordersep.collapsed button i{transform:rotate(-90deg)}
 .order-row{display:flex;gap:7px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
 .og{display:flex;flex-direction:column;gap:3px}
 .og label{font-size:10px;color:var(--dim);letter-spacing:.06em}
@@ -455,7 +472,13 @@ button{cursor:pointer;background:none;border:none}
           </div>
           <canvas id="chart"></canvas>
         </div>
-        <div class="order">
+        <div class="ordersep" id="orderSep">
+          <b>下单面板</b>
+          <button id="btnOrderToggle" type="button" title="收起 / 展开">
+            <span class="t-collapse">收起</span><span class="t-expand">展开</span><i>▾</i>
+          </button>
+        </div>
+        <div class="order" id="orderBox">
           <div class="order-row">
             <div class="og">
               <label>方向</label>
@@ -3106,6 +3129,15 @@ function bind() {
     });
     cvChart.addEventListener('mouseleave', () => { chartHover = null; drawChart(); });
   }
+  // 下单面板收起/展开：收起后 K 线拿回全部高度
+  const sep = $('#orderSep');
+  if (sep) sep.onclick = () => {
+    const box = $('#orderBox');
+    const collapsed = !box.classList.contains('collapsed');
+    box.classList.toggle('collapsed', collapsed);
+    sep.classList.toggle('collapsed', collapsed);
+    drawChart();
+  };
   $('#btnHelp').onclick = () => { buildHelp(); openModal('maskHelp'); };
   $$('[data-close]').forEach(b => b.onclick = () => {
     const m = b.closest('.mask'); if (m) m.classList.remove('on');

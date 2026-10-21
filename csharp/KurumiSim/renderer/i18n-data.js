@@ -346,6 +346,16 @@ window.I18N_DICT = {
 "ja": "おすすめ",
 "ko": "추천"
 },
+"收起": {
+"en": "Collapse",
+"ja": "たたむ",
+"ko": "접기"
+},
+"收起 / 展开": {
+"en": "Hide / Show",
+"ja": "隠す / 表示する",
+"ko": "숨기기 / 보이기"
+},
 "改为最多": {
 "en": "Change to a maximum of",
 "ja": "最大で変更する",
@@ -851,6 +861,11 @@ window.I18N_DICT = {
 "ja": "注文エリア",
 "ko": "주문 구역"
 },
+"下单面板": {
+"en": "Order panel",
+"ja": "注文パネル",
+"ko": "주문 패널"
+},
 "下载中  /": {
 "en": "Downloading...",
 "ja": "ダウンロード中…",
@@ -1325,6 +1340,11 @@ window.I18N_DICT = {
 "en": "Export to CSV",
 "ja": "CSV形式でエクスポート",
 "ko": "CSV 형식으로 내보내기"
+},
+"展开": {
+"en": "Expand",
+"ja": "ひらく",
+"ko": "펼치기"
 },
 "工作区": {
 "en": "Work area",
@@ -2070,6 +2090,11 @@ window.I18N_DICT = {
 "en": "Bullish symmetry. The higher the leverage, the closer the strong parity is to the entry price.",
 "ja": "好意的な対称性。レバレッジが高いほど、強いパラレル性は入札価格に近くなる。",
 "ko": "긍정적인 대칭성. 레버리지가 높을수록 강한 평형점이 입장 가격에 더 가까워진다."
+},
+"窗口变窄时按优先级收起次要指标，避免挤在一起": {
+"en": "When the window becomes narrow, hide the secondary indicators based on priority to avoid overcrowding.",
+"ja": "ウィンドウが狭くなると、混雑を避けるために優先順位に応じて二次的なインジケーターを隠す。",
+"ko": "창이 좁아질 때는 과도한 배치를 방지하기 위해 우선순위에 따라 보조 표시를 숨겨야 합니다."
 },
 "第三方杠杆 · 超出监管上限": {
 "en": "Third-party leverage · Exceeding regulatory limits",
