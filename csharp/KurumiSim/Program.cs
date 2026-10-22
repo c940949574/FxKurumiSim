@@ -321,6 +321,7 @@ internal sealed class MainForm : Form
     private static readonly string[] AllowedHosts =
     {
         "qt.gtimg.cn", "ifzq.gtimg.cn", "web.ifzq.gtimg.cn", "hq.sinajs.cn", "stock.finance.sina.com.cn",
+        "vip.stock.finance.sina.com.cn",   // A股全市场快照（AI 选股用）
         "query1.finance.yahoo.com"          // 公司名查询（需走代理）
     };
 

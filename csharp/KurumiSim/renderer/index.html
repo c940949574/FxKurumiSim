@@ -682,14 +682,16 @@ button{cursor:pointer;background:none;border:none}
       </div>
       <div class="frow" style="display:flex;gap:10px;margin-top:12px">
         <label style="flex:1">市场范围
-          <select id="aiMkt"><option value="">全部市场</option>
-            <option value="JP">日本</option><option value="US">美国</option>
-            <option value="HK">香港</option><option value="CN">雷霆大A</option></select></label>
+          <select id="aiMkt"><option value="hs_a" selected>A股全市场（实时）</option>
+            <option value="">内置品种 · 全部</option>
+            <option value="JP">内置 · 日本</option><option value="US">内置 · 美国</option>
+            <option value="HK">内置 · 香港</option><option value="CN">内置 · 雷霆大A</option></select></label>
         <label style="flex:1">取前几名
           <select id="aiN"><option value="3">3</option><option value="5" selected>5</option>
             <option value="10">10</option></select></label>
       </div>
       <button class="btn primary" style="width:100%;padding:9px;margin-top:12px" id="aiRun">开始筛选</button>
+      <button class="btn" style="width:100%;padding:7px;margin-top:8px" id="aiProbe">数据探针（测接口抓不抓得到）</button>
       <div class="hint" id="aiHint" style="margin:10px 0 4px">选择策略后点击「开始筛选」，按近期日线逐个打分。</div>
       <div id="aiResult"></div>
     </div>
@@ -3007,55 +3009,128 @@ function scoreByStrat(id, b) {
            why: `日均波幅 ${num(amp * 100, 2)}% · ${c[last] > m20[last] ? '站上' : '跌破'} MA20` };
 }
 
+/* 全市场实时快照（新浪）：按成交额分页取，返回 [{symbol,code,name,trade,changepercent,amount,turnoverratio,per}] */
+async function fetchMktSnapshot(node, pages, num) {
+  const out = [];
+  for (let p = 1; p <= pages; p++) {
+    const url = 'https://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData'
+      + `?page=${p}&num=${num}&node=${node}&sort=amount&asc=0`;
+    let arr = [];
+    try { arr = JSON.parse(await netGet(url)) || []; } catch (e) { break; }
+    if (!arr.length) break;
+    out.push(...arr);
+  }
+  return out;
+}
+// 新浪快照行 → 临时代理品种（与内置自选同一套 id 规则，方便后续加自选）
+function rowToInst(r) {
+  const sym = String(r.symbol || '');
+  const isSH = sym.startsWith('sh'), isSZ = sym.startsWith('sz');
+  return {
+    id: isSH ? r.code + '.SS' : isSZ ? r.code + '.SZ' : String(r.code || ''),
+    code: String(r.code || ''), mkt: 'CN', name: String(r.name || ''),
+    px: Number(r.trade) || 0, _row: r
+  };
+}
+const AI_KL = {};                      // 扫描到的日线缓存（会话内）
+const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+// 把扫描出来的股票加进自选（生成自定义品种，可看图/交易）
+function addScannedToWatch(id, name, px) {
+  if (!id) return;
+  if (IMAP[id]) return toast('已在自选', `${name || id} 无需重复添加`, 'warn');
+  const spec = makeCustomSpec(id, name, 100, px > 0 ? px : 100);
+  if (!spec) return toast('添加失败', '无法识别该代码', 'err');
+  state.custom.push({ id: spec.id, name: spec.name, nameEn: '', lot: spec.lot, px: spec.px });
+  if (!(state.aiPicks || (state.aiPicks = [])).includes(spec.id)) state.aiPicks.push(spec.id);  // AI 角标 + 置顶
+  INST.push(spec); IMAP[spec.id] = spec;
+  makeQuote(spec, spec.px);
+  if (AI_KL[id]) { quotes[spec.id].kl = quotes[spec.id].kl || {}; quotes[spec.id].kl._d = AI_KL[id]; }
+  save(); renderAll();
+  toast('已加入自选', `${spec.name}（${spec.id}）`, 'ok');
+}
+
+/* 数据探针：逐个测接口，只报「抓到没」，不跑策略 */
+async function runAiProbe() {
+  const hint = $('#aiHint');
+  const out = [];
+  const t = () => Date.now();
+  hint.textContent = '探针运行中…';
+  try {
+    const t0 = t();
+    const snap = await fetchMktSnapshot('hs_a', 1, 20);
+    out.push(`① 全市场快照（新浪）：<b style="color:${snap.length ? 'var(--up)' : 'var(--dngr)'}">${snap.length ? '抓到 ' + snap.length + ' 条' : '空'}</b> · ${t() - t0}ms`
+      + (snap.length ? ` · 样例 ${snap[0].code} ${snap[0].name} ${snap[0].trade}` : ''));
+  } catch (e) { out.push(`① 全市场快照：<b style="color:var(--dngr)">失败</b> ${esc(e.message || e)}`); }
+  try {
+    const t0 = t();
+    const bars = await fetchDaily({ id: '600519.SS', code: '600519', mkt: 'CN', name: '贵州茅台' });
+    out.push(`② 日线（腾讯 sh600519）：<b style="color:${bars.length ? 'var(--up)' : 'var(--dngr)'}">${bars.length ? '抓到 ' + bars.length + ' 根' : '空'}</b> · ${t() - t0}ms`
+      + (bars.length ? ` · 最后 ${new Date(bars[bars.length - 1].t).toISOString().slice(0, 10)}` : ''));
+  } catch (e) { out.push(`② 日线：<b style="color:var(--dngr)">失败</b> ${esc(e.message || e)}`); }
+  try {
+    const t0 = t();
+    const txt = await netGet('https://qt.gtimg.cn/q=sh600519');
+    const ok = /="([^"]*)"/.test(txt);
+    out.push(`③ 实时报价（腾讯）：<b style="color:${ok ? 'var(--up)' : 'var(--dngr)'}">${ok ? '抓到' : '空'}</b> · ${t() - t0}ms`);
+  } catch (e) { out.push(`③ 实时报价：<b style="color:var(--dngr)">失败</b> ${esc(e.message || e)}`); }
+  hint.innerHTML = out.join('<br>');
+}
+
 async function runAiScan() {
   const sel = document.querySelector('input[name="aiStrat"]:checked');
   const stratId = sel ? sel.value : 'mom';
-  const mkt = $('#aiMkt').value;
+  const scope = $('#aiMkt').value;
   const N = +$('#aiN').value || 5;
   const hint = $('#aiHint'), box = $('#aiResult');
-  const pool = INST.filter(i => i.kind === 'stock' && (!mkt || i.mkt === mkt));
   box.innerHTML = '';
-  if (!pool.length) { hint.textContent = '该范围内没有可评分的品种'; return; }
+  const stratName = (AI_STRATS.find(s => s.id === stratId) || {}).name;
+  let cands = [];
+
+  if (scope === 'hs_a') {
+    hint.textContent = '拉取 A 股全市场实时快照…';
+    const snap = (await fetchMktSnapshot('hs_a', 3, 100))
+      .filter(r => r && r.code && Number(r.trade) > 1 && !/ST/i.test(String(r.name || '')) && Number(r.amount) > 0);
+    hint.textContent = `快照 ${snap.length} 只，按成交额取前 40 进入策略打分…`;
+    cands = snap.slice(0, 40).map(rowToInst);
+  } else {
+    cands = INST.filter(i => i.kind === 'stock' && (!scope || i.mkt === scope));
+    if (!cands.length) { hint.textContent = '该范围内没有可评分的品种'; return; }
+  }
+
   const rows = [];
-  for (let i = 0; i < pool.length; i++) {
-    const inst = pool[i];
-    hint.textContent = `评分中 ${i + 1}/${pool.length} · ${inst.name}`;
-    let bars = (quotes[inst.id] && quotes[inst.id].kl && quotes[inst.id].kl._d) || null;
+  for (let i = 0; i < cands.length; i++) {
+    const inst = cands[i];
+    hint.textContent = `评分中 ${i + 1}/${cands.length} · ${inst.name}（策略：${stratName}）`;
+    let bars = AI_KL[inst.id] || (quotes[inst.id] && quotes[inst.id].kl && quotes[inst.id].kl._d) || null;
     if (!bars || !bars.length) {
       try {
         bars = await fetchDaily(inst);
-        if (bars && bars.length) {
-          quotes[inst.id].kl = quotes[inst.id].kl || {};
-          quotes[inst.id].kl._d = bars;
-        }
+        if (bars && bars.length) AI_KL[inst.id] = bars;
       } catch (e) { bars = []; }
     }
     const r = bars && bars.length ? scoreByStrat(stratId, bars) : null;
-    if (r) rows.push({ inst, score: r.score, why: r.why });
+    if (r) {
+      const row = inst._row || {};
+      rows.push({ inst, score: r.score, why: r.why,
+                  px: inst.px || Number(row.trade) || 0,
+                  chg: Number(row.changepercent) || 0 });
+    }
     await new Promise(done => setTimeout(done, 0));
   }
   rows.sort((a, b) => b.score - a.score);
   const top = rows.slice(0, N);
-  const picks = state.aiPicks || [];
-  hint.textContent = `${rows.length} 个标的有数据，已按评分排序（策略：${(AI_STRATS.find(s => s.id === stratId) || {}).name}）`;
+  hint.textContent = `${rows.length} 个标的完成打分，取前 ${top.length}（策略：${stratName}）`;
   box.innerHTML = top.map((r, i) => `
     <div class="ai-row">
       <span class="rk">${i + 1}</span>
-      <div class="nm"><b>${r.inst.name}</b><i>${r.inst.code} · ${MARKETS[r.inst.mkt].label} · ${r.why}</i></div>
+      <div class="nm"><b>${esc(r.inst.name)}</b><i>${esc(r.inst.code)} · ${esc(r.why)}</i></div>
+      <div class="ch" style="width:64px;text-align:right;font-family:var(--mono);color:${r.chg > 0 ? 'var(--up)' : r.chg < 0 ? 'var(--dn)' : 'var(--mut)'}">${r.px ? num(r.px, 2) : ''}${r.chg ? ' ' + sgn(r.chg, 2) + '%' : ''}</div>
       <div class="bar"><em style="width:${r.score}%"></em></div>
       <div class="sc">${r.score}</div>
-      <button class="btn sm" data-view="${r.inst.id}">查看</button>
-      <button class="btn sm" data-pick="${r.inst.id}">${picks.includes(r.inst.id) ? '取消标记' : '标记'}</button>
+      <button class="btn sm" data-pick="${esc(r.inst.id)}" data-name="${esc(r.inst.name)}" data-px="${r.inst.px || 0}">加自选</button>
     </div>`).join('') + (top.length ? `
-    <button class="btn primary" style="width:100%;padding:8px;margin-top:10px" id="aiPickAll">一键标记前 ${top.length} 个为 AI 自选</button>
-    <button class="btn" style="width:100%;padding:7px;margin-top:8px" id="aiPickNone">清除全部 AI 标记</button>` : '');
-}
-
-function toggleAiPick(id) {
-  const s = state.aiPicks || (state.aiPicks = []);
-  const i = s.indexOf(id);
-  if (i >= 0) s.splice(i, 1); else s.push(id);
-  save(); renderWatch();
+    <button class="btn primary" style="width:100%;padding:8px;margin-top:10px" id="aiPickAll">一键加入前 ${top.length} 个自选</button>` : '');
 }
 
 function openAddModal() {
@@ -3233,21 +3308,12 @@ function bind() {
     card.querySelector('input').checked = true;
   });
   $('#aiRun').onclick = runAiScan;
+  $('#aiProbe').onclick = runAiProbe;
   $('#aiResult').onclick = e => {
-    const view = e.target.closest('[data-view]');
     const pick = e.target.closest('[data-pick]');
-    if (view) { setInstrument(view.dataset.view); }
-    if (pick) { toggleAiPick(pick.dataset.pick); runAiScan(); }
+    if (pick) { addScannedToWatch(pick.dataset.pick, pick.dataset.name, +pick.dataset.px || 0); return; }
     if (e.target.id === 'aiPickAll') {
-      $$('#aiResult [data-pick]').forEach(btn => {
-        const id = btn.dataset.pick;
-        if (!(state.aiPicks || []).includes(id)) toggleAiPick(id);
-      });
-      runAiScan();
-    }
-    if (e.target.id === 'aiPickNone') {
-      state.aiPicks = [];
-      save(); renderWatch(); runAiScan();
+      $$('#aiResult [data-pick]').forEach(b => addScannedToWatch(b.dataset.pick, b.dataset.name, +b.dataset.px || 0));
     }
   };
   $('#btnFx').onclick = openFx;
