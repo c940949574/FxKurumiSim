@@ -21,6 +21,11 @@ window.I18N_DICT = {
 "ja": "必要保証金",
 "ko": "필요 증거금"
 },
+"失败": {
+"en": "Failed",
+"ja": "失敗",
+"ko": "실패"
+},
 "买入 / 做多": {
 "en": "Buy / Go Long",
 "ja": "買う / ロングに投資する",
@@ -86,6 +91,11 @@ window.I18N_DICT = {
 "ja": "強制決済",
 "ko": "강제 청산"
 },
+"抓到": {
+"en": "Got",
+"ja": "取得",
+"ko": "수신"
+},
 "日本": {
 "en": "Japan",
 "ja": "日本",
@@ -150,6 +160,11 @@ window.I18N_DICT = {
 "en": "Retail Rookies",
 "ja": "Retail Rookies",
 "ko": "Retail Rookies"
+},
+"一键加入前   个自选": {
+"en": "Before joining one-click selection",
+"ja": "ワンクリック選択に参加する前に",
+"ko": "한 번에 선택하기 기능에 참여하기 전에"
 },
 "下载日线": {
 "en": "Download daily chart",
@@ -231,6 +246,16 @@ window.I18N_DICT = {
 "ja": "保証金",
 "ko": "보증금"
 },
+"全市场快照": {
+"en": "Market snapshot",
+"ja": "全市場スナップショット",
+"ko": "전체 시장 스냅샷"
+},
+"全市场快照（新浪）": {
+"en": "Full Market Snapshot (Sina)",
+"ja": "フル市場概況（新浪）",
+"ko": "전체 시장 현황 (신아)"
+},
 "净隔夜/利息": {
 "en": "Net overnight/interest",
 "ja": "一晩中の純増益/利息",
@@ -300,6 +325,16 @@ window.I18N_DICT = {
 "en": "The commission was rejected",
 "ja": "委員会の提案は拒否された",
 "ko": "위원회는 거부되었습니다."
+},
+"实时报价": {
+"en": "Real-time Quotation",
+"ja": "リアルタイム価格提示",
+"ko": "실시간 견적"
+},
+"实时报价（腾讯）": {
+"en": "Real-time Quotation (Tencent)",
+"ja": "リアルタイム見積もり（テンセント）",
+"ko": "실시간 견적 (텐센트)"
 },
 "已启用第三方杠杆": {
 "en": "Third-party leverage has been enabled",
@@ -391,6 +426,11 @@ window.I18N_DICT = {
 "ja": "この株のロットあたりの実際の株数を入力してください。",
 "ko": "이 주식의 로트당 실제 주식 수를 입력하세요."
 },
+"探针运行中": {
+"en": "Probe operation",
+"ja": "プローブの操作",
+"ko": "조사 작업"
+},
 "推荐": {
 "en": "Recommended",
 "ja": "おすすめ",
@@ -425,6 +465,11 @@ window.I18N_DICT = {
 "en": "No need to add again",
 "ja": "再び追加する必要はありません",
 "ko": "다시 추가할 필요 없음"
+},
+"日线（腾讯 sh600519）": {
+"en": "Daily chart (Tencent Sh600519)",
+"ja": "日次チャート（テンセント Sh600519）",
+"ko": "일간 차트 (텐센트 Sh600519)"
 },
 "日股固定 100 股/手（单元株）": {
 "en": "Daily fixed amount: 100 shares per lot (unit shares)",
@@ -461,6 +506,11 @@ window.I18N_DICT = {
 "ja": "まだリスクイベントはありません",
 "ko": "아직 위험 사건이 없음"
 },
+"最后": {
+"en": "Last",
+"ja": "最終",
+"ko": "마지막"
+},
 "最多   个，请先移除部分": {
 "en": "At most... items, please remove some first.",
 "ja": "最大で…個のアイテムですから、まずいくつかを削除してください。",
@@ -490,6 +540,11 @@ window.I18N_DICT = {
 "en": "plate",
 "ja": "プレート",
 "ko": "판"
+},
+"样例": {
+"en": "Sample",
+"ja": "サンプル",
+"ko": "샘플"
 },
 "每手": {
 "en": "Each lot",
@@ -831,6 +886,11 @@ window.I18N_DICT = {
 "ja": "20. 開始",
 "ko": "20. 시작"
 },
+"20日 % · RSI": {
+"en": "20 days % · RSI",
+"ja": "20日間 % · RSI",
+"ko": "20일 % · RSI"
+},
 "20日 % · RSI  $": {
 "en": "20th day % · RSI $",
 "ja": "20日目 % · RSI $",
@@ -1020,6 +1080,11 @@ window.I18N_DICT = {
 "en": "East Money",
 "ja": "東方財富",
 "ko": "동방재부"
+},
+"个标的完成打分，取前  （策略： ）": {
+"en": "Score the completion of each target, and select the top one. (Strategy: )",
+"ja": "各目標の達成度をスコア化し、最も高いものを選択する。（戦略：）",
+"ko": "각 목표의 달성도를 점수로 매기고, 최고 점수를 받은 것을 선택하세요. (전략: )"
 },
 "个采样点 · 模拟时间   小时": {
 "en": "One sampling point · Simulation time in hours",
@@ -1225,6 +1290,11 @@ window.I18N_DICT = {
 "en": "The free source does not provide historical K-line data for overseas stocks. 1M / 5M / 10M periods are available normally.",
 "ja": "無料のソースでは、海外株の歴史的K線データは提供されていません。通常、1ヶ月/5ヶ月/10ヶ月の期間データが利用可能です。",
 "ko": "무료 소스에서는 해외 주식에 대한 역사적 K선 데이터가 제공되지 않습니다. 1개월 / 5개월 / 10개월 기간의 데이터는 일반적으로 제공됩니다."
+},
+"全市场实时快照（新浪）：按成交额分页取，返回": {
+"en": "Full market real-time snapshot (Sina): Paged by transaction volume, returned",
+"ja": "完全な市場リアルタイムスナップショット（新浪）：取引量によるページング、返信中",
+"ko": "전체 시장 실시간 시각화 정보 (신아): 거래량 기준으로 페이지화된 정보, 반환됨"
 },
 "全部": {
 "en": "All of them",
@@ -1571,6 +1641,11 @@ window.I18N_DICT = {
 "ja": "左側をクリックして、バリエーションチャートを切り替えます",
 "ko": "왼쪽을 클릭하여 다양한 차트들 사이를 전환하세요."
 },
+"已加入自选": {
+"en": "Added to favorites",
+"ja": "お気に入りに追加しました",
+"ko": "즐겨찾기에 추가됨"
+},
 "已同步行情": {
 "en": "Data synced successfully",
 "ja": "データの同期が成功しました",
@@ -1580,6 +1655,11 @@ window.I18N_DICT = {
 "en": "Already in the list",
 "ja": "リストにすでに含まれている",
 "ko": "리스트에 이미 포함됨"
+},
+"已在自选": {
+"en": "Already selected",
+"ja": "既に選択済み",
+"ko": "이미 선택됨"
 },
 "已实现": {
 "en": "Achieved",
@@ -1751,6 +1831,11 @@ window.I18N_DICT = {
 "ja": "ショートカットキーとヒント",
 "ko": "단축키와 팁"
 },
+"快照   只，按成交额取前 40 进入策略打分": {
+"en": "Snapshot: Only the top 40 by transaction value are considered for strategy scoring.",
+"ja": "スナップショット：取引価値が高い上位40件のみが、戦略評価の対象となります。",
+"ko": "스냅샷: 트랜잭션 가치 기준으로 상위 40개만이 전략 점수 산출에 포함됩니다."
+},
 "忽略交易时段限制，休市也能下单": {
 "en": "Ignore the trading hours restrictions; orders can be placed during the market closure.",
 "ja": "取引時間の制限は無視し、市場閉鎖中にも注文を入れることができます。",
@@ -1820,6 +1905,16 @@ window.I18N_DICT = {
 "en": "Used as a simulation starting point when real-time market data is unavailable",
 "ja": "リアルタイムの市場データが利用できない場合に、シミュレーションの出発点として使用される",
 "ko": "실시간 시장 데이터가 제공되지 않을 때 시뮬레이션 시작점으로 사용됨"
+},
+"拉取 A 股全市场实时快照": {
+"en": "Pull the real-time snapshot of the entire A-share market",
+"ja": "全A株市場のリアルタイムスナップショットを取得する",
+"ko": "전체 A주 시장의 실시간 스냅샷을 가져오세요"
+},
+"拉取美股榜单（最活跃 / 涨幅 / 跌幅）": {
+"en": "Pull US stock rankings (Most active / Gain / Loss)",
+"ja": "米国の株のランキングを表示する（最も活発／利益／損失）",
+"ko": "미국 주식 순위 (가장 활발한 / 수익 / 손실)"
 },
 "拒单": {
 "en": "Rejecting orders",
@@ -1921,6 +2016,11 @@ window.I18N_DICT = {
 "ja": "認識できないコード",
 "ko": "인식할 수 없는 코드"
 },
+"无法识别该代码": {
+"en": "Cannot identify this code",
+"ja": "このコードを識別できません",
+"ko": "이 코드를 식별할 수 없습니다."
+},
 "无法识别该代码。日股示例": {
 "en": "Cannot identify this code. Japanese stock example",
 "ja": "このコードを識別できません。日本の株式の例です。",
@@ -1980,6 +2080,11 @@ window.I18N_DICT = {
 "en": "Japanese stock: .T, Hong Kong stock: .HK, US stock: just enter the code directly.",
 "ja": "日本株：.T、香港株：.HK、米国株：コードをそのまま入力する。",
 "ko": "일본 주식: .T, 홍콩 주식: .HK, 미국 주식: 코드를 그대로 입력하기만 하면 됩니다."
+},
+"日股池（12 只）": {
+"en": "Nihonkoji Pool (12 stocks)",
+"ja": "日本橋プール（12個の池）",
+"ko": "니혼코지 풀 (12개의 스톤)"
 },
 "日股通常 100": {
 "en": "Japanese stocks usually 100",
@@ -2045,6 +2150,11 @@ window.I18N_DICT = {
 "en": "Not hovering",
 "ja": "浮かんでいない",
 "ko": "떠다니지 않아요"
+},
+"未转红": {
+"en": "Not turned red",
+"ja": "赤くなっていない",
+"ko": "빨간색이 되지 않았다"
 },
 "本地代理（HTTP / SOCKS5）": {
 "en": "Local proxy (HTTP / SOCKS5)",
@@ -2251,6 +2361,11 @@ window.I18N_DICT = {
 "ja": "お気に入りリストに追加",
 "ko": "즐겨찾기 목록에 추가"
 },
+"添加失败": {
+"en": "Addition failed",
+"ja": "加算が失敗した",
+"ko": "추가 작업이 실패했습니다."
+},
 "添加自选品种    ，每手   股": {
 "en": "Add selected varieties, each trade of shares",
 "ja": "選択した品種を追加し、各株数を記入する",
@@ -2265,6 +2380,11 @@ window.I18N_DICT = {
 "en": "Hong Kong stocks: each lot is different; fill in according to the actual amount.",
 "ja": "香港株：各ロットごとに異なります。実際の金額に応じて入力してください。",
 "ko": "홍콩 주식: 각 lot의 가치는 다르니 실제 금액에 맞게 입력하세요."
+},
+"港股池（15 只）": {
+"en": "Hong Kong Stock Pool (15 stocks)",
+"ja": "香港証券プール（15銘柄）",
+"ko": "홍콩 주식 풀 (15개 종목)"
 },
 "澳元 / 日元": {
 "en": "AUD / JPY",
@@ -2366,6 +2486,11 @@ window.I18N_DICT = {
 "ja": "ウィンドウが狭くなると、混雑を避けるために優先順位に応じて二次的なインジケーターを隠す。",
 "ko": "창이 좁아질 때는 과도한 배치를 방지하기 위해 우선순위에 따라 보조 표시를 숨겨야 합니다."
 },
+"站上": {
+"en": "Stand up",
+"ja": "立ち上がる",
+"ko": "일어나세요"
+},
 "第一三共": {
 "en": "Daiichi Sankyo",
 "ja": "第一三共",
@@ -2466,6 +2591,16 @@ window.I18N_DICT = {
 "ja": "米国の株",
 "ko": "미국 주식"
 },
+"美股候选   只，取前 40 进入策略打分": {
+"en": "US stock candidates, only the top 40 are considered for strategy scoring",
+"ja": "米国の株式候補株の中から、上位40社のみが戦略評価の対象とされます。",
+"ko": "미국 주식 후보 중 상위 40개만이 전략 점수 산출에 포함됩니다."
+},
+"美股全市场（Yahoo）": {
+"en": "U.S. stock market as a whole (Yahoo)",
+"ja": "全米株式市場（ヤフー）",
+"ko": "전체 미국 주식 시장 (야후)"
+},
 "胜率": {
 "en": "Win rate",
 "ja": "勝率",
@@ -2555,6 +2690,11 @@ window.I18N_DICT = {
 "en": "I give up",
 "ja": "降参",
 "ko": "항복"
+},
+"评分中  /  ·  （策略： ）": {
+"en": "Rating in progress / · (Strategy: )",
+"ja": "評価中 / ·（戦略：）",
+"ko": "평가 진행 중 / · (전략: )"
 },
 "该周期": {
 "en": "This cycle",
@@ -2825,6 +2965,11 @@ window.I18N_DICT = {
 "en": "Lei Ting Da A",
 "ja": "雷霆大ア",
 "ko": "레이팅다아"
+},
+"雷霆大A（8 只）": {
+"en": "Lei Ting Da A (8 animals)",
+"ja": "雷霆大ア（8匹の動物）",
+"ko": "레이팅다아 (8마리의 동물)"
 },
 "非农就业数据": {
 "en": "Non-agricultural employment data",

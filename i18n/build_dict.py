@@ -197,6 +197,11 @@ CORRECTIONS = {
     "② 日线（腾讯": {"en": "② Daily bars (Tencent ", "ja": "② 日足（Tencent ", "ko": "② 일봉(텐센트 "},
     "③ 实时报价（腾讯）：": {"en": "③ Live quote (Tencent): ", "ja": "③ リアルタイム（Tencent）: ", "ko": "③ 실시간 시세(텐센트): "},
     "探针运行中…": {"en": "Probing…", "ja": "プローブ中…", "ko": "프로브 중…"},
+    "抓到":   {"en": "Got", "ja": "取得", "ko": "수신"},
+    "最后":   {"en": "Last", "ja": "最終", "ko": "마지막"},
+    "失败":   {"en": "Failed", "ja": "失敗", "ko": "실패"},
+    "样例":   {"en": "Sample", "ja": "サンプル", "ko": "샘플"},
+    "全市场快照": {"en": "Market snapshot", "ja": "全市場スナップショット", "ko": "전체 시장 스냅샷"},
     # 公司名（Ollama 模型 404 期间手工补齐）
     "中国移动": {"en": "China Mobile", "ja": "チャイナモバイル", "ko": "차이나모바일"},
     "中国银行": {"en": "Bank of China", "ja": "中国銀行", "ko": "중국은행"},
