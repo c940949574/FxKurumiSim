@@ -21,11 +21,6 @@ window.I18N_DICT = {
 "ja": "必要保証金",
 "ko": "필요 증거금"
 },
-"香港": {
-"en": "Hong Kong",
-"ja": "香港",
-"ko": "홍콩"
-},
 "买入 / 做多": {
 "en": "Buy / Go Long",
 "ja": "買う / ロングに投資する",
@@ -45,11 +40,6 @@ window.I18N_DICT = {
 "en": "Direction",
 "ja": "方向",
 "ko": "방향"
-},
-"日本": {
-"en": "Japan",
-"ja": "日本",
-"ko": "일본"
 },
 "期货": {
 "en": "Futures",
@@ -81,10 +71,10 @@ window.I18N_DICT = {
 "ja": "選択した品種を追加する",
 "ko": "선택한 품종을 추가하세요"
 },
-"美国": {
-"en": "USA",
-"ja": "アメリカ",
-"ko": "미국"
+"香港": {
+"en": "Hong Kong",
+"ja": "香港",
+"ko": "홍콩"
 },
 "可用资金": {
 "en": "available funds",
@@ -96,6 +86,16 @@ window.I18N_DICT = {
 "ja": "強制決済",
 "ko": "강제 청산"
 },
+"日本": {
+"en": "Japan",
+"ja": "日本",
+"ko": "일본"
+},
+"日线": {
+"en": "Daily Chart",
+"ja": "日次チャート",
+"ko": "일일 차트"
+},
 "权益": {
 "en": "Equity",
 "ja": "株価",
@@ -106,10 +106,20 @@ window.I18N_DICT = {
 "ja": "直接接続",
 "ko": "직접 연결"
 },
+"美国": {
+"en": "USA",
+"ja": "アメリカ",
+"ko": "미국"
+},
 "设置": {
 "en": "Set up",
 "ja": "設定する",
 "ko": "설정하기"
+},
+"贵州茅台": {
+"en": "Kweichow Moutai",
+"ja": "茅台酒",
+"ko": "구이저우마오타이"
 },
 "逐仓参考强平价": {
 "en": "Per account, refer to strong parity",
@@ -145,6 +155,11 @@ window.I18N_DICT = {
 "en": "Download daily chart",
 "ja": "日次チャートをダウンロードする",
 "ko": "일일 차트를 다운로드하세요"
+},
+"中国平安": {
+"en": "Ping An",
+"ja": "中国平安",
+"ko": "핑안보험"
 },
 "久留美": {
 "en": "kurumi",
@@ -406,6 +421,11 @@ window.I18N_DICT = {
 "ja": "取り除くことができない",
 "ko": "제거할 수 없음"
 },
+"无需重复添加": {
+"en": "No need to add again",
+"ja": "再び追加する必要はありません",
+"ko": "다시 추가할 필요 없음"
+},
 "日股固定 100 股/手（单元株）": {
 "en": "Daily fixed amount: 100 shares per lot (unit shares)",
 "ja": "毎日固定量：ロットあたり100株（単位株）",
@@ -475,11 +495,6 @@ window.I18N_DICT = {
 "en": "Each lot",
 "ja": "各ロット",
 "ko": "각 묶음"
-},
-"清除全部 AI 标记": {
-"en": "Clear all AI tags",
-"ja": "AIタグを全解除",
-"ko": "AI 표시 전체 해제"
 },
 "爆仓": {
 "en": "Blown up",
@@ -632,9 +647,9 @@ window.I18N_DICT = {
 "ko": "주식이 회로 차단/중단 주문을 발생시켰고, 거래가 중단되었습니다."
 },
 "该范围内没有可评分的品种": {
-"en": "There are no varieties within this range that can be scored.",
-"ja": "この範囲内には、スコアをつけることができる種類はありません。",
-"ko": "이 범위 내에서는 점수를 매길 수 있는 다양한 종류가 없습니다."
+"en": "No instruments to score in this range",
+"ja": "この範囲に採点対象がありません",
+"ko": "이 범위에 채점할 종목이 없습니다"
 },
 "请填写大于 0 的金额": {
 "en": "Please enter a amount greater than 0.",
@@ -666,6 +681,11 @@ window.I18N_DICT = {
 "ja": "トレンドモメンタム",
 "ko": "추세 모멘텀"
 },
+"跌破": {
+"en": "Drop below",
+"ja": "下に落とす",
+"ko": "아래에 내려놓기"
+},
 "距强平（权益": {
 "en": "Ju Qiangping (Equity)",
 "ja": "朱強平（株式）",
@@ -695,11 +715,6 @@ window.I18N_DICT = {
 "en": "The amount is invalid",
 "ja": "金額が無効です",
 "ko": "금액이 유효하지 않습니다"
-},
-"雷霆大A": {
-"en": "Lei Ting Da A",
-"ja": "雷霆大ア",
-"ko": "레이팅다아"
 },
 "风险事件": {
 "en": "Risk Event",
@@ -851,6 +866,11 @@ window.I18N_DICT = {
 "ja": "A株",
 "ko": "A주"
 },
+"A股全市场（实时）": {
+"en": "CN market (live)",
+"ja": "A株全市場（リアルタイム）",
+"ko": "A주 전체 시장(실시간)"
+},
 "CCASS 结算费": {
 "en": "CCASS settlement fee",
 "ja": "CCASS決済手数料",
@@ -890,6 +910,11 @@ window.I18N_DICT = {
 "en": "JPY · Principal amount",
 "ja": "JPY · 元本",
 "ko": "JPY · 원금"
+},
+"JR东日本": {
+"en": "JR East",
+"ja": "JR東日本",
+"ko": "JR동일본"
 },
 "K线": {
 "en": "Candlestick",
@@ -936,20 +961,15 @@ window.I18N_DICT = {
 "ja": "save.json（15秒ごとに自動的に保存される）",
 "ko": "save.json (15초마다 자동으로 저장됨)"
 },
-"一键标记前   个为 AI 自选": {
-"en": "Before one-click marking, it is the AI's own selection",
-"ja": "ワンクリックでマークする前に、それはAI自身の選択です",
-"ko": "단일 클릭으로 표시하기 전에, 이는 AI가 직접 선택하는 것입니다."
-},
 "三种本金，三种活法。选一个开局，随时可在设置里重来": {
 "en": "Three types of capital, three ways to live. Choose a starting point, and you can start over in the settings at any time.",
 "ja": "3種類の資本、3つの生き方。出発点を選べば、いつでも設定をやり直すことができます。",
 "ko": "세 가지 종류의 자본, 세 가지 삶의 방식. 시작점을 선택하면 언제든지 설정에서 다시 시작할 수 있습니다."
 },
 "三菱UFJ": {
-"en": "Mitsubishi UFJ",
+"en": "MUFG",
 "ja": "三菱UFJ",
-"ko": "미쓰비시 UFJ"
+"ko": "MUFG"
 },
 "上海": {
 "en": "Shanghai",
@@ -991,15 +1011,15 @@ window.I18N_DICT = {
 "ja": "東京",
 "ko": "도쿄"
 },
-"东方财富": {
-"en": "Oriental Wealth",
-"ja": "オリエンタル・ウエルス",
-"ko": "동양의 부"
+"东京电子": {
+"en": "Tokyo Electron",
+"ja": "東京エレクトロン",
+"ko": "도쿄일렉트론"
 },
-"个标的有数据，已按评分排序（策略： ).name": {
-"en": "The metrics have data, sorted by score (Strategy: ). name",
-"ja": "メトリクスにはデータがあり、スコアで並べられています（戦略：）。名前",
-"ko": "지표에는 데이터가 있으며, 점수순으로 정렬되어 있습니다. (전략: ). 이름"
+"东方财富": {
+"en": "East Money",
+"ja": "東方財富",
+"ko": "동방재부"
 },
 "个采样点 · 模拟时间   小时": {
 "en": "One sampling point · Simulation time in hours",
@@ -1011,15 +1031,20 @@ window.I18N_DICT = {
 "ja": "中国の製造業PMI",
 "ko": "중국 제조업 PMI"
 },
-"中国平安": {
-"en": "China Ping An",
-"ja": "中国平安",
-"ko": "중국 핑안"
+"中国移动": {
+"en": "China Mobile",
+"ja": "チャイナモバイル",
+"ko": "차이나모바일"
+},
+"中国银行": {
+"en": "Bank of China",
+"ja": "中国銀行",
+"ko": "중국은행"
 },
 "丰田汽车": {
-"en": "Toyota cars",
-"ja": "トヨタの車",
-"ko": "토요타 차량"
+"en": "Toyota",
+"ja": "トヨタ自動車",
+"ko": "토요타"
 },
 "久留美模拟器 · KurumiSim": {
 "en": "KurumiSim Simulator",
@@ -1038,8 +1063,13 @@ window.I18N_DICT = {
 },
 "五粮液": {
 "en": "Wuliangye",
-"ja": "ウラオイェ",
-"ko": "우리앙예"
+"ja": "五糧液",
+"ko": "우량예"
+},
+"亚马逊": {
+"en": "Amazon",
+"ja": "アマゾン",
+"ko": "아마존"
 },
 "交收完成": {
 "en": "Payment settlement completed",
@@ -1110,6 +1140,16 @@ window.I18N_DICT = {
 "en": "After the price crosses, the remaining portion can be traded.",
 "ja": "価格が交差した後、残りの部分を取引することができます。",
 "ko": "가격이 교차한 후에는 남은 부분을 거래할 수 있습니다."
+},
+"任天堂": {
+"en": "Nintendo",
+"ja": "任天堂",
+"ko": "닌텐도"
+},
+"伊藤忠商事": {
+"en": "ITOCHU",
+"ja": "伊藤忠商事",
+"ko": "이토추상사"
 },
 "休市时段：默认开启练习模式可下单": {
 "en": "Closed market hours: The practice mode is enabled by default, allowing orders to be placed",
@@ -1191,15 +1231,15 @@ window.I18N_DICT = {
 "ja": "それら全て",
 "ko": "그들 모두"
 },
-"全部市场": {
-"en": "All markets",
-"ja": "全市場",
-"ko": "전체 시장"
-},
 "关闭后按各市场真实交易时段校验（含美股盘前盘后）": {
 "en": "After closing, verify during the actual trading hours of each market (including pre-market and after-market periods for US stocks)",
 "ja": "終了後、各市場の実際の取引時間中（米国株のプレトレーディングおよびアフトトレーディング期間も含む）を確認してください。",
 "ko": "종료 후에는 각 시장의 실제 거래 시간 동안(미국 주식의 전장 및 후장 기간 포함) 확인해야 합니다."
+},
+"内置品种 · 全部": {
+"en": "Built-in · all",
+"ja": "内蔵銘柄・全て",
+"ko": "내장 종목 · 전체"
 },
 "分板块盈亏": {
 "en": "Profit and Loss by Segment",
@@ -1236,6 +1276,11 @@ window.I18N_DICT = {
 "ja": "残り：資金が不足しているため、ポジションを開設できません。",
 "ko": "남은 금액: 자금이 부족하여 어떤 포지션도 개설할 수 없습니다."
 },
+"加自选": {
+"en": "Add",
+"ja": "追加",
+"ko": "추가"
+},
 "加速": {
 "en": "Accelerate",
 "ja": "加速",
@@ -1245,6 +1290,11 @@ window.I18N_DICT = {
 "en": "Selling from which currency?",
 "ja": "どの通貨で売るか？",
 "ko": "어느 통화로 판매하나요?"
+},
+"博通": {
+"en": "Broadcom",
+"ja": "ブロードコム",
+"ko": "브로드컴"
 },
 "印花税 0.05%（卖出）": {
 "en": "Stamp duty 0.05% (on sell)",
@@ -1302,24 +1352,24 @@ window.I18N_DICT = {
 "ko": "창핑을 참고하세요"
 },
 "友邦保险": {
-"en": "Fubon Insurance",
-"ja": "フブン保険",
-"ko": "푸본 보험"
+"en": "AIA Group",
+"ja": "AIA",
+"ko": "AIA"
 },
 "取前几名": {
 "en": "Top N",
 "ja": "上位N件",
 "ko": "상위 N개"
 },
-"取消标记": {
-"en": "Untag",
-"ja": "解除",
-"ko": "해제"
-},
 "只有满仓（保证金即全部权益）时两者才相等。右侧风控条的": {
 "en": "The two are equal only when the position is fully funded (the margin equals all equity). Right side risk control item",
 "ja": "両者が等しくなるのは、ポジションが完全に資金で賄われている場合のみです（マージンが全ての資本に等しい場合）。右側のリスク管理項目",
 "ko": "두 값은 자금이 전액 지원될 때만 같습니다(마진이 모든 자산과 같음). 우측 위험 관리 항목"
+},
+"可口可乐": {
+"en": "Coca-Cola",
+"ja": "コカ・コーラ",
+"ko": "코카콜라"
 },
 "可用资金不足：需保证金   + 费用  ，可用   JPY": {
 "en": "Insufficient available funds: requires deposit + fees, available JPY",
@@ -1371,9 +1421,14 @@ window.I18N_DICT = {
 "ja": "移動平均",
 "ko": "이동평균"
 },
+"埃克森美孚": {
+"en": "ExxonMobil",
+"ja": "エクソンモービル",
+"ko": "엑손모빌"
+},
 "基恩士": {
 "en": "Keyence",
-"ja": "キーレンセ",
+"ja": "キーエンス",
 "ko": "키엔스"
 },
 "填本地端口即可，例如 127.0.0.1:6789 或 socks5 代理。空着则为直连，仅用于下载 Yahoo 日线": {
@@ -1391,6 +1446,11 @@ window.I18N_DICT = {
 "ja": "FXの維持証拠金要件は25倍上限で算出されるため、25倍に近いレバレッジでは余裕がほとんどなく、ほぼ即座に強制決済となります。",
 "ko": "FX 유지 증거금 요건은 25배 상한으로 산출되므로, 25배에 가까운 레버리지에서는 여유가 거의 없어 거의 즉시 강제 청산됩니다."
 },
+"奈飞": {
+"en": "Netflix",
+"ja": "Netflix",
+"ko": "Netflix"
+},
 "委托类型": {
 "en": "Delegate type",
 "ja": "デリゲート型",
@@ -1407,9 +1467,14 @@ window.I18N_DICT = {
 "ko": "분기선"
 },
 "宁德时代": {
-"en": "Enel Xing",
-"ja": "エネル・シング",
-"ko": "엔엘 싱"
+"en": "CATL",
+"ja": "CATL",
+"ko": "CATL"
+},
+"安踏体育": {
+"en": "ANTA Sports",
+"ja": "アンタ・スポーツ",
+"ko": "안타스포츠"
 },
 "宏观事件": {
 "en": "Macro events",
@@ -1481,6 +1546,11 @@ window.I18N_DICT = {
 "ja": "CSV形式でエクスポート",
 "ko": "CSV 형식으로 내보내기"
 },
+"小米集团": {
+"en": "Xiaomi",
+"ja": "シャオミ",
+"ko": "샤오미"
+},
 "展开": {
 "en": "Expand",
 "ja": "ひらく",
@@ -1490,6 +1560,11 @@ window.I18N_DICT = {
 "en": "Work area",
 "ja": "作業エリア",
 "ko": "작업 영역"
+},
+"工商银行": {
+"en": "ICBC",
+"ja": "中国工商銀行",
+"ko": "중국공상은행"
 },
 "左侧点击品种切换图表": {
 "en": "Click on the left side to switch between variety charts",
@@ -1596,6 +1671,11 @@ window.I18N_DICT = {
 "ja": "年目線",
 "ko": "연도 라인"
 },
+"建设银行": {
+"en": "China Construction Bank",
+"ja": "中国建設銀行",
+"ko": "중국건설은행"
+},
 "开     现     保证金     参考强平": {
 "en": "Open Display Margin Reference Close",
 "ja": "開示余白参照閉塞",
@@ -1658,8 +1738,13 @@ window.I18N_DICT = {
 },
 "微软": {
 "en": "Microsoft",
-"ja": "マイクロソフト",
-"ko": "마이크로소프트"
+"ja": "Microsoft",
+"ko": "Microsoft"
+},
+"快手": {
+"en": "Kuaishou",
+"ja": "クアイショウ",
+"ko": "콰이셔우"
 },
 "快捷键与提示": {
 "en": "Shortcut Keys and Tips",
@@ -1743,8 +1828,8 @@ window.I18N_DICT = {
 },
 "招商银行": {
 "en": "China Merchants Bank",
-"ja": "中国商業銀行",
-"ko": "중국 상인은행"
+"ja": "招商銀行",
+"ko": "초상은행"
 },
 "持仓卡片": {
 "en": "Position card",
@@ -1791,6 +1876,11 @@ window.I18N_DICT = {
 "ja": "リスク管理の推奨レベルに近い、またはそれを超える",
 "ko": "위험 관리 권고 수준에 가까우거나 그 이상을 초과함"
 },
+"摩根大通": {
+"en": "JPMorgan Chase",
+"ja": "JPモルガン",
+"ko": "JP모간"
+},
 "撮合与摩擦": {
 "en": "Match and Friction",
 "ja": "マッチとフリクション",
@@ -1800,6 +1890,11 @@ window.I18N_DICT = {
 "en": "Breakout above the 20-day high, momentum confirmed",
 "ja": "20日間の高値を上回り、勢いが確認される",
 "ko": "20일 고점 위로 돌파되었으며, 추세가 확인됨"
+},
+"数据探针（测接口抓不抓得到）": {
+"en": "Data probe (test if sources respond)",
+"ja": "データプローブ（取得可否を確認）",
+"ko": "데이터 프로브 (수신 확인)"
 },
 "数量须为   股的整数倍（每手   股）": {
 "en": "The quantity must be an integer multiple of 1 share (1 lot).",
@@ -1841,11 +1936,6 @@ window.I18N_DICT = {
 "ja": "ゴールデンクロスなし · MA5$",
 "ko": "황금 십자가 없음 · MA5$"
 },
-"无需重复添加": {
-"en": "No need to add again",
-"ja": "再び追加する必要はありません",
-"ko": "다시 추가할 필요 없음"
-},
 "日元本位账户，初始": {
 "en": "Yen-based account, initial",
 "ja": "円ベースのアカウント、初期状態",
@@ -1876,10 +1966,10 @@ window.I18N_DICT = {
 "ja": "日本の株（TSE）",
 "ko": "일본 주식 (TSE)"
 },
-"日线": {
-"en": "Daily Chart",
-"ja": "日次チャート",
-"ko": "일일 차트"
+"日立制作所": {
+"en": "Hitachi",
+"ja": "日立製作所",
+"ko": "히타치"
 },
 "日经225迷你": {
 "en": "Nikkei 225 Mini",
@@ -2021,11 +2111,6 @@ window.I18N_DICT = {
 "ja": "プレートナビゲーション",
 "ko": "판널 내비게이션"
 },
-"查看": {
-"en": "View",
-"ja": "表示",
-"ko": "보기"
-},
 "标普500 E-mini": {
 "en": "S&P 500 E-mini",
 "ja": "S&P 500 E-mini",
@@ -2035,11 +2120,6 @@ window.I18N_DICT = {
 "en": "S&P 500 ETF",
 "ja": "S&P 500 ETF",
 "ko": "S&P 500 ETF"
-},
-"标记": {
-"en": "Tag",
-"ja": "タグ付け",
-"ko": "표시"
 },
 "桌面版存于 文档": {
 "en": "Desktop version is stored in documents",
@@ -2117,14 +2197,19 @@ window.I18N_DICT = {
 "ko": "BYD"
 },
 "汇丰控股": {
-"en": "HSBC Holdings",
-"ja": "HSBCホールドスピンズ",
-"ko": "HSBC 홀딩스"
+"en": "HSBC",
+"ja": "HSBC",
+"ko": "HSBC"
 },
 "汇兑成本已计入点差": {
 "en": "The exchange cost has been included in the spread.",
 "ja": "スプレッドには取引コストが含まれています。",
 "ko": "거래 비용은 스프레드에 포함되어 있습니다."
+},
+"沃尔玛": {
+"en": "Walmart",
+"ja": "ウォルマート",
+"ko": "월마트"
 },
 "波动  % 触及限制，暂停交易 5 分钟": {
 "en": "Volatility % reached the limit, trading suspended for 5 minutes",
@@ -2203,13 +2288,18 @@ window.I18N_DICT = {
 },
 "特斯拉": {
 "en": "Tesla",
-"ja": "テスラ",
-"ko": "테슬라"
+"ja": "Tesla",
+"ko": "Tesla"
 },
 "现金 + 浮动盈亏": {
 "en": "Cash + variable profits and losses",
 "ja": "現金 + 変動利益・損失",
 "ko": "현금 + 변동된 이익과 손실"
+},
+"甲骨文": {
+"en": "Oracle",
+"ja": "オラクル",
+"ko": "오라클"
 },
 "留空则自动获取公司名": {
 "en": "Leave blank to automatically get the company name",
@@ -2276,6 +2366,11 @@ window.I18N_DICT = {
 "ja": "ウィンドウが狭くなると、混雑を避けるために優先順位に応じて二次的なインジケーターを隠す。",
 "ko": "창이 좁아질 때는 과도한 배치를 방지하기 위해 우선순위에 따라 보조 표시를 숨겨야 합니다."
 },
+"第一三共": {
+"en": "Daiichi Sankyo",
+"ja": "第一三共",
+"ko": "다이이찌산쿄"
+},
 "第三方杠杆 · 超出监管上限": {
 "en": "Third-party leverage · Exceeding regulatory limits",
 "ja": "第三者のレバレッジ・規制上の制限を超える",
@@ -2303,8 +2398,8 @@ window.I18N_DICT = {
 },
 "紫金矿业": {
 "en": "Zijin Mining",
-"ja": "ジン鉱業",
-"ko": "지인 광업"
+"ja": "紫金鉱業",
+"ko": "쯔진광업"
 },
 "纽约": {
 "en": "New York",
@@ -2377,9 +2472,9 @@ window.I18N_DICT = {
 "ko": "승률"
 },
 "腾讯控股": {
-"en": "Tencent Holdings",
-"ja": "腾讯控股",
-"ko": "텐센트 홀딩스"
+"en": "Tencent",
+"ja": "テンセント",
+"ko": "텐센트"
 },
 "自动": {
 "en": "Automatic",
@@ -2418,8 +2513,8 @@ window.I18N_DICT = {
 },
 "苹果": {
 "en": "Apple",
-"ja": "アップル",
-"ko": "애플"
+"ja": "Apple",
+"ko": "Apple"
 },
 "融资利息": {
 "en": "Financing interest",
@@ -2460,11 +2555,6 @@ window.I18N_DICT = {
 "en": "I give up",
 "ja": "降参",
 "ko": "항복"
-},
-"评分中  /": {
-"en": "Rating in progress",
-"ja": "評価中",
-"ko": "평점 평가 중"
 },
 "该周期": {
 "en": "This cycle",
@@ -2521,6 +2611,11 @@ window.I18N_DICT = {
 "ja": "異なる通貨を選択してください",
 "ko": "다른 통화를 선택해 주세요"
 },
+"谷歌-A": {
+"en": "Alphabet A",
+"ja": "グーグルA",
+"ko": "구글 A"
+},
 "账户存档": {
 "en": "Account archive",
 "ja": "アカウントアーカイブ",
@@ -2545,11 +2640,6 @@ window.I18N_DICT = {
 "en": "Account model",
 "ja": "アカウントモデル",
 "ko": "계정 모델"
-},
-"贵州茅台": {
-"en": "Guizhou Moutai",
-"ja": "貴州・毛臘",
-"ko": "구이저우 모타이"
 },
 "费用(JPY)": {
 "en": "Cost (JPY)",
@@ -2586,6 +2676,11 @@ window.I18N_DICT = {
 "ja": "資金不足で、ポジションを開けない",
 "ko": "자금이 부족하여 포지션을 개설할 수 없음"
 },
+"赛富时": {
+"en": "Salesforce",
+"ja": "セールスフォース",
+"ko": "세일즈포스"
+},
 "走势图 + 下单": {
 "en": "Chart + Order Placement",
 "ja": "チャート + 注文の出荷",
@@ -2596,10 +2691,10 @@ window.I18N_DICT = {
 "ja": "過剰な金額は第三者金融機関から提供され、その条件は通常の信用取引の条件とは異なります。",
 "ko": "초과 금액은 제3자 금융기관에서 제공되며, 조건은 일반 신용 거래와는 다릅니다."
 },
-"跌破": {
-"en": "Drop below",
-"ja": "下に落とす",
-"ko": "아래에 내려놓기"
+"超威半导体": {
+"en": "AMD",
+"ja": "AMD",
+"ko": "AMD"
 },
 "距强平": {
 "en": "Ju Qiangping",
@@ -2614,7 +2709,7 @@ window.I18N_DICT = {
 "软银集团": {
 "en": "SoftBank Group",
 "ja": "ソフトバンクグループ",
-"ko": "소프트뱅크 그룹"
+"ko": "소프트뱅크그룹"
 },
 "载入失败": {
 "en": "Loading failed",
@@ -2630,6 +2725,11 @@ window.I18N_DICT = {
 "en": "Near root golden cross · MA20$",
 "ja": "ルート近くのゴールドクロス · MA20$",
 "ko": "뿌리 근처의 금색 십자기 · MA20$"
+},
+"迪士尼": {
+"en": "Disney",
+"ja": "ディズニー",
+"ko": "디즈니"
 },
 "追保线": {
 "en": "Follow the protection line",
@@ -2681,6 +2781,11 @@ window.I18N_DICT = {
 "ja": "お金があまりにも多いので、全てを失うのは難しい。これは、取引を試すため、戦略を検証するため、または単に数字が変わるのを楽しむためにも適している。",
 "ko": "돈이 너무 많아서 모든 것을 잃는 것은 어렵습니다. 이는 거래를 테스트하거나 전략을 검증하거나, 단순히 숫자가 변하는 것을 즐기는 데 적합합니다."
 },
+"银河娱乐": {
+"en": "Galaxy Entertainment",
+"ja": "ギャラクシー・エンターテインメント",
+"ko": "갤럭시 엔터테인먼트"
+},
 "阿里巴巴": {
 "en": "Alibaba",
 "ja": "アリババ",
@@ -2716,6 +2821,11 @@ window.I18N_DICT = {
 "ja": "困難度・高い",
 "ko": "난이도 · 높음"
 },
+"雷霆大A": {
+"en": "Lei Ting Da A",
+"ja": "雷霆大ア",
+"ko": "레이팅다아"
+},
 "非农就业数据": {
 "en": "Non-agricultural employment data",
 "ja": "非農業雇用データ",
@@ -2725,6 +2835,11 @@ window.I18N_DICT = {
 "en": "Top bar",
 "ja": "トップバー",
 "ko": "상단 바"
+},
+"香港交易所": {
+"en": "HKEX",
+"ja": "香港取引所",
+"ko": "홍콩거래소"
 },
 "香港股票": {
 "en": "Hong Kong stocks",
@@ -2810,5 +2925,135 @@ window.I18N_DICT = {
 "en": "Game over!",
 "ja": "人生終了！",
 "ko": "인생 종료!"
+},
+"全部市场": {
+"en": "All markets",
+"ja": "全市場",
+"ko": "전체 시장"
+},
+"查看": {
+"en": "View",
+"ja": "表示",
+"ko": "보기"
+},
+"标记": {
+"en": "Tag",
+"ja": "タグ付け",
+"ko": "표시"
+},
+"取消标记": {
+"en": "Untag",
+"ja": "解除",
+"ko": "해제"
+},
+"清除全部 AI 标记": {
+"en": "Clear all AI tags",
+"ja": "AIタグを全解除",
+"ko": "AI 표시 전체 해제"
+},
+"拉取 A 股全市场实时快照…": {
+"en": "Fetching CN market snapshot…",
+"ja": "A株全市場スナップショット取得中…",
+"ko": "A주 전체 시장 스냅샷 가져오는 중…"
+},
+"拉取美股榜单（最活跃 / 涨幅 / 跌幅）…": {
+"en": "Fetching US market lists (actives / gainers / losers)…",
+"ja": "米国市場ランキング取得中…",
+"ko": "미국 시장 랭킹 가져오는 중…"
+},
+"只，按成交额取前": {
+"en": " matched, top by turnover ",
+"ja": " 件、出来高上位 ",
+"ko": " 개, 거래대금 상위 "
+},
+"进入策略打分…": {
+"en": " enter scoring…",
+"ja": " を採点…",
+"ko": " 채점 시작…"
+},
+"评分中": {
+"en": "Scoring ",
+"ja": "採点中 ",
+"ko": "채점 중 "
+},
+"（策略：": {
+"en": " (strategy: ",
+"ja": "（戦略：",
+"ko": " (전략: "
+},
+"个标的完成打分，取前": {
+"en": " instruments scored, top ",
+"ja": " 銘柄を採点、上位 ",
+"ko": " 종목 채점, 상위 "
+},
+"一键加入前": {
+"en": "Add top ",
+"ja": "上位 ",
+"ko": "상위 "
+},
+"个自选": {
+"en": " to watchlist",
+"ja": " 件をウォッチリストへ",
+"ko": " 개 관심종목 추가"
+},
+"美股候选": {
+"en": "US candidates ",
+"ja": "米国候補 ",
+"ko": "미국 후보 "
+},
+"① 全市场快照（新浪）：": {
+"en": "① Market snapshot (Sina): ",
+"ja": "① 全市場スナップショット（Sina）: ",
+"ko": "① 시장 스냅샷(新浪): "
+},
+"② 日线（腾讯": {
+"en": "② Daily bars (Tencent ",
+"ja": "② 日足（Tencent ",
+"ko": "② 일봉(텐센트 "
+},
+"③ 实时报价（腾讯）：": {
+"en": "③ Live quote (Tencent): ",
+"ja": "③ リアルタイム（Tencent）: ",
+"ko": "③ 실시간 시세(텐센트): "
+},
+"探针运行中…": {
+"en": "Probing…",
+"ja": "プローブ中…",
+"ko": "프로브 중…"
+},
+"英特尔": {
+"en": "Intel",
+"ja": "インテル",
+"ko": "인텔"
+},
+"强生": {
+"en": "Johnson & Johnson",
+"ja": "ジョンソン・エンド・ジョンソン",
+"ko": "존슨앤존슨"
+},
+"Visa": {
+"en": "Visa",
+"ja": "Visa",
+"ko": "Visa"
+},
+"Meta": {
+"en": "Meta",
+"ja": "Meta",
+"ko": "Meta"
+},
+"索尼": {
+"en": "Sony",
+"ja": "ソニー",
+"ko": "소니"
+},
+"NTT": {
+"en": "NTT",
+"ja": "NTT",
+"ko": "NTT"
+},
+"台积电": {
+"en": "TSMC",
+"ja": "TSMC",
+"ko": "TSMC"
 }
 };

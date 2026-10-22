@@ -3217,7 +3217,7 @@ async function runAiScan() {
   box.innerHTML = top.map((r, i) => `
     <div class="ai-row">
       <span class="rk">${i + 1}</span>
-      <div class="nm"><b>${esc(r.inst.name)}</b><i>${esc(r.inst.code)} · ${esc(r.why)}</i></div>
+      <div class="nm"><b>${esc(r.inst.name)}<span class="pill m" style="margin-left:5px">${MARKETS[r.inst.mkt] ? MARKETS[r.inst.mkt].label : esc(r.inst.mkt)}</span></b><i>${esc(r.inst.code)} · ${esc(r.why)}</i></div>
       <div class="ch" style="width:64px;text-align:right;font-family:var(--mono);color:${r.chg > 0 ? 'var(--up)' : r.chg < 0 ? 'var(--dn)' : 'var(--mut)'}">${r.px ? num(r.px, 2) : ''}${r.chg ? ' ' + sgn(r.chg, 2) + '%' : ''}</div>
       <div class="bar"><em style="width:${r.score}%"></em></div>
       <div class="sc">${r.score}</div>

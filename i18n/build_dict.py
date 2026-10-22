@@ -74,13 +74,14 @@ def tr(text, lang, model="hy-mt2"):
     b = json.dumps({"model": model, "prompt": p, "stream": False, "keep_alive": "10m",
                     "options": {"temperature": 0.1, "num_predict": 400}}).encode()
     last = None
-    for attempt in range(3):                       # Ollama 偶尔 RemoteDisconnected，重试即可
+    for attempt in range(2):                       # Ollama 偶尔 RemoteDisconnected，重试即可
         try:
             req = urllib.request.Request(API, data=b, headers={"Content-Type": "application/json"})
-            with urllib.request.urlopen(req, timeout=120) as resp:
+            with urllib.request.urlopen(req, timeout=25) as resp:
                 return clean(json.load(resp).get("response", ""))
         except Exception as e:
             last = e
+            if '404' in str(e): break           # 模型不存在：重试没意义，立刻跳过
             time.sleep(1.5 * (attempt + 1))
     print(f"  [warn] 翻译失败({lang}): {text[:24]} -> {last}")
     return ""
@@ -179,6 +180,77 @@ CORRECTIONS = {
     "A股全市场（实时）": {"en": "CN market (live)", "ja": "A株全市場（リアルタイム）", "ko": "A주 전체 시장(실시간)"},
     "内置品种 · 全部": {"en": "Built-in · all", "ja": "内蔵銘柄・全て", "ko": "내장 종목 · 전체"},
     "加自选": {"en": "Add", "ja": "追加", "ko": "추가"},
+    # AI 动态提示片段（模板串渲染后由 DOM 扫描替换）
+    "拉取 A 股全市场实时快照…": {"en": "Fetching CN market snapshot…", "ja": "A株全市場スナップショット取得中…", "ko": "A주 전체 시장 스냅샷 가져오는 중…"},
+    "拉取美股榜单（最活跃 / 涨幅 / 跌幅）…": {"en": "Fetching US market lists (actives / gainers / losers)…", "ja": "米国市場ランキング取得中…", "ko": "미국 시장 랭킹 가져오는 중…"},
+    "只，按成交额取前": {"en": " matched, top by turnover ", "ja": " 件、出来高上位 ", "ko": " 개, 거래대금 상위 "},
+    "进入策略打分…": {"en": " enter scoring…", "ja": " を採点…", "ko": " 채점 시작…"},
+    "评分中": {"en": "Scoring ", "ja": "採点中 ", "ko": "채점 중 "},
+    "（策略：": {"en": " (strategy: ", "ja": "（戦略：", "ko": " (전략: "},
+    "个标的完成打分，取前": {"en": " instruments scored, top ", "ja": " 銘柄を採点、上位 ", "ko": " 종목 채점, 상위 "},
+    "该范围内没有可评分的品种": {"en": "No instruments to score in this range", "ja": "この範囲に採点対象がありません", "ko": "이 범위에 채점할 종목이 없습니다"},
+    "数据探针（测接口抓不抓得到）": {"en": "Data probe (test if sources respond)", "ja": "データプローブ（取得可否を確認）", "ko": "데이터 프로브 (수신 확인)"},
+    "一键加入前": {"en": "Add top ", "ja": "上位 ", "ko": "상위 "},
+    "个自选": {"en": " to watchlist", "ja": " 件をウォッチリストへ", "ko": " 개 관심종목 추가"},
+    "美股候选": {"en": "US candidates ", "ja": "米国候補 ", "ko": "미국 후보 "},
+    "① 全市场快照（新浪）：": {"en": "① Market snapshot (Sina): ", "ja": "① 全市場スナップショット（Sina）: ", "ko": "① 시장 스냅샷(新浪): "},
+    "② 日线（腾讯": {"en": "② Daily bars (Tencent ", "ja": "② 日足（Tencent ", "ko": "② 일봉(텐센트 "},
+    "③ 实时报价（腾讯）：": {"en": "③ Live quote (Tencent): ", "ja": "③ リアルタイム（Tencent）: ", "ko": "③ 실시간 시세(텐센트): "},
+    "探针运行中…": {"en": "Probing…", "ja": "プローブ中…", "ko": "프로브 중…"},
+    # 公司名（Ollama 模型 404 期间手工补齐）
+    "中国移动": {"en": "China Mobile", "ja": "チャイナモバイル", "ko": "차이나모바일"},
+    "中国银行": {"en": "Bank of China", "ja": "中国銀行", "ko": "중국은행"},
+    "建设银行": {"en": "China Construction Bank", "ja": "中国建設銀行", "ko": "중국건설은행"},
+    "工商银行": {"en": "ICBC", "ja": "中国工商銀行", "ko": "중국공상은행"},
+    "小米集团": {"en": "Xiaomi", "ja": "シャオミ", "ko": "샤오미"},
+    "安踏体育": {"en": "ANTA Sports", "ja": "アンタ・スポーツ", "ko": "안타스포츠"},
+    "快手":   {"en": "Kuaishou", "ja": "クアイショウ", "ko": "콰이셔우"},
+    "银河娱乐": {"en": "Galaxy Entertainment", "ja": "ギャラクシー・エンターテインメント", "ko": "갤럭시 엔터테인먼트"},
+    "任天堂": {"en": "Nintendo", "ja": "任天堂", "ko": "닌텐도"},
+    "东京电子": {"en": "Tokyo Electron", "ja": "東京エレクトロン", "ko": "도쿄일렉트론"},
+    "伊藤忠商事": {"en": "ITOCHU", "ja": "伊藤忠商事", "ko": "이토추상사"},
+    "JR东日本": {"en": "JR East", "ja": "JR東日本", "ko": "JR동일본"},
+    "摩根大通": {"en": "JPMorgan Chase", "ja": "JPモルガン", "ko": "JP모간"},
+    "亚马逊": {"en": "Amazon", "ja": "アマゾン", "ko": "아마존"},
+    "博通":   {"en": "Broadcom", "ja": "ブロードコム", "ko": "브로드컴"},
+    "奈飞":   {"en": "Netflix", "ja": "Netflix", "ko": "Netflix"},
+    "可口可乐": {"en": "Coca-Cola", "ja": "コカ・コーラ", "ko": "코카콜라"},
+    "埃克森美孚": {"en": "ExxonMobil", "ja": "エクソンモービル", "ko": "엑손모빌"},
+    "超威半导体": {"en": "AMD", "ja": "AMD", "ko": "AMD"},
+    "甲骨文": {"en": "Oracle", "ja": "オラクル", "ko": "오라클"},
+    "迪士尼": {"en": "Disney", "ja": "ディズニー", "ko": "디즈니"},
+    "沃尔玛": {"en": "Walmart", "ja": "ウォルマート", "ko": "월마트"},
+    "赛富时": {"en": "Salesforce", "ja": "セールスフォース", "ko": "세일즈포스"},
+    "英特尔": {"en": "Intel", "ja": "インテル", "ko": "인텔"},
+    "强生":   {"en": "Johnson & Johnson", "ja": "ジョンソン・エンド・ジョンソン", "ko": "존슨앤존슨"},
+    "Visa":   {"en": "Visa", "ja": "Visa", "ko": "Visa"},
+    "Meta":   {"en": "Meta", "ja": "Meta", "ko": "Meta"},
+    "谷歌-A": {"en": "Alphabet A", "ja": "グーグルA", "ko": "구글 A"},
+    "英伟达": {"en": "NVIDIA", "ja": "NVIDIA", "ko": "NVIDIA"},
+    "微软":   {"en": "Microsoft", "ja": "Microsoft", "ko": "Microsoft"},
+    "苹果":   {"en": "Apple", "ja": "Apple", "ko": "Apple"},
+    "特斯拉": {"en": "Tesla", "ja": "Tesla", "ko": "Tesla"},
+    "丰田汽车": {"en": "Toyota", "ja": "トヨタ自動車", "ko": "토요타"},
+    "索尼":   {"en": "Sony", "ja": "ソニー", "ko": "소니"},
+    "软银集团": {"en": "SoftBank Group", "ja": "ソフトバンクグループ", "ko": "소프트뱅크그룹"},
+    "三菱UFJ": {"en": "MUFG", "ja": "三菱UFJ", "ko": "MUFG"},
+    "基恩士": {"en": "Keyence", "ja": "キーエンス", "ko": "키엔스"},
+    "日立制作所": {"en": "Hitachi", "ja": "日立製作所", "ko": "히타치"},
+    "第一三共": {"en": "Daiichi Sankyo", "ja": "第一三共", "ko": "다이이찌산쿄"},
+    "NTT":    {"en": "NTT", "ja": "NTT", "ko": "NTT"},
+    "腾讯控股": {"en": "Tencent", "ja": "テンセント", "ko": "텐센트"},
+    "汇丰控股": {"en": "HSBC", "ja": "HSBC", "ko": "HSBC"},
+    "友邦保险": {"en": "AIA Group", "ja": "AIA", "ko": "AIA"},
+    "香港交易所": {"en": "HKEX", "ja": "香港取引所", "ko": "홍콩거래소"},
+    "中国平安": {"en": "Ping An", "ja": "中国平安", "ko": "핑안보험"},
+    "贵州茅台": {"en": "Kweichow Moutai", "ja": "茅台酒", "ko": "구이저우마오타이"},
+    "宁德时代": {"en": "CATL", "ja": "CATL", "ko": "CATL"},
+    "比亚迪": {"en": "BYD", "ja": "BYD", "ko": "BYD"},
+    "五粮液": {"en": "Wuliangye", "ja": "五糧液", "ko": "우량예"},
+    "招商银行": {"en": "China Merchants Bank", "ja": "招商銀行", "ko": "초상은행"},
+    "紫金矿业": {"en": "Zijin Mining", "ja": "紫金鉱業", "ko": "쯔진광업"},
+    "东方财富": {"en": "East Money", "ja": "東方財富", "ko": "동방재부"},
+    "台积电": {"en": "TSMC", "ja": "TSMC", "ko": "TSMC"},
     "收起":   {"en": "Collapse", "ja": "たたむ", "ko": "접기"},
     "展开":   {"en": "Expand", "ja": "ひらく", "ko": "펼치기"},
     "上海":   {"en": "Shanghai", "ja": "上海", "ko": "상하이"},
