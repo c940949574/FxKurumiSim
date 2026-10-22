@@ -7,9 +7,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>久留美模拟器</AssemblyName>
     <RootNamespace>KurumiSim</RootNamespace>
-    <Version>1.2.18</Version>
-    <AssemblyVersion>1.2.18.0</AssemblyVersion>
-    <FileVersion>1.2.18.0</FileVersion>
+    <Version>1.2.19</Version>
+    <AssemblyVersion>1.2.19.0</AssemblyVersion>
+    <FileVersion>1.2.19.0</FileVersion>
     <Product>久留美模拟器 / FxKurumiSim</Product>
     <Company>FxKurumiSim</Company>
     <ApplicationManifest>app.manifest</ApplicationManifest>

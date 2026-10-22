@@ -683,9 +683,11 @@ button{cursor:pointer;background:none;border:none}
       <div class="frow" style="display:flex;gap:10px;margin-top:12px">
         <label style="flex:1">市场范围
           <select id="aiMkt"><option value="hs_a" selected>A股全市场（实时）</option>
-            <option value="">内置品种 · 全部</option>
-            <option value="JP">内置 · 日本</option><option value="US">内置 · 美国</option>
-            <option value="HK">内置 · 香港</option><option value="CN">内置 · 雷霆大A</option></select></label>
+            <option value="us">美股全市场（Yahoo）</option>
+            <option value="JP">日股池（12 只）</option>
+            <option value="HK">港股池（15 只）</option>
+            <option value="CN">雷霆大A（8 只）</option>
+            <option value="">内置品种 · 全部</option></select></label>
         <label style="flex:1">取前几名
           <select id="aiN"><option value="3">3</option><option value="5" selected>5</option>
             <option value="10">10</option></select></label>
@@ -840,6 +842,68 @@ const INST = [
     px: 28.92, vol: 0.32, lot: 100, tick: 0.01, initM: 0.50, maintM: 0.30, levMax: 2, fee: 'CN', longRate: 0.045, shortRate: 0.085 },
   { id: '300059.SZ', name: '东方财富', code: '300059', mkt: 'CN', kind: 'stock', ccy: 'CNY',
     px: 18.07, vol: 0.38, lot: 100, tick: 0.01, initM: 0.50, maintM: 0.30, levMax: 2, fee: 'CN', longRate: 0.045, shortRate: 0.085 },
+
+  // ===== 扩充池：港股/日股/美股 主流标的（用于自动选股）=====
+  { id: '0941.HK', name: '中国移动', code: '0941', mkt: 'HK', kind: 'stock', ccy: 'HKD',
+    px: 77.35, vol: 0.18, lot: 500, tick: 0.05, initM: 0.40, maintM: 0.30, levMax: 2.5, fee: 'HK', longRate: 0.058, shortRate: 0.03 },
+  { id: '2318.HK', name: '中国平安', code: '2318', mkt: 'HK', kind: 'stock', ccy: 'HKD',
+    px: 48.48, vol: 0.26, lot: 500, tick: 0.05, initM: 0.40, maintM: 0.30, levMax: 2.5, fee: 'HK', longRate: 0.058, shortRate: 0.03 },
+  { id: '0939.HK', name: '建设银行', code: '0939', mkt: 'HK', kind: 'stock', ccy: 'HKD',
+    px: 9.72, vol: 0.20, lot: 1000, tick: 0.01, initM: 0.40, maintM: 0.30, levMax: 2.5, fee: 'HK', longRate: 0.058, shortRate: 0.03 },
+  { id: '3988.HK', name: '中国银行', code: '3988', mkt: 'HK', kind: 'stock', ccy: 'HKD',
+    px: 5.99, vol: 0.20, lot: 1000, tick: 0.01, initM: 0.40, maintM: 0.30, levMax: 2.5, fee: 'HK', longRate: 0.058, shortRate: 0.03 },
+  { id: '1398.HK', name: '工商银行', code: '1398', mkt: 'HK', kind: 'stock', ccy: 'HKD',
+    px: 7.35, vol: 0.20, lot: 1000, tick: 0.01, initM: 0.40, maintM: 0.30, levMax: 2.5, fee: 'HK', longRate: 0.058, shortRate: 0.03 },
+  { id: '0388.HK', name: '香港交易所', code: '0388', mkt: 'HK', kind: 'stock', ccy: 'HKD',
+    px: 367.2, vol: 0.28, lot: 100, tick: 0.2, initM: 0.40, maintM: 0.30, levMax: 2.5, fee: 'HK', longRate: 0.058, shortRate: 0.03 },
+  { id: '1810.HK', name: '小米集团', code: '1810', mkt: 'HK', kind: 'stock', ccy: 'HKD',
+    px: 25.8, vol: 0.38, lot: 200, tick: 0.02, initM: 0.45, maintM: 0.35, levMax: 2.2, fee: 'HK', longRate: 0.058, shortRate: 0.03 },
+  { id: '2020.HK', name: '安踏体育', code: '2020', mkt: 'HK', kind: 'stock', ccy: 'HKD',
+    px: 73.0, vol: 0.32, lot: 100, tick: 0.05, initM: 0.45, maintM: 0.35, levMax: 2.2, fee: 'HK', longRate: 0.058, shortRate: 0.03 },
+  { id: '0027.HK', name: '银河娱乐', code: '0027', mkt: 'HK', kind: 'stock', ccy: 'HKD',
+    px: 31.5, vol: 0.35, lot: 200, tick: 0.05, initM: 0.45, maintM: 0.35, levMax: 2.2, fee: 'HK', longRate: 0.058, shortRate: 0.03 },
+  { id: '1024.HK', name: '快手', code: '1024', mkt: 'HK', kind: 'stock', ccy: 'HKD',
+    px: 26.78, vol: 0.45, lot: 100, tick: 0.02, initM: 0.45, maintM: 0.35, levMax: 2.2, fee: 'HK', longRate: 0.058, shortRate: 0.03 },
+  { id: '9432.T', name: 'NTT', code: '9432', mkt: 'JP', kind: 'stock', ccy: 'JPY',
+    px: 178.1, vol: 0.16, lot: 100, tick: 0.5, initM: 0.30, maintM: 0.20, levMax: 3.33, fee: 'JP', longRate: 0.028, shortRate: 0.015 },
+  { id: '4568.T', name: '第一三共', code: '4568', mkt: 'JP', kind: 'stock', ccy: 'JPY',
+    px: 2836.5, vol: 0.30, lot: 100, tick: 0.5, initM: 0.30, maintM: 0.20, levMax: 3.33, fee: 'JP', longRate: 0.028, shortRate: 0.015 },
+  { id: '8035.T', name: '东京电子', code: '8035', mkt: 'JP', kind: 'stock', ccy: 'JPY',
+    px: 9450, vol: 0.32, lot: 100, tick: 0.5, initM: 0.30, maintM: 0.20, levMax: 3.33, fee: 'JP', longRate: 0.028, shortRate: 0.015 },
+  { id: '7974.T', name: '任天堂', code: '7974', mkt: 'JP', kind: 'stock', ccy: 'JPY',
+    px: 8699, vol: 0.26, lot: 100, tick: 1, initM: 0.30, maintM: 0.20, levMax: 3.33, fee: 'JP', longRate: 0.028, shortRate: 0.015 },
+  { id: '6501.T', name: '日立制作所', code: '6501', mkt: 'JP', kind: 'stock', ccy: 'JPY',
+    px: 5816, vol: 0.28, lot: 100, tick: 0.5, initM: 0.30, maintM: 0.20, levMax: 3.33, fee: 'JP', longRate: 0.028, shortRate: 0.015 },
+  { id: '8001.T', name: '伊藤忠商事', code: '8001', mkt: 'JP', kind: 'stock', ccy: 'JPY',
+    px: 2327, vol: 0.24, lot: 100, tick: 0.5, initM: 0.30, maintM: 0.20, levMax: 3.33, fee: 'JP', longRate: 0.028, shortRate: 0.015 },
+  { id: '9020.T', name: 'JR东日本', code: '9020', mkt: 'JP', kind: 'stock', ccy: 'JPY',
+    px: 3668, vol: 0.22, lot: 100, tick: 0.5, initM: 0.30, maintM: 0.20, levMax: 3.33, fee: 'JP', longRate: 0.028, shortRate: 0.015 },
+  { id: 'GOOGL', name: '谷歌-A', code: 'GOOGL', mkt: 'US', kind: 'stock', ccy: 'USD',
+    px: 334.76, vol: 0.26, lot: 1, tick: 0.01, initM: 0.50, maintM: 0.25, levMax: 2, fee: 'US', longRate: 0.065, shortRate: 0.08 },
+  { id: 'AMZN', name: '亚马逊', code: 'AMZN', mkt: 'US', kind: 'stock', ccy: 'USD',
+    px: 262.37, vol: 0.28, lot: 1, tick: 0.01, initM: 0.50, maintM: 0.25, levMax: 2, fee: 'US', longRate: 0.065, shortRate: 0.08 },
+  { id: 'META', name: 'Meta', code: 'META', mkt: 'US', kind: 'stock', ccy: 'USD',
+    px: 697.52, vol: 0.32, lot: 1, tick: 0.01, initM: 0.50, maintM: 0.25, levMax: 2, fee: 'US', longRate: 0.065, shortRate: 0.08 },
+  { id: 'AVGO', name: '博通', code: 'AVGO', mkt: 'US', kind: 'stock', ccy: 'USD',
+    px: 337.8, vol: 0.34, lot: 1, tick: 0.01, initM: 0.50, maintM: 0.25, levMax: 2, fee: 'US', longRate: 0.065, shortRate: 0.08 },
+  { id: 'AMD', name: '超威半导体', code: 'AMD', mkt: 'US', kind: 'stock', ccy: 'USD',
+    px: 552.72, vol: 0.42, lot: 1, tick: 0.01, initM: 0.50, maintM: 0.25, levMax: 2, fee: 'US', longRate: 0.065, shortRate: 0.08 },
+  { id: 'NFLX', name: '奈飞', code: 'NFLX', mkt: 'US', kind: 'stock', ccy: 'USD',
+    px: 65.04, vol: 0.30, lot: 1, tick: 0.01, initM: 0.50, maintM: 0.25, levMax: 2, fee: 'US', longRate: 0.065, shortRate: 0.08 },
+  { id: 'JPM', name: '摩根大通', code: 'JPM', mkt: 'US', kind: 'stock', ccy: 'USD',
+    px: 335.19, vol: 0.20, lot: 1, tick: 0.01, initM: 0.50, maintM: 0.25, levMax: 2, fee: 'US', longRate: 0.065, shortRate: 0.08 },
+  { id: 'XOM', name: '埃克森美孚', code: 'XOM', mkt: 'US', kind: 'stock', ccy: 'USD',
+    px: 178.09, vol: 0.18, lot: 1, tick: 0.01, initM: 0.50, maintM: 0.25, levMax: 2, fee: 'US', longRate: 0.065, shortRate: 0.08 },
+  { id: 'WMT', name: '沃尔玛', code: 'WMT', mkt: 'US', kind: 'stock', ccy: 'USD',
+    px: 117.8, vol: 0.16, lot: 1, tick: 0.01, initM: 0.50, maintM: 0.25, levMax: 2, fee: 'US', longRate: 0.065, shortRate: 0.08 },
+  { id: 'DIS', name: '迪士尼', code: 'DIS', mkt: 'US', kind: 'stock', ccy: 'USD',
+    px: 111.83, vol: 0.22, lot: 1, tick: 0.01, initM: 0.50, maintM: 0.25, levMax: 2, fee: 'US', longRate: 0.065, shortRate: 0.08 },
+  { id: 'KO', name: '可口可乐', code: 'KO', mkt: 'US', kind: 'stock', ccy: 'USD',
+    px: 92.68, vol: 0.12, lot: 1, tick: 0.01, initM: 0.50, maintM: 0.25, levMax: 2, fee: 'US', longRate: 0.065, shortRate: 0.08 },
+  { id: 'CRM', name: '赛富时', code: 'CRM', mkt: 'US', kind: 'stock', ccy: 'USD',
+    px: 241.78, vol: 0.28, lot: 1, tick: 0.01, initM: 0.50, maintM: 0.25, levMax: 2, fee: 'US', longRate: 0.065, shortRate: 0.08 },
+  { id: 'ORCL', name: '甲骨文', code: 'ORCL', mkt: 'US', kind: 'stock', ccy: 'USD',
+    px: 129.13, vol: 0.30, lot: 1, tick: 0.01, initM: 0.50, maintM: 0.25, levMax: 2, fee: 'US', longRate: 0.065, shortRate: 0.08 },
 
   // ===== 期货（保证金制，逐日盯市）=====
   { id: 'NIY=F', name: '日经225迷你', code: 'NIY', mkt: 'FUT', kind: 'fut', ccy: 'JPY',
@@ -2972,10 +3036,10 @@ function scoreByStrat(id, b) {
   const m20 = maArr(c, 20), m60 = maArr(c, 60), r14 = rsiArr(c, 14);
   const last = n - 1;
   const ret20 = c[last] / c[n - 21] - 1;
+  const mk = (raw, why) => ({ score: clamp(Math.round(raw), 0, 100), raw, why });   // raw 不截断，供池内排序
   if (id === 'mom') {
     const above = (c[last] > m20[last] ? 1 : 0) + (c[last] > m60[last] ? 1 : 0);
-    return { score: clamp(Math.round(50 + ret20 * 400 + above * 12), 0, 100),
-             why: `20日${sgn(ret20 * 100, 1)}% · 均线之上 ${above}/2` };
+    return mk(50 + ret20 * 400 + above * 12, `20日${sgn(ret20 * 100, 1)}% · 均线之上 ${above}/2`);
   }
   if (id === 'cross') {
     const a5 = maArr(c, 5);
@@ -2984,29 +3048,30 @@ function scoreByStrat(id, b) {
       if (a5[i - 1] && a5[i] && m20[i - 1] && m20[i] && a5[i - 1] <= m20[i - 1] && a5[i] > m20[i]) cross = n - i;
     }
     const rise = m20[last] > m20[Math.max(0, last - 5)] ? 1 : 0;
-    return { score: clamp(35 + (cross ? 35 : 0) + rise * 20 + (c[last] > m20[last] ? 10 : 0), 0, 100),
-             why: cross ? `近 ${cross} 根内金叉 · MA20${rise ? '上行' : '下行'}` : `无金叉 · MA5${c[last] > m20[last] ? '在' : '不在'} MA20 上` };
+    return mk(35 + (cross ? 35 : 0) + rise * 20 + (c[last] > m20[last] ? 10 : 0),
+      cross ? `近 ${cross} 根内金叉 · MA20${rise ? '上行' : '下行'}` : `无金叉 · MA5${c[last] > m20[last] ? '在' : '不在'} MA20 上`);
   }
   if (id === 'bounce') {
-    const up = b[last].c >= b[last].o;
-    return { score: clamp(Math.round(40 + (-ret20) * 300 + (r14[last] < 35 ? 25 : r14[last] < 45 ? 12 : 0) + (up ? 12 : 0)), 0, 100),
-             why: `20日${sgn(ret20 * 100, 1)}% · RSI ${num(r14[last], 0)}${up ? ' · 转红' : ''}` };
+    // 跌得够深 + RSI 低 + 有真实反弹动作（当日/前日收红、距低点回升）
+    const up = b[last].c > b[last].o, prevUp = n > 1 && b[last - 1].c > b[last - 1].o;
+    const offLow = c[last] / Math.min(...b.slice(-20).map(x => x.l)) - 1;
+    return mk((-ret20) * 160 + (100 - r14[last]) * 0.45 + (up ? 22 : 0) + (prevUp ? 10 : 0) + offLow * 120,
+      `20日${sgn(ret20 * 100, 1)}% · RSI ${num(r14[last], 0)}${up ? ' · 转红' : ' · 未转红'}`);
   }
   if (id === 'break') {
     let prior = -Infinity;
     for (let i = Math.max(0, n - 21); i <= n - 2; i++) prior = Math.max(prior, b[i].h);
     const broke = c[last] > prior;
-    return { score: clamp(30 + (broke ? 45 : 0) + (c[last] > m20[last] ? 15 : 0), 0, 100),
-             why: broke ? '突破 20 日高点' : `距高点 ${num((prior / c[last] - 1) * 100, 1)}%` };
+    return mk(30 + (broke ? 45 : 0) + (c[last] > m20[last] ? 15 : 0) + ret20 * 120,
+      broke ? '突破 20 日高点' : `距高点 ${num((prior / c[last] - 1) * 100, 1)}%`);
   }
-  // lowvol
   let amp = 0;
   for (let i = Math.max(1, n - 20); i < n; i++) amp += Math.abs(c[i] / c[i - 1] - 1);
   amp /= Math.min(20, n - 1);
   const peak = Math.max(...b.slice(-20).map(x => x.h));
   const dd = c[last] / peak - 1;
-  return { score: clamp(Math.round(72 - amp * 2500 + (c[last] > m20[last] ? 12 : 0) + dd * 60), 0, 100),
-           why: `日均波幅 ${num(amp * 100, 2)}% · ${c[last] > m20[last] ? '站上' : '跌破'} MA20` };
+  return mk(72 - amp * 2500 + (c[last] > m20[last] ? 12 : 0) + dd * 60,
+    `日均波幅 ${num(amp * 100, 2)}% · ${c[last] > m20[last] ? '站上' : '跌破'} MA20`);
 }
 
 /* 全市场实时快照（新浪）：按成交额分页取，返回 [{symbol,code,name,trade,changepercent,amount,turnoverratio,per}] */
@@ -3021,6 +3086,20 @@ async function fetchMktSnapshot(node, pages, num) {
     out.push(...arr);
   }
   return out;
+}
+/* 美股榜单（Yahoo predefined，需代理）：most_actives / day_gainers / day_losers */
+async function fetchYahooScreen(scrId, count) {
+  const url = 'https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved'
+    + `?scrIds=${scrId}&count=${count}&lang=en-US`;
+  const j = JSON.parse(await netGet(url));
+  const q = ((((j || {}).finance || {}).result || [])[0] || {}).quotes || [];
+  return q.filter(x => x.symbol && Number(x.regularMarketPrice) > 1)
+    .map(x => ({
+      id: String(x.symbol), code: String(x.symbol), mkt: 'US',
+      name: String(x.shortName || x.longName || x.symbol),
+      px: Number(x.regularMarketPrice) || 0,
+      _row: { changepercent: Number(x.regularMarketChangePercent) || 0, trade: x.regularMarketPrice }
+    }));
 }
 // 新浪快照行 → 临时代理品种（与内置自选同一套 id 规则，方便后续加自选）
 function rowToInst(r) {
@@ -3093,6 +3172,16 @@ async function runAiScan() {
       .filter(r => r && r.code && Number(r.trade) > 1 && !/ST/i.test(String(r.name || '')) && Number(r.amount) > 0);
     hint.textContent = `快照 ${snap.length} 只，按成交额取前 40 进入策略打分…`;
     cands = snap.slice(0, 40).map(rowToInst);
+  } else if (scope === 'us') {
+    hint.textContent = '拉取美股榜单（最活跃 / 涨幅 / 跌幅）…';
+    const seen = new Set();
+    for (const sid of ['most_actives', 'day_gainers', 'day_losers']) {
+      for (const it of await fetchYahooScreen(sid, 25)) {
+        if (!seen.has(it.id)) { seen.add(it.id); cands.push(it); }
+      }
+    }
+    hint.textContent = `美股候选 ${cands.length} 只，取前 40 进入策略打分…`;
+    cands = cands.slice(0, 40);
   } else {
     cands = INST.filter(i => i.kind === 'stock' && (!scope || i.mkt === scope));
     if (!cands.length) { hint.textContent = '该范围内没有可评分的品种'; return; }
@@ -3112,12 +3201,16 @@ async function runAiScan() {
     const r = bars && bars.length ? scoreByStrat(stratId, bars) : null;
     if (r) {
       const row = inst._row || {};
-      rows.push({ inst, score: r.score, why: r.why,
+      rows.push({ inst, raw: r.raw, why: r.why,
                   px: inst.px || Number(row.trade) || 0,
                   chg: Number(row.changepercent) || 0 });
     }
     await new Promise(done => setTimeout(done, 0));
   }
+  // 池内归一化：原始分可能集体顶到 100（如超跌反弹），按相对强弱重新拉开
+  const raws = rows.map(r => r.raw);
+  const mn = Math.min(...raws), mx = Math.max(...raws);
+  rows.forEach(r => { r.score = (raws.length > 1 && mx > mn) ? Math.round(35 + 65 * (r.raw - mn) / (mx - mn)) : 70; });
   rows.sort((a, b) => b.score - a.score);
   const top = rows.slice(0, N);
   hint.textContent = `${rows.length} 个标的完成打分，取前 ${top.length}（策略：${stratName}）`;
