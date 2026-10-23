@@ -104,7 +104,7 @@ button{cursor:pointer;background:none;border:none}
 .boards .nav.on{color:#fff;background:var(--panel3);border-color:var(--line2)}
 .boards .nav em{font-style:normal;font-size:10px;color:var(--dim);font-family:var(--mono)}
 .boards .sp{flex:1}
-.subtabs{display:flex;gap:2px;padding:2px;background:var(--panel2);border-radius:7px;border:1px solid var(--line)}
+.subtabs{display:flex;gap:2px;padding:2px;background:var(--panel2);border-radius:7px;border:1px solid var(--line);margin:0 8px 0 2px}
 .subtabs button{padding:4px 12px;border-radius:5px;font-size:11.5px;color:var(--mut)}
 .subtabs button.on{background:var(--panel3);color:var(--txt);box-shadow:0 1px 2px rgba(0,0,0,.3)}
 
@@ -447,17 +447,17 @@ button{cursor:pointer;background:none;border:none}
   </header>
 
   <nav class="boards">
-    <button class="nav on" data-board="stock">股票 <em>JP / US / HK / A股</em></button>
-    <button class="nav" data-board="fut">期货 <em>5 品种</em></button>
-    <button class="nav" data-board="fx">外汇 <em>4 货币对</em></button>
-    <button class="nav" data-board="perf">组合绩效</button>
-    <div class="sp"></div>
+    <button class="nav on" data-board="stock">股票</button>
     <div class="subtabs" id="subTabs">
       <button data-mkt="JP" class="on">日本</button>
       <button data-mkt="US">美国</button>
       <button data-mkt="HK">香港</button>
       <button data-mkt="CN" data-i18n-skip>雷霆大A</button>
     </div>
+    <button class="nav" data-board="fut">期货 <em>5 品种</em></button>
+    <button class="nav" data-board="fx">外汇 <em>4 货币对</em></button>
+    <button class="nav" data-board="perf">组合绩效</button>
+    <div class="sp"></div>
   </nav>
 
   <div class="workspace">
